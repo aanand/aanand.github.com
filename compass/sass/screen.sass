@@ -7,42 +7,58 @@
 // Import all the default blueprint modules so that we can access their mixins.
 @import blueprint
 
-// Import the non-default scaffolding module.
-@import blueprint/scaffolding
++blueprint-typography
 
-// To generate css equivalent to the blueprint css but with your
-// configuration applied, uncomment:
-// @include blueprint
-
-// If you are doing a lot of stylesheet concatenation, it is suggested
-// that you scope your blueprint styles, so that you can better control
-// what pages use blueprint when stylesheets are concatenated together.
 body
-  +blueprint-typography(true)
   +blueprint-utilities
   +blueprint-debug
   +blueprint-interaction
-  // Remove the scaffolding when you're ready to start doing visual design.
-  // Or leave it in if you're happy with how blueprint looks out-of-the-box
+  margin-top: 100px
 
 form
   +blueprint-form
-  // You'll probably want to remove the scaffolding once you start styling your site.
-  +blueprint-scaffolding
 
-// Page layout can be done using mixins applied to your semantic classes and IDs:
-body
-  #container
-    +container
-  #header, #footer
-    +column($blueprint-grid-columns)
-  #sidebar
-    // One third of the grid columns, rounding down. With 24 cols, this is 8.
-    $sidebar-columns: floor($blueprint-grid-columns / 3)
-    +column($sidebar-columns)
-  #content
-    // Two thirds of the grid columns, rounding up.
-    // With 24 cols, this is 16.
-    $content-columns: ceil(2 * $blueprint-grid-columns / 3)
-    // true means it's the last column in the row
-    +column($content-columns, true)
+#container
+  +container
+  // +grid-background($blueprint-grid-columns, $blueprint-grid-width, $blueprint-grid-margin, 30px)
+
+#sidebar
+  $sidebar-columns: 5
+  +column($sidebar-columns)
+  +append(1)
+  text-align: right
+
+  ul
+    list-style: none
+    padding:    0
+    margin:     0
+
+    li a:after
+      content: "."
+
+#content
+  $content-columns: 14
+  +column($content-columns, true)
+
+h1
+  font-size:     1em
+  font-style:    italic
+  line-height:   inherit
+  margin-bottom: 0
+
+  a
+    font-style:      normal
+    font-weight:     bold
+    text-decoration: none
+    text-transform:  uppercase
+    color:           $header-color !important
+
+    &:hover
+      color: $link-hover-color !important
+
+a
+  text-decoration: none
+
+  &:hover
+    text-decoration: underline
+

@@ -10,20 +10,15 @@
       %link{:href => "/stylesheets/ie.css", :media => "screen, projection", :rel => "stylesheet", :type => "text/css"}
   %body
     #container
+      #sidebar
+        %h1 It’s <a href="/">Aanand Prasad</a>.
+        %ul
+          %li
+            %a{:href => "/archive"} Archive
+          %li
+            %a{:href => "http://twitter.com/aanand"} Twitter
+          %li
+            %a{:href => "http://github.com/aanand"} Github
       #content
         = yield
-      #sidebar
-        %h2 Documentation
-        %ul
-          %li
-            %a{:href => "http://nanoc.stoneship.org/docs/"} Documentation
-          %li
-            %a{:href => "http://nanoc.stoneship.org/docs/3-getting-started/"} Getting Started
-        %h2 Community
-        %ul
-          %li
-            %a{:href => "http://groups.google.com/group/nanoc/"} Discussion Group
-          %li
-            %a{:href => "irc://chat.freenode.net/#nanoc"} IRC Channel
-          %li
-            %a{:href => "http://projects.stoneship.org/trac/nanoc/"} Wiki
+            
