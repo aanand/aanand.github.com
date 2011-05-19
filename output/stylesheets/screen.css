@@ -544,10 +544,32 @@ h1 a:hover {
 }
 
 /* line 59, ../../compass/sass/screen.sass */
+h2 {
+  font-size: 1.5em;
+  line-height: 1;
+  margin-bottom: 1em;
+  font-weight: bold;
+}
+
+/* line 65, ../../compass/sass/screen.sass */
 a {
   text-decoration: none;
 }
-/* line 62, ../../compass/sass/screen.sass */
+/* line 68, ../../compass/sass/screen.sass */
 a:hover {
   text-decoration: underline;
+}
+
+/* line 72, ../../compass/sass/screen.sass */
+.article .title {
+  font-weight: bold;
+}
+/* line 75, ../../compass/sass/screen.sass */
+.article .title:after {
+  content: ".";
+}
+/* line 78, ../../compass/sass/screen.sass */
+.article time {
+  font-weight: normal;
+  color: #666666;
 }

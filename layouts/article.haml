@@ -1,0 +1,8 @@
+- render 'default' do
+  %article.article
+    %h2
+      %span.title= @item[:title]
+      = time_tag(@item)
+
+    = yield
+

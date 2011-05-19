@@ -2,7 +2,10 @@
 %html{:lang => "en"}
   %head
     %meta{:charset => "utf-8"}
-    %title= "#{@item[:title]} - Aanand Prasad"
+    %title
+      - if @item[:title]
+        = "#{@item[:title]} -"
+      Aanand Prasad
     %meta{:content => "nanoc 3.1.7", :name => "generator"}
     %link{:href => "/stylesheets/screen.css", :media => "screen, projection", :rel => "stylesheet", :type => "text/css"}
     %link{:href => "/stylesheets/print.css", :media => "print", :rel => "stylesheet", :type => "text/css"}
@@ -13,8 +16,6 @@
       #sidebar
         %h1 It’s <a href="/">Aanand Prasad</a>.
         %ul
-          %li
-            %a{:href => "/archive"} Archive
           %li
             %a{:href => "http://twitter.com/aanand"} Twitter
           %li
