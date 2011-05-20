@@ -48,10 +48,72 @@ class Touch.Widget extends Views.Widget
     this
 </code></pre>
 
-Blah blah blah.
+Remember, though, that _some_ classes in `Views` will only be subclassed for _one_ of the UIs, and some won’t be subclassed at all. The implementation structure might look like this:
+
+<pre class="go"><code class="language-coffeescript">
+class Views.Widget extends Backbone.View
+class Views.Thinger extends Backbone.View
+class Views.Sprocket extends Backbone.View
+
+class Desktop.Widget extends Views.Widget
+
+class Touch.Widget extends Views.Widget
+class Touch.Thinger extends Views.Thinger
+</code></pre>
+
+So how, at runtime, might we instantiate the appropriate class? Running all instantiations through a helper method would certainly work:
+
+<pre class="go"><code class="language-coffeescript"># assume the existence of a `Mobile` boolean variable
+
+makeViewObject: -> (name, args...)
+  klass = if Mobile and Touch[name]?
+    Touch[name]
+  else if !Mobile and Desktop[name]?
+    Desktop[name]
+  else
+    Views[name]
+
+  new klass(args...)
+
+makeViewObject("Widget")   # => Desktop.Widget / Touch.Widget
+makeViewObject("Thinger")  # => Desktop.Thinger / Views.Thinger
+makeViewObject("Sprocket") # => Views.Sprocket
+</code></pre>
+
+...and if you’re most people, you’ll stop there. I, on the other hand, had just read Isaac Z. Schlueter’s [Evolution of a Prototypal Language User][evolution], hadn't done anything fun with prototype chains in years and didn’t like the idea of this unsightly helper method peppering my code. So I got to work. Instead of `Views`, `Desktop` and `Touch` being plain objects, they’re chained:
+
+<pre class="go"><code class="language-coffeescript">ViewShop = ->
+
+Views   = ViewShop.prototype
+Desktop = new ViewShop
+Touch   = new ViewShop
+</code></pre>
+
+Now, after defining the view classes, access any property of `Desktop` or `Touch`, and the chaining works its magic:
+
+<pre class="go"><code class="language-coffeescript">Desktop.Widget   # => Desktop.Widget
+Desktop.Thinger  # => Views.Thinger
+Desktop.Sprocket # => Views.Sprocket
+
+Touch.Widget     # => Touch.Widget
+Touch.Thinger    # => Touch.Thinger
+Touch.Sprocket   # => Views.Sprocket
+</code></pre>
+
+We need only instantiate a `UI` variable that points to the right `ViewShop`, and we’re done:
+
+<pre class="go"><code class="language-coffeescript">UI = if Mobile then Touch else Desktop
+
+new UI.Widget()   # => Desktop.Widget / Touch.Widget
+new UI.Thinger()  # => Desktop.Thinger / Views.Thinger
+new UI.Sprocket() # => Views.Sprocket
+</code></pre>
+
+Well anyway, I like it.
 
 [coffeescript]: http://jashkenas.github.com/coffee-script/
 [coffeescript-classes]: http://jashkenas.github.com/coffee-script/#classes
 [backbone]:     http://documentcloud.github.com/backbone/
 [lightweight]:  http://twitter.com/hylomorphism/status/71202209618067457
+[evolution]:    http://blog.izs.me/post/4731036392/evolution-of-a-prototypal-language-user
 [email]:        mailto:aanand.prasad@gmail.com

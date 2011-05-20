@@ -62,7 +62,57 @@
 
     <span class="k">this</span>
 </code></pre>
-          <p>Blah blah blah.</p>
+          <p>Remember, though, that <em>some</em> classes in <code>Views</code> will only be subclassed for <em>one</em> of the UIs, and some won’t be subclassed at all. The implementation structure might look like this:</p>
+          <pre class="go"><code class="language-coffeescript"><span class="k">class</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Widget</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
+<span class="k">class</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Thinger</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
+<span class="k">class</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Sprocket</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
+
+<span class="k">class</span> <span class="nx">Desktop</span><span class="p">.</span><span class="nx">Widget</span> <span class="k">extends</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Widget</span>
+
+<span class="k">class</span> <span class="nx">Touch</span><span class="p">.</span><span class="nx">Widget</span> <span class="k">extends</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Widget</span>
+<span class="k">class</span> <span class="nx">Touch</span><span class="p">.</span><span class="nx">Thinger</span> <span class="k">extends</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Thinger</span>
+</code></pre>
+          <p>So how, at runtime, might we instantiate the appropriate class? Running all instantiations through a helper method would certainly work:</p>
+          <pre class="go"><code class="language-coffeescript"><span class="c1"># assume the existence of a `Mobile` boolean variable</span>
+
+<span class="nv">makeViewObject: </span><span class="o">-&gt;</span> <span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">args</span><span class="p">...)</span>
+  <span class="nv">klass = </span><span class="k">if</span> <span class="nx">Mobile</span> <span class="o">and</span> <span class="nx">Touch</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span><span class="o">?</span>
+    <span class="nx">Touch</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="o">!</span><span class="nx">Mobile</span> <span class="o">and</span> <span class="nx">Desktop</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span><span class="o">?</span>
+    <span class="nx">Desktop</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span>
+  <span class="k">else</span>
+    <span class="nx">Views</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span>
+
+  <span class="k">new</span> <span class="nx">klass</span><span class="p">(</span><span class="nx">args</span><span class="p">...)</span>
+
+<span class="nx">makeViewObject</span><span class="p">(</span><span class="s2">"Widget"</span><span class="p">)</span>   <span class="c1"># =&gt; Desktop.Widget / Touch.Widget</span>
+<span class="nx">makeViewObject</span><span class="p">(</span><span class="s2">"Thinger"</span><span class="p">)</span>  <span class="c1"># =&gt; Desktop.Thinger / Views.Thinger</span>
+<span class="nx">makeViewObject</span><span class="p">(</span><span class="s2">"Sprocket"</span><span class="p">)</span> <span class="c1"># =&gt; Views.Sprocket</span>
+</code></pre>
+          <p>…and if you’re most people, you’ll stop there. I, on the other hand, had just read Isaac Z. Schlueter’s <a href="http://blog.izs.me/post/4731036392/evolution-of-a-prototypal-language-user">Evolution of a Prototypal Language User</a>, hadn’t done anything fun with prototype chains in years and didn’t like the idea of this unsightly helper method peppering my code. So I got to work. Instead of <code>Views</code>, <code>Desktop</code> and <code>Touch</code> being plain objects, they’re chained:</p>
+          <pre class="go"><code class="language-coffeescript"><span class="nv">ViewShop = </span><span class="o">-&gt;</span>
+
+<span class="nv">Views   = </span><span class="nx">ViewShop</span><span class="p">.</span><span class="nx">prototype</span>
+<span class="nv">Desktop = </span><span class="k">new</span> <span class="nx">ViewShop</span>
+<span class="nv">Touch   = </span><span class="k">new</span> <span class="nx">ViewShop</span>
+</code></pre>
+          <p>Now, after defining the view classes, access any property of <code>Desktop</code> or <code>Touch</code>, and the chaining works its magic:</p>
+          <pre class="go"><code class="language-coffeescript"><span class="nx">Desktop</span><span class="p">.</span><span class="nx">Widget</span>   <span class="c1"># =&gt; Desktop.Widget</span>
+<span class="nx">Desktop</span><span class="p">.</span><span class="nx">Thinger</span>  <span class="c1"># =&gt; Views.Thinger</span>
+<span class="nx">Desktop</span><span class="p">.</span><span class="nx">Sprocket</span> <span class="c1"># =&gt; Views.Sprocket</span>
+
+<span class="nx">Touch</span><span class="p">.</span><span class="nx">Widget</span>     <span class="c1"># =&gt; Touch.Widget</span>
+<span class="nx">Touch</span><span class="p">.</span><span class="nx">Thinger</span>    <span class="c1"># =&gt; Touch.Thinger</span>
+<span class="nx">Touch</span><span class="p">.</span><span class="nx">Sprocket</span>   <span class="c1"># =&gt; Views.Sprocket</span>
+</code></pre>
+          <p>We need only instantiate a <code>UI</code> variable that points to the right <code>ViewShop</code>, and we’re done:</p>
+          <pre class="go"><code class="language-coffeescript"><span class="nv">UI = </span><span class="k">if</span> <span class="nx">Mobile</span> <span class="k">then</span> <span class="nx">Touch</span> <span class="k">else</span> <span class="nx">Desktop</span>
+
+<span class="k">new</span> <span class="nx">UI</span><span class="p">.</span><span class="nx">Widget</span><span class="p">()</span>   <span class="c1"># =&gt; Desktop.Widget / Touch.Widget</span>
+<span class="k">new</span> <span class="nx">UI</span><span class="p">.</span><span class="nx">Thinger</span><span class="p">()</span>  <span class="c1"># =&gt; Desktop.Thinger / Views.Thinger</span>
+<span class="k">new</span> <span class="nx">UI</span><span class="p">.</span><span class="nx">Sprocket</span><span class="p">()</span> <span class="c1"># =&gt; Views.Sprocket</span>
+</code></pre>
+          <p>Well anyway, I like it.</p>
           <div class="footnotes">
 <hr>
 <ol><li id="fn:1">
