@@ -16,6 +16,7 @@ GEM
     haml (3.1.1)
     maruku (0.6.0)
       syntax (>= 1.0.0)
+    mime-types (1.16)
     nanoc (3.1.7)
       nanoc3 (>= 3.1.7)
     nanoc3 (3.1.7)
@@ -35,4 +36,5 @@ DEPENDENCIES
   foreman
   haml
   maruku
+  mime-types
   nanoc

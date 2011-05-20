@@ -1,6 +1,7 @@
 source :rubygems
 
 gem "nanoc"
+gem "mime-types"
 gem "adsf"
 gem "compass"
 gem "foreman"

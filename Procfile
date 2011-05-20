@@ -1,3 +1,3 @@
-nanoc:   bundle exec nanoc view
+nanoc:   bundle exec nanoc autocompile
 compass: bundle exec compass watch
 
