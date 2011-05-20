@@ -63,14 +63,14 @@
     <span class="k">this</span>
 </code></pre>
           <p>Remember, though, that <em>some</em> classes in <code>Views</code> will only be subclassed for <em>one</em> of the UIs, and some won’t be subclassed at all. The implementation structure might look like this:</p>
-          <pre class="go"><code class="language-coffeescript"><span class="k">class</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Widget</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
-<span class="k">class</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Thinger</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
+          <pre class="go"><code class="language-coffeescript"><span class="k">class</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Widget</span>   <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
+<span class="k">class</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Thinger</span>  <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
 <span class="k">class</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Sprocket</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
 
 <span class="k">class</span> <span class="nx">Desktop</span><span class="p">.</span><span class="nx">Widget</span> <span class="k">extends</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Widget</span>
 
-<span class="k">class</span> <span class="nx">Touch</span><span class="p">.</span><span class="nx">Widget</span> <span class="k">extends</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Widget</span>
-<span class="k">class</span> <span class="nx">Touch</span><span class="p">.</span><span class="nx">Thinger</span> <span class="k">extends</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Thinger</span>
+<span class="k">class</span> <span class="nx">Touch</span><span class="p">.</span><span class="nx">Widget</span>   <span class="k">extends</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Widget</span>
+<span class="k">class</span> <span class="nx">Touch</span><span class="p">.</span><span class="nx">Thinger</span>  <span class="k">extends</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Thinger</span>
 </code></pre>
           <p>So how, at runtime, might we instantiate the appropriate class? Running all instantiations through a helper method would certainly work:</p>
           <pre class="go"><code class="language-coffeescript"><span class="c1"># assume the existence of a `Mobile` boolean variable</span>
