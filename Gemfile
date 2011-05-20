@@ -7,4 +7,5 @@ gem "compass"
 gem "foreman"
 gem "haml"
 gem "maruku"
+gem "nokogiri"
 

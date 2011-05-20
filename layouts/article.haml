@@ -1,8 +1,12 @@
-- render 'default' do
-  %article.article
-    %h2
-      %span.title= @item[:title]
-      = time_tag(@item)
+- filter :colorize_syntax, colorizers: { coffeescript: :pygmentize }, pygmentize: { encoding: "utf-8" } do
+  - render 'default' do
+    %article.article
+      %h2
+        %span.title= @item[:title]
+        = time_tag(@item)
 
-    = yield
+      %details
+        %summary= maruku(item[:summary])
+
+      ~ yield
 

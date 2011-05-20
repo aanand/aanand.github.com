@@ -6,5 +6,5 @@
     .article.summary
       %a.title{ :href => item.path }= item[:title]
       = time_tag(item)
-      %p= item[:summary]
+      = maruku(item[:summary])
 

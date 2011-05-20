@@ -21,6 +21,7 @@ GEM
       nanoc3 (>= 3.1.7)
     nanoc3 (3.1.7)
       cri (>= 1.0.0)
+    nokogiri (1.4.4)
     rack (1.2.2)
     sass (3.1.1)
     syntax (1.0.0)
@@ -38,3 +39,4 @@ DEPENDENCIES
   maruku
   mime-types
   nanoc
+  nokogiri
