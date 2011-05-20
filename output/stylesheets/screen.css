@@ -625,23 +625,23 @@ p .right {
 /* line 62, ../../../../.rvm/gems/ruby-1.9.2-p136/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_typography.scss */
 a {
   text-decoration: underline;
-  color: #882222;
+  color: #aa2222;
 }
 /* line 18, ../../../../.rvm/gems/ruby-1.9.2-p136/gems/compass-0.11.1/frameworks/compass/stylesheets/compass/typography/links/_link-colors.scss */
 a:visited {
-  color: #5f1818;
+  color: #aa2222;
 }
 /* line 21, ../../../../.rvm/gems/ruby-1.9.2-p136/gems/compass-0.11.1/frameworks/compass/stylesheets/compass/typography/links/_link-colors.scss */
 a:focus {
-  color: #882222;
+  color: #aa2222;
 }
 /* line 24, ../../../../.rvm/gems/ruby-1.9.2-p136/gems/compass-0.11.1/frameworks/compass/stylesheets/compass/typography/links/_link-colors.scss */
 a:hover {
-  color: #882222;
+  color: #aa2222;
 }
 /* line 27, ../../../../.rvm/gems/ruby-1.9.2-p136/gems/compass-0.11.1/frameworks/compass/stylesheets/compass/typography/links/_link-colors.scss */
 a:active {
-  color: #90b12c;
+  color: #aad52a;
 }
 
 /* line 63, ../../../../.rvm/gems/ruby-1.9.2-p136/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_typography.scss */
@@ -1028,7 +1028,7 @@ h1 a {
 }
 /* line 52, ../../compass/sass/screen.sass */
 h1 a:hover {
-  color: #882222 !important;
+  color: #aa2222 !important;
 }
 
 /* line 55, ../../compass/sass/screen.sass */
