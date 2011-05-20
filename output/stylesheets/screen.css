@@ -1079,3 +1079,13 @@ hr {
   margin: 0 0 1.45em;
   border: none;
 }
+
+/* line 91, ../../compass/sass/screen.sass */
+.footnotes ol {
+  font-size: 0.8em;
+  line-height: 1.875em;
+}
+/* line 95, ../../compass/sass/screen.sass */
+.footnotes ol p {
+  margin: 0;
+}
