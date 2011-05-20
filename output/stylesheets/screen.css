@@ -1075,7 +1075,7 @@ pre, code, tt {
 
 /* line 86, ../../compass/sass/screen.sass */
 pre {
-  padding: 15px;
+  padding: 0 15px;
   margin: 30px 0;
 }
 
