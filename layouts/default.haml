@@ -14,13 +14,15 @@
       %link{:href => "/stylesheets/ie.css", :media => "screen, projection", :rel => "stylesheet", :type => "text/css"}
   %body
     .container
-      .sidebar
+      .header
         %h1 It’s <a href="/">Aanand Prasad</a>.
-        %ul
-          %li
-            %a{:href => "http://twitter.com/aanand"} Twitter
-          %li
-            %a{:href => "http://github.com/aanand"} Github
-      .content
-        = yield
-            
+        = "&nbsp;"
+        %a{:href => "http://twitter.com/aanand"}> Twitter
+        = ",&nbsp;"
+        %a{:href => "http://github.com/aanand"}> Github
+        = "."
+
+      %hr.header-rule
+
+      = yield
+

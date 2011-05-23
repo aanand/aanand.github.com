@@ -7,30 +7,24 @@
     </title><meta content="nanoc 3.1.7" name="generator"><link href="http://fonts.googleapis.com/css?family=Vollkorn:regular,italic,bold" rel="stylesheet" type="text/css"><link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css"><link href="/stylesheets/print.css" media="print" rel="stylesheet" type="text/css"><!--[if lt IE 8]>
       <link href='/stylesheets/ie.css' media='screen, projection' rel='stylesheet' type='text/css' />
     <![endif]--><div class="container">
-      <div class="sidebar">
-        <h1>It’s <a href="/">Aanand Prasad</a>.</h1>
-        <ul>
-<li>
-            <a href="http://twitter.com/aanand">Twitter</a>
-          </li>
-          <li>
-            <a href="http://github.com/aanand">Github</a>
-          </li>
-        </ul>
-</div>
-      <div class="content">
-        <article class="article"><h2>
-            <span class="title">Prototype Chains and CoffeeScript Subclasses</span>
-            <time datetime="2011-05-20">20 May 2011</time>
-</h2>
-          <details><summary><p>In developing <a href="http://nnnnext.com">nnnnext.com</a>, I tackled a surprising number of problems I’d not faced before as a web developer and programming language enthusiast. Here’s one of the more interesting ones, with what I feel is a pretty cute solution.</p></summary></details><p>Context, briefly: nnnnext is a todo list for your music. It’s a single-page JavaScript app written in <a href="http://jashkenas.github.com/coffee-script/">CoffeeScript</a> and utilising <a href="http://documentcloud.github.com/backbone/">Backbone.js</a> for <a href="http://twitter.com/hylomorphism/status/71202209618067457">lightweight</a> MVC. Importantly, it has two similar-but-separate user interfaces: one for desktop web browsers, and another for multitouch devices.</p>
-          
-          <p>Both interfaces are implemented as a set of classes (provided by CoffeeScript’s <a href="http://jashkenas.github.com/coffee-script/#classes">simple classes implementation</a>) that represent the different UI views. Each UI requires slightly different behaviour for <em>some</em> views, and so some view classes are subclassed by one or both UIs. (Whatever you think of classical object-orientation and inheritance, it’s an undeniably good fit for MVC-style UI code—subclasses and the <code>super</code> keyword make augmentation of behaviour very straightforward<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.)</p>
-          
-          <p>For example: an element contains a button that (in the desktop UI) appears when the element is hovered, and (in the touch UI) appears/disappears when the element is tapped. Furthermore, in the touch UI, there must be more visual feedback than simply showing the button instantly. (The iPhone’s smooth animations aren’t just for show—instantaneous changes in a touch-based interface are jarring.)</p>
-          
-          <p>The view class for this widget might, off the top of my head, look something like this:</p>
-          <pre><code class="language-coffeescript"><span class="k">class</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Widget</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
+      <div class="header">
+        <h1>It’s <a href="/">Aanand Prasad</a>.</h1> <a href="http://twitter.com/aanand">Twitter</a>, <a href="http://github.com/aanand">Github</a>.
+      </div>
+      <hr class="header-rule">
+<div class="sidebar">
+        <time datetime="2011-05-20">20 May 2011</time><br><a class="permalink" href="/articles/prototype-chains-and-coffeescript-subclasses/">Permalink</a>
+      </div>
+      <article class="article content"><h2>
+          <span class="title">Prototype Chains and CoffeeScript Subclasses</span>
+        </h2>
+        <details><summary><p>In developing <a href="http://nnnnext.com">nnnnext.com</a>, I tackled a surprising number of problems I’d not faced before as a web developer and programming language enthusiast. Here’s one of the more interesting ones, with what I feel is a pretty cute solution.</p></summary></details><p>Context, briefly: nnnnext is a todo list for your music. It’s a single-page JavaScript app written in <a href="http://jashkenas.github.com/coffee-script/">CoffeeScript</a> and utilising <a href="http://documentcloud.github.com/backbone/">Backbone.js</a> for <a href="http://twitter.com/hylomorphism/status/71202209618067457">lightweight</a> MVC. Importantly, it has two similar-but-separate user interfaces: one for desktop web browsers, and another for multitouch devices.</p>
+        
+        <p>Both interfaces are implemented as a set of classes (provided by CoffeeScript’s <a href="http://jashkenas.github.com/coffee-script/#classes">simple classes implementation</a>) that represent the different UI views. Each UI requires slightly different behaviour for <em>some</em> views, and so some view classes are subclassed by one or both UIs. (Whatever you think of classical object-orientation and inheritance, it’s an undeniably good fit for MVC-style UI code—subclasses and the <code>super</code> keyword make augmentation of behaviour very straightforward<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.)</p>
+        
+        <p>For example: an element contains a button that (in the desktop UI) appears when the element is hovered, and (in the touch UI) appears/disappears when the element is tapped. Furthermore, in the touch UI, there must be more visual feedback than simply showing the button instantly. (The iPhone’s smooth animations aren’t just for show—instantaneous changes in a touch-based interface are jarring.)</p>
+        
+        <p>The view class for this widget might, off the top of my head, look something like this:</p>
+        <pre><code class="language-coffeescript"><span class="k">class</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Widget</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
   <span class="nv">render: </span><span class="o">-&gt;</span>
     <span class="nx">$</span><span class="p">(</span><span class="nx">@el</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s2">"I'm a widget. &lt;button&gt;Do something&lt;/button&gt;"</span><span class="p">)</span>
     <span class="k">this</span>
@@ -62,8 +56,8 @@
 
     <span class="k">this</span>
 </code></pre>
-          <p>Remember, though, that <em>some</em> classes in <code>Views</code> will only be subclassed for <em>one</em> of the UIs, and some won’t be subclassed at all. The implementation structure might look like this:</p>
-          <pre><code class="language-coffeescript"><span class="k">class</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Widget</span>   <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
+        <p>Remember, though, that <em>some</em> classes in <code>Views</code> will only be subclassed for <em>one</em> of the UIs, and some won’t be subclassed at all. The implementation structure might look like this:</p>
+        <pre><code class="language-coffeescript"><span class="k">class</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Widget</span>   <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
 <span class="k">class</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Thinger</span>  <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
 <span class="k">class</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Sprocket</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
 
@@ -72,8 +66,8 @@
 <span class="k">class</span> <span class="nx">Touch</span><span class="p">.</span><span class="nx">Widget</span>   <span class="k">extends</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Widget</span>
 <span class="k">class</span> <span class="nx">Touch</span><span class="p">.</span><span class="nx">Thinger</span>  <span class="k">extends</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Thinger</span>
 </code></pre>
-          <p>So how, at runtime, might we instantiate the appropriate class? Running all instantiations through a helper method would certainly work:</p>
-          <pre><code class="language-coffeescript"><span class="c1"># assume the existence of a `Mobile` boolean variable</span>
+        <p>So how, at runtime, might we instantiate the appropriate class? Running all instantiations through a helper method would certainly work:</p>
+        <pre><code class="language-coffeescript"><span class="c1"># assume the existence of a `Mobile` boolean variable</span>
 
 <span class="nv">makeViewObject: </span><span class="o">-&gt;</span> <span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">args</span><span class="p">...)</span>
   <span class="nv">klass = </span><span class="k">if</span> <span class="nx">Mobile</span> <span class="o">and</span> <span class="nx">Touch</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span><span class="o">?</span>
@@ -89,15 +83,15 @@
 <span class="nx">makeViewObject</span><span class="p">(</span><span class="s2">"Thinger"</span><span class="p">)</span>  <span class="c1"># =&gt; Desktop.Thinger / Views.Thinger</span>
 <span class="nx">makeViewObject</span><span class="p">(</span><span class="s2">"Sprocket"</span><span class="p">)</span> <span class="c1"># =&gt; Views.Sprocket</span>
 </code></pre>
-          <p>…and if you’re most people, you’ll stop there. I, on the other hand, had just read Isaac Z. Schlueter’s <a href="http://blog.izs.me/post/4731036392/evolution-of-a-prototypal-language-user">Evolution of a Prototypal Language User</a>, hadn’t done anything fun with prototype chains in years and didn’t like the idea of this unsightly helper method peppering my code. So I got to work. Instead of <code>Views</code>, <code>Desktop</code> and <code>Touch</code> being plain objects, they’re chained:</p>
-          <pre><code class="language-coffeescript"><span class="nv">ViewShop = </span><span class="o">-&gt;</span>
+        <p>…and if you’re most people, you’ll stop there. I, on the other hand, had just read Isaac Z. Schlueter’s <a href="http://blog.izs.me/post/4731036392/evolution-of-a-prototypal-language-user">Evolution of a Prototypal Language User</a>, hadn’t done anything fun with prototype chains in years and didn’t like the idea of this unsightly helper method peppering my code. So I got to work. Instead of <code>Views</code>, <code>Desktop</code> and <code>Touch</code> being plain objects, they’re chained:</p>
+        <pre><code class="language-coffeescript"><span class="nv">ViewShop = </span><span class="o">-&gt;</span>
 
 <span class="nv">Views   = </span><span class="nx">ViewShop</span><span class="p">.</span><span class="nx">prototype</span>
 <span class="nv">Desktop = </span><span class="k">new</span> <span class="nx">ViewShop</span>
 <span class="nv">Touch   = </span><span class="k">new</span> <span class="nx">ViewShop</span>
 </code></pre>
-          <p>Now, after defining the view classes, access any property of <code>Desktop</code> or <code>Touch</code>, and the chaining works its magic:</p>
-          <pre><code class="language-coffeescript"><span class="nx">Desktop</span><span class="p">.</span><span class="nx">Widget</span>   <span class="c1"># =&gt; Desktop.Widget</span>
+        <p>Now, after defining the view classes, access any property of <code>Desktop</code> or <code>Touch</code>, and the chaining works its magic:</p>
+        <pre><code class="language-coffeescript"><span class="nx">Desktop</span><span class="p">.</span><span class="nx">Widget</span>   <span class="c1"># =&gt; Desktop.Widget</span>
 <span class="nx">Desktop</span><span class="p">.</span><span class="nx">Thinger</span>  <span class="c1"># =&gt; Views.Thinger</span>
 <span class="nx">Desktop</span><span class="p">.</span><span class="nx">Sprocket</span> <span class="c1"># =&gt; Views.Sprocket</span>
 
@@ -105,22 +99,21 @@
 <span class="nx">Touch</span><span class="p">.</span><span class="nx">Thinger</span>    <span class="c1"># =&gt; Touch.Thinger</span>
 <span class="nx">Touch</span><span class="p">.</span><span class="nx">Sprocket</span>   <span class="c1"># =&gt; Views.Sprocket</span>
 </code></pre>
-          <p>We need only instantiate a <code>UI</code> variable that points to the right <code>ViewShop</code>, and we’re done:</p>
-          <pre><code class="language-coffeescript"><span class="nv">UI = </span><span class="k">if</span> <span class="nx">Mobile</span> <span class="k">then</span> <span class="nx">Touch</span> <span class="k">else</span> <span class="nx">Desktop</span>
+        <p>We need only instantiate a <code>UI</code> variable that points to the right <code>ViewShop</code>, and we’re done:</p>
+        <pre><code class="language-coffeescript"><span class="nv">UI = </span><span class="k">if</span> <span class="nx">Mobile</span> <span class="k">then</span> <span class="nx">Touch</span> <span class="k">else</span> <span class="nx">Desktop</span>
 
 <span class="k">new</span> <span class="nx">UI</span><span class="p">.</span><span class="nx">Widget</span><span class="p">()</span>   <span class="c1"># =&gt; Desktop.Widget / Touch.Widget</span>
 <span class="k">new</span> <span class="nx">UI</span><span class="p">.</span><span class="nx">Thinger</span><span class="p">()</span>  <span class="c1"># =&gt; Desktop.Thinger / Views.Thinger</span>
 <span class="k">new</span> <span class="nx">UI</span><span class="p">.</span><span class="nx">Sprocket</span><span class="p">()</span> <span class="c1"># =&gt; Views.Sprocket</span>
 </code></pre>
-          <p>Well anyway, I like it.</p>
-          <div class="footnotes">
+        <p>Well anyway, I like it.</p>
+        <div class="footnotes">
 <hr>
 <ol><li id="fn:1">
-          <p>I should be careful about using the word “undeniably” though. I’m no expert on object systems. If you feel you can reasonably deny it, I’d love to <a href="mailto:aanand.prasad@gmail.com">hear from you</a>!</p>
-          <a href="#fnref:1" rev="footnote">↩</a>
+        <p>I should be careful about using the word “undeniably” though. I’m no expert on object systems. If you feel you can reasonably deny it, I’d love to <a href="mailto:aanand.prasad@gmail.com">hear from you</a>!</p>
+        <a href="#fnref:1" rev="footnote">↩</a>
 </li></ol>
 </div>
-        </article>
+      </article>
 </div>
-    </div>
   

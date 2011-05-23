@@ -1,10 +1,11 @@
-%p
-  Hello. There’s not much to see here yet. But look, here’s an article:
+.full
+  %p
+    Hello. There’s not much to see here yet. But look, here’s an article:
 
-.index
-  - articles.each do |item|
-    .article.summary
-      %a.title{ :href => item.path }= item[:title]
-      = time_tag(item)
-      = maruku(item[:summary])
+  .index
+    - articles.each do |item|
+      .article.summary
+        %a.title{ :href => item.path }= item[:title]
+        = time_tag(item)
+        = maruku(item[:summary])
 
