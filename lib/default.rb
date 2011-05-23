@@ -32,8 +32,6 @@ def highlight_syntax(content)
     if first_line =~ %r{^```(\w+)}
       command = "pygmentize -l #{$1} -f html -O encoding=utf-8,nowrap"
 
-      puts command
-
       highlighted_text = IO.popen(command, "r+") do |f|
         f.write(rest)
         f.close_write
@@ -43,8 +41,6 @@ def highlight_syntax(content)
       block.inner_html = highlighted_text
     end
   end
-
-  puts doc.to_html
 
   doc.to_html
 end
