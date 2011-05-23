@@ -7,15 +7,13 @@ summary: In developing [nnnnext.com](http://nnnnext.com), I tackled a surprising
 
 Context, briefly: nnnnext is a todo list for your music. It’s a single-page JavaScript app written in [CoffeeScript][coffeescript] and utilising [Backbone.js][backbone] for [lightweight][lightweight] MVC. Importantly, it has two similar-but-separate user interfaces: one for desktop web browsers, and another for multitouch devices.
 
-Both interfaces are implemented as a set of classes (provided by CoffeeScript’s [simple classes implementation][coffeescript-classes]) that represent the different UI views. Each UI requires slightly different behaviour for _some_ views, and so some view classes are subclassed by one or both UIs. (Whatever you think of classical object-orientation and inheritance, it’s an undeniably good fit for MVC-style UI code—subclasses and the `super` keyword make augmentation of behaviour very straightforward[^classical-oo-and-mvc].)
-
-[^classical-oo-and-mvc]: I should be careful about using the word “undeniably” though. I’m no expert on object systems. If you feel you can reasonably deny it, I’d love to [hear from you][email]!
-
-For example: an element contains a button that (in the desktop UI) appears when the element is hovered, and (in the touch UI) appears/disappears when the element is tapped. Furthermore, in the touch UI, there must be more visual feedback than simply showing the button instantly. (The iPhone’s smooth animations aren’t just for show—instantaneous changes in a touch-based interface are jarring.)
-
-Anyway, the important thing is that _some_ classes in `Views` will only be subclassed for _one_ of the UIs, and some won’t be subclassed at all. The implementation structure might look like this:
+Both interfaces are implemented as a set of classes (provided by CoffeeScript’s [simple classes implementation][coffeescript-classes]) that represent the different UI views. Each UI requires slightly different behaviour for _some_ views. For example, an element might contain a button that (in the desktop UI) appears when the element is hovered, and (in the touch UI) appears/disappears when the element is tapped. Consequently, some view classes are subclassed in one or both UIs in order to implement these differences. The class structure might look like this (implementation code omitted):
 
 <pre><code class="language-coffeescript">
+Views   = {}
+Desktop = {}
+Touch   = {}
+
 class Views.Widget   extends Backbone.View
 class Views.Thinger  extends Backbone.View
 class Views.Sprocket extends Backbone.View
@@ -26,14 +24,18 @@ class Touch.Widget   extends Views.Widget
 class Touch.Thinger  extends Views.Thinger
 </code></pre>
 
+(Whatever you think of classical object-orientation and inheritance, it’s an undeniably good fit for MVC-style UI code—subclasses and the `super` keyword make augmentation of behaviour very straightforward[^classical-oo-and-mvc].)
+
+[^classical-oo-and-mvc]: I should be careful about using the word “undeniably” though. I’m no expert on object systems. If you feel you can reasonably deny it, I’d love to [hear from you][email]!
+
 So how, at runtime, might we instantiate the appropriate class? Running all instantiations through a helper method would certainly work:
 
 <pre><code class="language-coffeescript">
 # assume the existence of a `Mobile` boolean variable
 
 makeViewObject: -> (name, args...)
-  ui    = if Mobile then Touch else Desktop
-  klass = if ui[name]? then ui[name] else Views[name]
+  UI    = if Mobile then Touch else Desktop
+  klass = UI[name] || Views[name]
 
   new klass(args...)
 
@@ -42,7 +44,9 @@ makeViewObject("Thinger")  # => new Desktop.Thinger OR new Views.Thinger
 makeViewObject("Sprocket") # => new Views.Sprocket
 </code></pre>
 
-...and if you’re most people, you’ll stop there. I, on the other hand, had just read Isaac Z. Schlueter’s [Evolution of a Prototypal Language User][evolution], hadn't done anything fun with prototype chains in years and didn’t like the idea of this unsightly helper method peppering my code. So I got to work. Instead of `Views`, `Desktop` and `Touch` being plain objects, we create a `ViewShop` function, point `Views` at its prototype and make `Desktop` and `Touch` new `ViewShop`s, so that property access falls back to `ViewShop.prototype` (a.k.a. `Views`). Look, it’s easier if I just show you:
+...and if you’re most people, you’ll stop there. I, on the other hand, had just read Isaac Z. Schlueter’s [Evolution of a Prototypal Language User][evolution], hadn't done anything fun with prototype chains in years and didn’t like the idea of this unsightly helper method peppering my code. So I got to work.
+
+Instead of `Views`, `Desktop` and `Touch` being plain objects, we create a `ViewShop` function, point `Views` at its prototype and make `Desktop` and `Touch` new `ViewShop`s, so that property access falls back to `ViewShop.prototype` (a.k.a. `Views`). Look, it’s easier if I just show you:
 
 <pre><code class="language-coffeescript">
 ViewShop = ->
@@ -52,7 +56,7 @@ Desktop = new ViewShop
 Touch   = new ViewShop
 </code></pre>
 
-Now, after defining the view classes, access any property of `Desktop` or `Touch`, and the chaining works its magic:
+Now, after defining the view classes, access any property of `Desktop` or `Touch`, and prototype chaining works its magic:
 
 <pre><code class="language-coffeescript">
 Desktop.Widget   # => Desktop.Widget
@@ -64,7 +68,7 @@ Touch.Thinger    # => Touch.Thinger
 Touch.Sprocket   # => Views.Sprocket
 </code></pre>
 
-We need only instantiate a `UI` variable that points to the right `ViewShop`, and we’re done:
+We need only make a `UI` variable that points to the right `ViewShop`, and we’re done:
 
 <pre><code class="language-coffeescript">
 UI = if Mobile then Touch else Desktop
