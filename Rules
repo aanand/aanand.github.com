@@ -10,19 +10,33 @@
 #   item, use the pattern “/about/*/”; “/about/*” will also select the parent,
 #   because “*” matches zero or more characters.
 
-compile 'articles/feed' do
+compile '/articles/feed/' do
   filter :erb
 end
 
-compile 'articles/*' do
+compile '/articles/*/' do
   filter :maruku
+  filter :syntax
   layout 'article'
   layout 'default'
+end
+
+compile '/articles/feed/', rep: "feed" do
+  nil
+end
+
+compile '/articles/*/', rep: "feed" do
+  filter :maruku
+  filter :syntax, colour: false
 end
 
 compile '*' do
   filter :haml
   layout 'default'
+end
+
+route '/articles/*/', rep: "feed" do
+  nil
 end
 
 route 'articles/feed' do

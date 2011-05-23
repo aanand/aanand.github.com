@@ -21,26 +21,34 @@ def maruku(code)
   Nanoc3::Filter.named(:maruku).new(@item_rep.assigns).run(code)
 end
 
-def highlight_syntax(content)
-  doc = Nokogiri::HTML.fragment(content)
-  code_blocks = doc.search('pre>code')
+class SyntaxFilter < Nanoc3::Filter
+  identifier :syntax
 
-  code_blocks.each do |block|
-    text = block.text.strip
-    first_line, rest = text.split("\n", 2)
+  def run(content, params={})
+    doc = Nokogiri::HTML.fragment(content)
+    code_blocks = doc.search('pre>code')
 
-    if first_line =~ %r{^```(\w+)}
-      command = "pygmentize -l #{$1} -f html -O encoding=utf-8,nowrap"
+    code_blocks.each do |block|
+      text = block.text.strip
+      first_line, rest = text.split("\n", 2)
 
-      highlighted_text = IO.popen(command, "r+") do |f|
-        f.write(rest)
-        f.close_write
-        f.read
+      if first_line =~ %r{^```(\w+)}
+        if params.fetch(:colour, true)
+          command = "pygmentize -l #{$1} -f html -O encoding=utf-8,nowrap"
+
+          highlighted_text = IO.popen(command, "r+") do |f|
+            f.write(rest)
+            f.close_write
+            f.read
+          end
+
+          block.inner_html = highlighted_text
+        else
+          block.content = rest
+        end
       end
-
-      block.inner_html = highlighted_text
     end
-  end
 
-  doc.to_html
+    doc.to_html
+  end
 end

@@ -15,12 +15,11 @@
     <published>2011-05-20T13:16:00Z</published>
     <updated>2011-05-20T13:16:00Z</updated>
     <link rel="alternate" href="http://aanandprasad.com/articles/prototype-chains-and-coffeescript-subclasses/"/>
-    <content type="html">&lt;p&gt;Context, briefly: nnnnext is a todo list for your music. It’s a single-page JavaScript app written in &lt;a href='http://jashkenas.github.com/coffee-script/'&gt;CoffeeScript&lt;/a&gt; and utilising &lt;a href='http://documentcloud.github.com/backbone/'&gt;Backbone.js&lt;/a&gt; for &lt;a href='http://twitter.com/hylomorphism/status/71202209618067457'&gt;lightweight&lt;/a&gt; MVC. Importantly, it has two similar-but-separate user interfaces: one for desktop web browsers, and another for multitouch devices.&lt;/p&gt;
+    <content type="html">&lt;p&gt;Context, briefly: nnnnext is a todo list for your music. It’s a single-page JavaScript app written in &lt;a href="http://jashkenas.github.com/coffee-script/"&gt;CoffeeScript&lt;/a&gt; and utilising &lt;a href="http://documentcloud.github.com/backbone/"&gt;Backbone.js&lt;/a&gt; for &lt;a href="http://twitter.com/hylomorphism/status/71202209618067457"&gt;lightweight&lt;/a&gt; MVC. Importantly, it has two similar-but-separate user interfaces: one for desktop web browsers, and another for multitouch devices.&lt;/p&gt;
 
-&lt;p&gt;Both interfaces are implemented as a set of classes (provided by CoffeeScript’s &lt;a href='http://jashkenas.github.com/coffee-script/#classes'&gt;simple classes implementation&lt;/a&gt;) that represent the different UI views. Each UI requires slightly different behaviour for &lt;em&gt;some&lt;/em&gt; views. For example, an element might contain a button that (in the desktop UI) appears when the element is hovered, and (in the touch UI) appears/disappears when the element is tapped. Consequently, some view classes are subclassed in one or both UIs in order to implement these differences. The class structure might look like this (implementation code omitted):&lt;/p&gt;
+&lt;p&gt;Both interfaces are implemented as a set of classes (provided by CoffeeScript’s &lt;a href="http://jashkenas.github.com/coffee-script/#classes"&gt;simple classes implementation&lt;/a&gt;) that represent the different UI views. Each UI requires slightly different behaviour for &lt;em&gt;some&lt;/em&gt; views. For example, an element might contain a button that (in the desktop UI) appears when the element is hovered, and (in the touch UI) appears/disappears when the element is tapped. Consequently, some view classes are subclassed in one or both UIs in order to implement these differences. The class structure might look like this (implementation code omitted):&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;```coffeescript
-Views   = {}
+&lt;pre&gt;&lt;code&gt;Views   = {}
 Desktop = {}
 Touch   = {}
 
@@ -33,12 +32,11 @@ class Desktop.Widget extends Views.Widget
 class Touch.Widget   extends Views.Widget
 class Touch.Thinger  extends Views.Thinger&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;(Whatever you think of classical object-orientation and inheritance, it’s an undeniably good fit for MVC-style UI code—subclasses and the &lt;code&gt;super&lt;/code&gt; keyword make augmentation of behaviour very straightforward&lt;sup id='fnref:1'&gt;&lt;a href='#fn:1' rel='footnote'&gt;1&lt;/a&gt;&lt;/sup&gt;.)&lt;/p&gt;
+&lt;p&gt;(Whatever you think of classical object-orientation and inheritance, it’s an undeniably good fit for MVC-style UI code—subclasses and the &lt;code&gt;super&lt;/code&gt; keyword make augmentation of behaviour very straightforward&lt;sup id="fnref:1"&gt;&lt;a href="#fn:1" rel="footnote"&gt;1&lt;/a&gt;&lt;/sup&gt;.)&lt;/p&gt;
 
 &lt;p&gt;So how, at runtime, might we instantiate the appropriate class? Running all instantiations through a helper method would certainly work:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;```coffeescript
-# assume the existence of a `Mobile` boolean variable
+&lt;pre&gt;&lt;code&gt;# assume the existence of a `Mobile` boolean variable
 
 makeViewObject: -&amp;gt; (name, args...)
   UI    = if Mobile then Touch else Desktop
@@ -46,16 +44,15 @@ makeViewObject: -&amp;gt; (name, args...)
 
   new klass(args...)
 
-makeViewObject(&amp;quot;Widget&amp;quot;)   # =&amp;gt; new Desktop.Widget OR new Touch.Widget
-makeViewObject(&amp;quot;Thinger&amp;quot;)  # =&amp;gt; new Desktop.Thinger OR new Views.Thinger
-makeViewObject(&amp;quot;Sprocket&amp;quot;) # =&amp;gt; new Views.Sprocket&lt;/code&gt;&lt;/pre&gt;
+makeViewObject("Widget")   # =&amp;gt; new Desktop.Widget OR new Touch.Widget
+makeViewObject("Thinger")  # =&amp;gt; new Desktop.Thinger OR new Views.Thinger
+makeViewObject("Sprocket") # =&amp;gt; new Views.Sprocket&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&amp;#8230;and if you’re most people, you’ll stop there. I, on the other hand, had just read Isaac Z. Schlueter’s &lt;a href='http://blog.izs.me/post/4731036392/evolution-of-a-prototypal-language-user'&gt;Evolution of a Prototypal Language User&lt;/a&gt;, hadn&amp;#8217;t done anything fun with prototype chains in years and didn’t like the idea of this unsightly helper method peppering my code. So I got to work.&lt;/p&gt;
+&lt;p&gt;…and if you’re most people, you’ll stop there. I, on the other hand, had just read Isaac Z. Schlueter’s &lt;a href="http://blog.izs.me/post/4731036392/evolution-of-a-prototypal-language-user"&gt;Evolution of a Prototypal Language User&lt;/a&gt;, hadn’t done anything fun with prototype chains in years and didn’t like the idea of this unsightly helper method peppering my code. So I got to work.&lt;/p&gt;
 
 &lt;p&gt;Instead of &lt;code&gt;Views&lt;/code&gt;, &lt;code&gt;Desktop&lt;/code&gt; and &lt;code&gt;Touch&lt;/code&gt; being plain objects, we create a &lt;code&gt;ViewShop&lt;/code&gt; function, point &lt;code&gt;Views&lt;/code&gt; at its prototype and make &lt;code&gt;Desktop&lt;/code&gt; and &lt;code&gt;Touch&lt;/code&gt; new &lt;code&gt;ViewShop&lt;/code&gt;s, so that property access falls back to &lt;code&gt;ViewShop.prototype&lt;/code&gt; (a.k.a. &lt;code&gt;Views&lt;/code&gt;). Look, it’s easier if I just show you:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;```coffeescript
-ViewShop = -&amp;gt;
+&lt;pre&gt;&lt;code&gt;ViewShop = -&amp;gt;
 
 Views   = ViewShop.prototype
 Desktop = new ViewShop
@@ -63,8 +60,7 @@ Touch   = new ViewShop&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Now, after defining the view classes, access any property of &lt;code&gt;Desktop&lt;/code&gt; or &lt;code&gt;Touch&lt;/code&gt;, and prototype chaining works its magic:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;```coffeescript
-Desktop.Widget   # =&amp;gt; Desktop.Widget
+&lt;pre&gt;&lt;code&gt;Desktop.Widget   # =&amp;gt; Desktop.Widget
 Desktop.Thinger  # =&amp;gt; Views.Thinger
 Desktop.Sprocket # =&amp;gt; Views.Sprocket
 
@@ -74,16 +70,19 @@ Touch.Sprocket   # =&amp;gt; Views.Sprocket&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;We need only make a &lt;code&gt;UI&lt;/code&gt; variable that points to the right &lt;code&gt;ViewShop&lt;/code&gt;, and we’re done:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;```coffeescript
-UI = if Mobile then Touch else Desktop
+&lt;pre&gt;&lt;code&gt;UI = if Mobile then Touch else Desktop
 
 new UI.Widget   # =&amp;gt; new Desktop.Widget OR new Touch.Widget
 new UI.Thinger  # =&amp;gt; new Desktop.Thinger OR new Views.Thinger
 new UI.Sprocket # =&amp;gt; new Views.Sprocket&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Well anyway, I like it.&lt;/p&gt;
-&lt;div class='footnotes'&gt;&lt;hr /&gt;&lt;ol&gt;&lt;li id='fn:1'&gt;
-&lt;p&gt;I should be careful about using the word “undeniably” though. I’m no expert on object systems. If you feel you can reasonably deny it, I’d love to &lt;a href='mailto:aanand.prasad@gmail.com'&gt;hear from you&lt;/a&gt;!&lt;/p&gt;
-&lt;a href='#fnref:1' rev='footnote'&gt;&amp;#8617;&lt;/a&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/div&gt;</content>
+&lt;div class="footnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;&lt;li id="fn:1"&gt;
+&lt;p&gt;I should be careful about using the word “undeniably” though. I’m no expert on object systems. If you feel you can reasonably deny it, I’d love to &lt;a href="mailto:aanand.prasad@gmail.com"&gt;hear from you&lt;/a&gt;!&lt;/p&gt;
+&lt;a href="#fnref:1" rev="footnote"&gt;↩&lt;/a&gt;
+&lt;/li&gt;&lt;/ol&gt;
+&lt;/div&gt;</content>
   </entry>
 </feed>

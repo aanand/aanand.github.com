@@ -4,5 +4,5 @@ author_name: Aanand Prasad
 author_uri: http://aanandprasad.com/
 ---
 
-<%= atom_feed :limit => 10 %>
+<%= atom_feed limit: 10, content_proc: -> a { a.compiled_content(rep: :feed) } %>
 
