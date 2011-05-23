@@ -548,7 +548,7 @@ a img {
 /* line 33, ../../../../.rvm/gems/ruby-1.9.2-p136/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_typography.scss */
 body {
   line-height: 1.5;
-  font-family: "Baskerville", "Georgia", serif;
+  font-family: "Vollkorn", "Georgia", serif;
   color: #333333;
   font-size: 125%;
 }
@@ -1036,49 +1036,44 @@ h2 {
   font-size: 1.5em;
   line-height: 1;
   margin-bottom: 1em;
-  font-weight: bold;
 }
 
-/* line 61, ../../compass/sass/screen.sass */
+/* line 60, ../../compass/sass/screen.sass */
 a {
   text-decoration: none;
 }
-/* line 64, ../../compass/sass/screen.sass */
+/* line 63, ../../compass/sass/screen.sass */
 a:hover {
   text-decoration: underline;
 }
 
 /* line 68, ../../compass/sass/screen.sass */
-.article .title {
-  font-weight: bold;
-}
-/* line 71, ../../compass/sass/screen.sass */
 .article .title:after {
   content: ".";
 }
-/* line 74, ../../compass/sass/screen.sass */
+/* line 71, ../../compass/sass/screen.sass */
 .article time {
   font-weight: normal;
   color: #666666;
 }
-/* line 78, ../../compass/sass/screen.sass */
+/* line 75, ../../compass/sass/screen.sass */
 .article p {
   text-align: justify;
 }
 
-/* line 81, ../../compass/sass/screen.sass */
+/* line 78, ../../compass/sass/screen.sass */
 pre, code, tt {
   font-family: "Monaco", monospace;
   font-size: 0.8em;
 }
 
-/* line 85, ../../compass/sass/screen.sass */
+/* line 82, ../../compass/sass/screen.sass */
 pre {
   padding: 0 15px;
   margin: 30px 0;
 }
 
-/* line 89, ../../compass/sass/screen.sass */
+/* line 86, ../../compass/sass/screen.sass */
 hr {
   background: #666666;
   color: #666666;
@@ -1090,12 +1085,12 @@ hr {
   border: none;
 }
 
-/* line 93, ../../compass/sass/screen.sass */
+/* line 90, ../../compass/sass/screen.sass */
 .footnotes ol {
   font-size: 0.8em;
   line-height: 1.875em;
 }
-/* line 97, ../../compass/sass/screen.sass */
+/* line 94, ../../compass/sass/screen.sass */
 .footnotes ol p {
   margin: 0;
 }
