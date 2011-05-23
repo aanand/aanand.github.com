@@ -10,6 +10,10 @@
 #   item, use the pattern “/about/*/”; “/about/*” will also select the parent,
 #   because “*” matches zero or more characters.
 
+compile 'articles/feed' do
+  filter :erb
+end
+
 compile 'articles/*' do
   filter :maruku
   layout 'article'
@@ -18,6 +22,10 @@ end
 compile '*' do
   filter :haml
   layout 'default'
+end
+
+route 'articles/feed' do
+  '/articles.xml'
 end
 
 route '*' do

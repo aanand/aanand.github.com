@@ -3,6 +3,7 @@ GEM
   specs:
     adsf (1.0.1)
       rack (>= 1.0.0)
+    builder (3.0.0)
     chunky_png (1.2.0)
     compass (0.11.1)
       chunky_png (~> 1.1)
@@ -33,6 +34,7 @@ PLATFORMS
 
 DEPENDENCIES
   adsf
+  builder
   compass
   foreman
   haml
