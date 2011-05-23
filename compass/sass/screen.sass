@@ -1,3 +1,4 @@
+@import compass/css3/border-radius
 @import blueprint/reset
 @import partials/base
 @import partials/pygments
@@ -24,42 +25,52 @@ form
 .header
   font-size: 1.5em
 
+  .links
+    a:before
+      content: "\2022"
+
 .header-rule
   +colruler(#bbb)
 
 .sidebar
   $sidebar-columns: 4
   +column($sidebar-columns)
-  +append(1)
-
-  ul
-    list-style: none
-    padding:    0
-    margin:     0
-
-    li a:after
-      content: "."
 
 .content
-  $content-columns: 15
+  $content-columns: 16
   +column($content-columns, true)
 
 h1
   display:       inline
   font-size:     1em
-  font-style:    italic
   line-height:   inherit
   margin-bottom: 0
 
-  a
-    font-style:      normal
-    font-weight:     bold
-    text-decoration: none
-    text-transform:  uppercase
-    color:           $header-color !important
+  &:before
+    content:    "It’s "
+    font-style: italic
 
-    &:hover
-      color: $link-hover-color !important
+  a
+    font-family:     $logo-font-family
+    font-style:      normal
+    text-decoration: none
+    color:           $name-color !important
+    background:      $name-bg
+    padding:         0 0.25em
+    +border-radius(0.25em)
+
+.header ul
+  display:    inline
+  list-style: none
+  margin:     0
+  padding:    0
+
+  li
+    display: inline
+
+    &:before
+      content: "\00b7"
+      color:   $quiet-color
 
 h2
   font-size:     1.5em
@@ -74,11 +85,12 @@ a
 
 .article
   .title
+    font-weight: 700
+
     &:after
       content: "."
 
   time
-    font-weight: normal
     +quiet
 
   p

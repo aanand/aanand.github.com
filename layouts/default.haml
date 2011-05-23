@@ -2,25 +2,32 @@
 %html{:lang => "en"}
   %head
     %meta{:charset => "utf-8"}
+
     %title
       - if @item[:title]
         = "#{@item[:title]} -"
       Aanand Prasad
+
     %meta{:content => "nanoc 3.1.7", :name => "generator"}
-    %link{:href => 'http://fonts.googleapis.com/css?family=Vollkorn:regular,italic,bold', :rel => 'stylesheet', :type => 'text/css'}
+
     %link{:href => "/stylesheets/screen.css", :media => "screen, projection", :rel => "stylesheet", :type => "text/css"}
     %link{:href => "/stylesheets/print.css", :media => "print", :rel => "stylesheet", :type => "text/css"}
     /[if lt IE 8]
       %link{:href => "/stylesheets/ie.css", :media => "screen, projection", :rel => "stylesheet", :type => "text/css"}
+
+    <script type="text/javascript" src="http://use.typekit.com/jzt3kai.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
   %body
     .container
       .header
-        %h1 It’s <a href="/">Aanand Prasad</a>.
-        = "&nbsp;"
-        %a{:href => "http://twitter.com/aanand"}> Twitter
-        = ",&nbsp;"
-        %a{:href => "http://github.com/aanand"}> Github
-        = "."
+        %h1 <a href="/">Aanand Prasad</a>
+
+        %ul
+          %li
+            %a{:href => "http://twitter.com/aanand"} Twitter
+          %li
+            %a{:href => "http://github.com/aanand"} Github
 
       %hr.header-rule
 
