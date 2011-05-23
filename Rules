@@ -17,6 +17,7 @@ end
 compile 'articles/*' do
   filter :maruku
   layout 'article'
+  layout 'default'
 end
 
 compile '*' do

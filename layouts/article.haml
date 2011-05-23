@@ -1,15 +1,14 @@
-- render 'default' do
-  .sidebar
-    = time_tag(@item)
-    %br
-    %a.permalink{ :href => @item.path } Permalink
+.sidebar
+  = time_tag(@item)
+  %br
+  %a.permalink{ :href => @item.path } Permalink
 
-  %article.article.content
-    %h2
-      %span.title= @item[:title]
+%article.article.content
+  %h2
+    %span.title= @item[:title]
 
-    %details
-      %summary= maruku(item[:summary])
+  %details
+    %summary= maruku(item[:summary])
 
-    ~ highlight_syntax(yield)
+  ~ highlight_syntax(yield)
 
