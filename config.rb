@@ -1,7 +1,7 @@
 # Require any additional compass plugins here.
 
 http_path  = "/"
-css_dir    = "output/stylesheets"
+css_dir    = "stylesheets"
 sass_dir   = "compass/sass"
 images_dir = "compass/images"
 
