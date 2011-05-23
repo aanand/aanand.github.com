@@ -777,10 +777,6 @@ caption {
   color: #111111;
 }
 
-/* line 9, ../compass/sass/screen.sass */
-body {
-  margin-top: 100px;
-}
 /* line 9, ../../../.rvm/gems/ruby-1.9.2-p136/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_utilities.scss */
 body .clear {
   clear: both;
@@ -968,7 +964,7 @@ form textarea {
   height: 250px;
 }
 
-/* line 18, ../compass/sass/screen.sass */
+/* line 17, ../compass/sass/screen.sass */
 .container {
   width: 790px;
   margin: 0 auto;
@@ -976,7 +972,7 @@ form textarea {
   *zoom: 1;
 }
 
-/* line 22, ../compass/sass/screen.sass */
+/* line 21, ../compass/sass/screen.sass */
 .header, .full {
   display: inline;
   float: left;
@@ -988,16 +984,19 @@ form textarea {
   overflow-x: hidden;
 }
 
-/* line 25, ../compass/sass/screen.sass */
+/* line 24, ../compass/sass/screen.sass */
 .header {
   font-size: 1.5em;
+  line-height: 1;
+  margin-top: 2em;
+  margin-bottom: 1em;
 }
-/* line 29, ../compass/sass/screen.sass */
+/* line 31, ../compass/sass/screen.sass */
 .header .links a:before {
   content: "\2022";
 }
 
-/* line 32, ../compass/sass/screen.sass */
+/* line 34, ../compass/sass/screen.sass */
 .header-rule {
   background: #bbbbbb;
   color: #bbbbbb;
@@ -1009,7 +1008,7 @@ form textarea {
   border: none;
 }
 
-/* line 35, ../compass/sass/screen.sass */
+/* line 37, ../compass/sass/screen.sass */
 .sidebar {
   display: inline;
   float: left;
@@ -1021,7 +1020,7 @@ form textarea {
   overflow-x: hidden;
 }
 
-/* line 39, ../compass/sass/screen.sass */
+/* line 41, ../compass/sass/screen.sass */
 .content {
   display: inline;
   float: left;
@@ -1033,19 +1032,19 @@ form textarea {
   overflow-x: hidden;
 }
 
-/* line 43, ../compass/sass/screen.sass */
+/* line 45, ../compass/sass/screen.sass */
 h1 {
   display: inline;
   font-size: 1em;
   line-height: inherit;
   margin-bottom: 0;
 }
-/* line 49, ../compass/sass/screen.sass */
+/* line 51, ../compass/sass/screen.sass */
 h1:before {
   content: "It’s ";
   font-style: italic;
 }
-/* line 53, ../compass/sass/screen.sass */
+/* line 55, ../compass/sass/screen.sass */
 h1 a {
   font-family: "lobster-1", "lobster-2", sans-serif;
   font-style: normal;
@@ -1062,67 +1061,67 @@ h1 a {
 }
 
 @-moz-document url-prefix() {
-  /* line 63, ../compass/sass/screen.sass */
+  /* line 65, ../compass/sass/screen.sass */
   h1 a {
     padding-top: 0.1em;
   }
 
-  /* line 66, ../compass/sass/screen.sass */
+  /* line 68, ../compass/sass/screen.sass */
   html.wf-active h1 a {
     padding-top: 0;
   }
 }
 
-/* line 69, ../compass/sass/screen.sass */
+/* line 71, ../compass/sass/screen.sass */
 .header ul {
   display: inline;
   list-style: none;
   margin: 0;
   padding: 0;
 }
-/* line 75, ../compass/sass/screen.sass */
+/* line 77, ../compass/sass/screen.sass */
 .header ul li {
   display: inline;
 }
-/* line 78, ../compass/sass/screen.sass */
+/* line 80, ../compass/sass/screen.sass */
 .header ul li:before {
   content: "\00b7";
   color: #666666;
 }
 
-/* line 82, ../compass/sass/screen.sass */
+/* line 84, ../compass/sass/screen.sass */
 h2 {
   font-size: 1.5em;
   line-height: 1;
   margin-bottom: 1em;
 }
 
-/* line 87, ../compass/sass/screen.sass */
+/* line 89, ../compass/sass/screen.sass */
 a {
   text-decoration: none;
 }
-/* line 90, ../compass/sass/screen.sass */
+/* line 92, ../compass/sass/screen.sass */
 a:hover {
   text-decoration: underline;
 }
 
-/* line 94, ../compass/sass/screen.sass */
+/* line 96, ../compass/sass/screen.sass */
 .article .title {
   font-weight: 700;
 }
-/* line 97, ../compass/sass/screen.sass */
+/* line 99, ../compass/sass/screen.sass */
 .article .title:after {
   content: ".";
 }
-/* line 100, ../compass/sass/screen.sass */
+/* line 102, ../compass/sass/screen.sass */
 .article time {
   color: #666666;
 }
-/* line 103, ../compass/sass/screen.sass */
+/* line 105, ../compass/sass/screen.sass */
 .article p {
   text-align: justify;
 }
-/* line 106, ../compass/sass/screen.sass */
+/* line 108, ../compass/sass/screen.sass */
 .article hr {
   background: #666666;
   color: #666666;
@@ -1134,24 +1133,24 @@ a:hover {
   border: none;
 }
 
-/* line 109, ../compass/sass/screen.sass */
+/* line 111, ../compass/sass/screen.sass */
 pre, code, tt {
   font-family: "Monaco", monospace;
   font-size: 0.8em;
 }
 
-/* line 113, ../compass/sass/screen.sass */
+/* line 115, ../compass/sass/screen.sass */
 pre {
   padding: 0 15px;
   margin: 30px 0;
 }
 
-/* line 118, ../compass/sass/screen.sass */
+/* line 120, ../compass/sass/screen.sass */
 .footnotes ol {
   font-size: 0.8em;
   line-height: 1.875em;
 }
-/* line 122, ../compass/sass/screen.sass */
+/* line 124, ../compass/sass/screen.sass */
 .footnotes ol p {
   margin: 0;
 }

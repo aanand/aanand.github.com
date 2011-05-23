@@ -10,7 +10,6 @@ body
   +blueprint-utilities
   +blueprint-debug
   +blueprint-interaction
-  margin-top: 100px
 
 form
   +blueprint-form
@@ -24,6 +23,9 @@ form
 
 .header
   font-size: 1.5em
+  line-height: 1
+  +prepend-top(2em)
+  +append-bottom(1em)
 
   .links
     a:before
