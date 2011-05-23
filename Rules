@@ -43,6 +43,10 @@ route 'articles/feed' do
   '/articles.xml'
 end
 
+route '/404/' do
+  '/404.html'
+end
+
 route '*' do
   item.identifier + 'index.html'
 end

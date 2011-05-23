@@ -816,13 +816,13 @@ form textarea {
   *zoom: 1;
 }
 
-.header, .full {
+.header, .full, .not-found {
   display: inline;
   float: left;
   margin-right: 10px;
   width: 790px;
 }
-* html .header, * html .full {
+* html .header, * html .full, * html .not-found {
   overflow-x: hidden;
 }
 
@@ -970,4 +970,14 @@ pre {
 }
 .footnotes ol p {
   margin: 0;
+}
+
+.not-found {
+  text-align: center;
+}
+.not-found:before {
+  display: block;
+  content: "404";
+  font-family: "lobster-1", "lobster-2", sans-serif;
+  font-size: 10em;
 }
