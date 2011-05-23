@@ -1059,69 +1059,75 @@ h1 a {
   -khtml-border-radius: 0.25em;
   border-radius: 0.25em;
 }
+/* line 64, ../compass/sass/screen.sass */
+h1 a:hover {
+  text-decoration: none;
+  color: #cc2222 !important;
+  background: #ffcc88;
+}
 
 @-moz-document url-prefix() {
-  /* line 65, ../compass/sass/screen.sass */
+  /* line 70, ../compass/sass/screen.sass */
   h1 a {
     padding-top: 0.1em;
   }
 
-  /* line 68, ../compass/sass/screen.sass */
+  /* line 73, ../compass/sass/screen.sass */
   html.wf-active h1 a {
     padding-top: 0;
   }
 }
 
-/* line 71, ../compass/sass/screen.sass */
+/* line 76, ../compass/sass/screen.sass */
 .header ul {
   display: inline;
   list-style: none;
   margin: 0;
   padding: 0;
 }
-/* line 77, ../compass/sass/screen.sass */
+/* line 82, ../compass/sass/screen.sass */
 .header ul li {
   display: inline;
 }
-/* line 80, ../compass/sass/screen.sass */
+/* line 85, ../compass/sass/screen.sass */
 .header ul li:before {
   content: "\00b7";
   color: #666666;
 }
 
-/* line 84, ../compass/sass/screen.sass */
+/* line 89, ../compass/sass/screen.sass */
 h2 {
   font-size: 1.5em;
   line-height: 1;
   margin-bottom: 1em;
 }
 
-/* line 89, ../compass/sass/screen.sass */
+/* line 94, ../compass/sass/screen.sass */
 a {
   text-decoration: none;
 }
-/* line 92, ../compass/sass/screen.sass */
+/* line 97, ../compass/sass/screen.sass */
 a:hover {
   text-decoration: underline;
 }
 
-/* line 96, ../compass/sass/screen.sass */
+/* line 101, ../compass/sass/screen.sass */
 .article .title {
   font-weight: 700;
 }
-/* line 99, ../compass/sass/screen.sass */
+/* line 104, ../compass/sass/screen.sass */
 .article .title:after {
   content: ".";
 }
-/* line 102, ../compass/sass/screen.sass */
+/* line 107, ../compass/sass/screen.sass */
 .article time {
   color: #666666;
 }
-/* line 105, ../compass/sass/screen.sass */
+/* line 110, ../compass/sass/screen.sass */
 .article p {
   text-align: justify;
 }
-/* line 108, ../compass/sass/screen.sass */
+/* line 113, ../compass/sass/screen.sass */
 .article hr {
   background: #666666;
   color: #666666;
@@ -1133,24 +1139,24 @@ a:hover {
   border: none;
 }
 
-/* line 111, ../compass/sass/screen.sass */
+/* line 116, ../compass/sass/screen.sass */
 pre, code, tt {
   font-family: "Monaco", monospace;
   font-size: 0.8em;
 }
 
-/* line 115, ../compass/sass/screen.sass */
+/* line 120, ../compass/sass/screen.sass */
 pre {
   padding: 0 15px;
   margin: 30px 0;
 }
 
-/* line 120, ../compass/sass/screen.sass */
+/* line 125, ../compass/sass/screen.sass */
 .footnotes ol {
   font-size: 0.8em;
   line-height: 1.875em;
 }
-/* line 124, ../compass/sass/screen.sass */
+/* line 129, ../compass/sass/screen.sass */
 .footnotes ol p {
   margin: 0;
 }
