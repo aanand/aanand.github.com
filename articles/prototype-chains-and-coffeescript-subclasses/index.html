@@ -34,40 +34,7 @@
         
         <p>For example: an element contains a button that (in the desktop UI) appears when the element is hovered, and (in the touch UI) appears/disappears when the element is tapped. Furthermore, in the touch UI, there must be more visual feedback than simply showing the button instantly. (The iPhone’s smooth animations aren’t just for show—instantaneous changes in a touch-based interface are jarring.)</p>
         
-        <p>The view class for this widget might, off the top of my head, look something like this:</p>
-        <pre><code class="language-coffeescript"><span class="k">class</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Widget</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
-  <span class="nv">render: </span><span class="o">-&gt;</span>
-    <span class="nx">$</span><span class="p">(</span><span class="nx">@el</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s2">"I'm a widget. &lt;button&gt;Do something&lt;/button&gt;"</span><span class="p">)</span>
-    <span class="k">this</span>
-
-  <span class="nv">events:</span>
-    <span class="s2">"click button"</span><span class="o">:</span> <span class="s2">"doSomething"</span>
-  
-  <span class="nv">doSomething: </span><span class="nf">(event) -&gt;</span>
-    <span class="c1"># ...</span>
-
-<span class="k">class</span> <span class="nx">Desktop</span><span class="p">.</span><span class="nx">Widget</span> <span class="k">extends</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Widget</span>
-  <span class="nv">render: </span><span class="o">-&gt;</span>
-    <span class="k">super</span><span class="p">()</span>
-
-    <span class="nv">button = </span><span class="nx">@$</span><span class="p">(</span><span class="s2">"button"</span><span class="p">)</span>
-    <span class="nx">button</span><span class="p">.</span><span class="nx">hide</span><span class="p">()</span>
-    <span class="nx">$</span><span class="p">(</span><span class="nx">@el</span><span class="p">).</span><span class="nx">hover</span><span class="p">(</span><span class="o">-&gt;</span> <span class="nx">button</span><span class="p">.</span><span class="nx">show</span><span class="p">(),</span> <span class="o">-&gt;</span> <span class="nx">button</span><span class="p">.</span><span class="nx">hide</span><span class="p">())</span>
-
-    <span class="k">this</span>
-
-<span class="k">class</span> <span class="nx">Touch</span><span class="p">.</span><span class="nx">Widget</span> <span class="k">extends</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Widget</span>
-  <span class="nv">render: </span><span class="o">-&gt;</span>
-    <span class="k">super</span><span class="p">()</span>
-
-    <span class="nv">button = </span><span class="nx">@$</span><span class="p">(</span><span class="s2">"button"</span><span class="p">)</span>
-    <span class="nx">button</span><span class="p">.</span><span class="nx">css</span><span class="p">({</span><span class="s2">"opacity"</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">"-webkit-transition"</span><span class="o">:</span> <span class="s2">"0.5s"</span><span class="p">})</span>
-    <span class="nx">$</span><span class="p">(</span><span class="nx">@el</span><span class="p">).</span><span class="nx">bind</span> <span class="s2">"touchend"</span><span class="p">,</span> <span class="o">-&gt;</span>
-      <span class="nx">button</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s2">"opacity"</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">button</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s2">"opacity"</span><span class="p">)))</span>
-
-    <span class="k">this</span>
-</code></pre>
-        <p>Remember, though, that <em>some</em> classes in <code>Views</code> will only be subclassed for <em>one</em> of the UIs, and some won’t be subclassed at all. The implementation structure might look like this:</p>
+        <p>Anyway, the important thing is that <em>some</em> classes in <code>Views</code> will only be subclassed for <em>one</em> of the UIs, and some won’t be subclassed at all. The implementation structure might look like this:</p>
         <pre><code class="language-coffeescript"><span class="k">class</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Widget</span>   <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
 <span class="k">class</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Thinger</span>  <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
 <span class="k">class</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Sprocket</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
@@ -81,20 +48,16 @@
         <pre><code class="language-coffeescript"><span class="c1"># assume the existence of a `Mobile` boolean variable</span>
 
 <span class="nv">makeViewObject: </span><span class="o">-&gt;</span> <span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">args</span><span class="p">...)</span>
-  <span class="nv">klass = </span><span class="k">if</span> <span class="nx">Mobile</span> <span class="o">and</span> <span class="nx">Touch</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span><span class="o">?</span>
-    <span class="nx">Touch</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span>
-  <span class="k">else</span> <span class="k">if</span> <span class="o">!</span><span class="nx">Mobile</span> <span class="o">and</span> <span class="nx">Desktop</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span><span class="o">?</span>
-    <span class="nx">Desktop</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span>
-  <span class="k">else</span>
-    <span class="nx">Views</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span>
+  <span class="nv">ui    = </span><span class="k">if</span> <span class="nx">Mobile</span> <span class="k">then</span> <span class="nx">Touch</span> <span class="k">else</span> <span class="nx">Desktop</span>
+  <span class="nv">klass = </span><span class="k">if</span> <span class="nx">ui</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span><span class="o">?</span> <span class="k">then</span> <span class="nx">ui</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="k">else</span> <span class="nx">Views</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span>
 
   <span class="k">new</span> <span class="nx">klass</span><span class="p">(</span><span class="nx">args</span><span class="p">...)</span>
 
-<span class="nx">makeViewObject</span><span class="p">(</span><span class="s2">"Widget"</span><span class="p">)</span>   <span class="c1"># =&gt; Desktop.Widget / Touch.Widget</span>
-<span class="nx">makeViewObject</span><span class="p">(</span><span class="s2">"Thinger"</span><span class="p">)</span>  <span class="c1"># =&gt; Desktop.Thinger / Views.Thinger</span>
-<span class="nx">makeViewObject</span><span class="p">(</span><span class="s2">"Sprocket"</span><span class="p">)</span> <span class="c1"># =&gt; Views.Sprocket</span>
+<span class="nx">makeViewObject</span><span class="p">(</span><span class="s2">"Widget"</span><span class="p">)</span>   <span class="c1"># =&gt; new Desktop.Widget OR new Touch.Widget</span>
+<span class="nx">makeViewObject</span><span class="p">(</span><span class="s2">"Thinger"</span><span class="p">)</span>  <span class="c1"># =&gt; new Desktop.Thinger OR new Views.Thinger</span>
+<span class="nx">makeViewObject</span><span class="p">(</span><span class="s2">"Sprocket"</span><span class="p">)</span> <span class="c1"># =&gt; new Views.Sprocket</span>
 </code></pre>
-        <p>…and if you’re most people, you’ll stop there. I, on the other hand, had just read Isaac Z. Schlueter’s <a href="http://blog.izs.me/post/4731036392/evolution-of-a-prototypal-language-user">Evolution of a Prototypal Language User</a>, hadn’t done anything fun with prototype chains in years and didn’t like the idea of this unsightly helper method peppering my code. So I got to work. Instead of <code>Views</code>, <code>Desktop</code> and <code>Touch</code> being plain objects, they’re chained:</p>
+        <p>…and if you’re most people, you’ll stop there. I, on the other hand, had just read Isaac Z. Schlueter’s <a href="http://blog.izs.me/post/4731036392/evolution-of-a-prototypal-language-user">Evolution of a Prototypal Language User</a>, hadn’t done anything fun with prototype chains in years and didn’t like the idea of this unsightly helper method peppering my code. So I got to work. Instead of <code>Views</code>, <code>Desktop</code> and <code>Touch</code> being plain objects, we create a <code>ViewShop</code> function, point <code>Views</code> at its prototype and make <code>Desktop</code> and <code>Touch</code> new <code>ViewShop</code>s, so that property access falls back to <code>ViewShop.prototype</code> (a.k.a. <code>Views</code>). Look, it’s easier if I just show you:</p>
         <pre><code class="language-coffeescript"><span class="nv">ViewShop = </span><span class="o">-&gt;</span>
 
 <span class="nv">Views   = </span><span class="nx">ViewShop</span><span class="p">.</span><span class="nx">prototype</span>
@@ -113,9 +76,9 @@
         <p>We need only instantiate a <code>UI</code> variable that points to the right <code>ViewShop</code>, and we’re done:</p>
         <pre><code class="language-coffeescript"><span class="nv">UI = </span><span class="k">if</span> <span class="nx">Mobile</span> <span class="k">then</span> <span class="nx">Touch</span> <span class="k">else</span> <span class="nx">Desktop</span>
 
-<span class="k">new</span> <span class="nx">UI</span><span class="p">.</span><span class="nx">Widget</span><span class="p">()</span>   <span class="c1"># =&gt; Desktop.Widget / Touch.Widget</span>
-<span class="k">new</span> <span class="nx">UI</span><span class="p">.</span><span class="nx">Thinger</span><span class="p">()</span>  <span class="c1"># =&gt; Desktop.Thinger / Views.Thinger</span>
-<span class="k">new</span> <span class="nx">UI</span><span class="p">.</span><span class="nx">Sprocket</span><span class="p">()</span> <span class="c1"># =&gt; Views.Sprocket</span>
+<span class="k">new</span> <span class="nx">UI</span><span class="p">.</span><span class="nx">Widget</span>   <span class="c1"># =&gt; new Desktop.Widget OR new Touch.Widget</span>
+<span class="k">new</span> <span class="nx">UI</span><span class="p">.</span><span class="nx">Thinger</span>  <span class="c1"># =&gt; new Desktop.Thinger OR new Views.Thinger</span>
+<span class="k">new</span> <span class="nx">UI</span><span class="p">.</span><span class="nx">Sprocket</span> <span class="c1"># =&gt; new Views.Sprocket</span>
 </code></pre>
         <p>Well anyway, I like it.</p>
         <div class="footnotes">

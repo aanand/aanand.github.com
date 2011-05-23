@@ -13,43 +13,7 @@ Both interfaces are implemented as a set of classes (provided by CoffeeScript’
 
 For example: an element contains a button that (in the desktop UI) appears when the element is hovered, and (in the touch UI) appears/disappears when the element is tapped. Furthermore, in the touch UI, there must be more visual feedback than simply showing the button instantly. (The iPhone’s smooth animations aren’t just for show—instantaneous changes in a touch-based interface are jarring.)
 
-The view class for this widget might, off the top of my head, look something like this:
-
-<pre><code class="language-coffeescript">
-class Views.Widget extends Backbone.View
-  render: -&gt;
-    $(@el).html("I'm a widget. &lt;button&gt;Do something&lt;/button&gt;")
-    this
-
-  events:
-    "click button": "doSomething"
-  
-  doSomething: (event) -&gt;
-    # ...
-
-class Desktop.Widget extends Views.Widget
-  render: -&gt;
-    super()
-
-    button = @$("button")
-    button.hide()
-    $(@el).hover(-&gt; button.show(), -&gt; button.hide())
-
-    this
-
-class Touch.Widget extends Views.Widget
-  render: -&gt;
-    super()
-
-    button = @$("button")
-    button.css({"opacity": 0, "-webkit-transition": "0.5s"})
-    $(@el).bind "touchend", -&gt;
-      button.css("opacity", 1-parseInt(button.css("opacity")))
-
-    this
-</code></pre>
-
-Remember, though, that _some_ classes in `Views` will only be subclassed for _one_ of the UIs, and some won’t be subclassed at all. The implementation structure might look like this:
+Anyway, the important thing is that _some_ classes in `Views` will only be subclassed for _one_ of the UIs, and some won’t be subclassed at all. The implementation structure might look like this:
 
 <pre><code class="language-coffeescript">
 class Views.Widget   extends Backbone.View
@@ -68,21 +32,17 @@ So how, at runtime, might we instantiate the appropriate class? Running all inst
 # assume the existence of a `Mobile` boolean variable
 
 makeViewObject: -> (name, args...)
-  klass = if Mobile and Touch[name]?
-    Touch[name]
-  else if !Mobile and Desktop[name]?
-    Desktop[name]
-  else
-    Views[name]
+  ui    = if Mobile then Touch else Desktop
+  klass = if ui[name]? then ui[name] else Views[name]
 
   new klass(args...)
 
-makeViewObject("Widget")   # => Desktop.Widget / Touch.Widget
-makeViewObject("Thinger")  # => Desktop.Thinger / Views.Thinger
-makeViewObject("Sprocket") # => Views.Sprocket
+makeViewObject("Widget")   # => new Desktop.Widget OR new Touch.Widget
+makeViewObject("Thinger")  # => new Desktop.Thinger OR new Views.Thinger
+makeViewObject("Sprocket") # => new Views.Sprocket
 </code></pre>
 
-...and if you’re most people, you’ll stop there. I, on the other hand, had just read Isaac Z. Schlueter’s [Evolution of a Prototypal Language User][evolution], hadn't done anything fun with prototype chains in years and didn’t like the idea of this unsightly helper method peppering my code. So I got to work. Instead of `Views`, `Desktop` and `Touch` being plain objects, they’re chained:
+...and if you’re most people, you’ll stop there. I, on the other hand, had just read Isaac Z. Schlueter’s [Evolution of a Prototypal Language User][evolution], hadn't done anything fun with prototype chains in years and didn’t like the idea of this unsightly helper method peppering my code. So I got to work. Instead of `Views`, `Desktop` and `Touch` being plain objects, we create a `ViewShop` function, point `Views` at its prototype and make `Desktop` and `Touch` new `ViewShop`s, so that property access falls back to `ViewShop.prototype` (a.k.a. `Views`). Look, it’s easier if I just show you:
 
 <pre><code class="language-coffeescript">
 ViewShop = ->
@@ -109,9 +69,9 @@ We need only instantiate a `UI` variable that points to the right `ViewShop`, an
 <pre><code class="language-coffeescript">
 UI = if Mobile then Touch else Desktop
 
-new UI.Widget()   # => Desktop.Widget / Touch.Widget
-new UI.Thinger()  # => Desktop.Thinger / Views.Thinger
-new UI.Sprocket() # => Views.Sprocket
+new UI.Widget   # => new Desktop.Widget OR new Touch.Widget
+new UI.Thinger  # => new Desktop.Thinger OR new Views.Thinger
+new UI.Sprocket # => new Views.Sprocket
 </code></pre>
 
 Well anyway, I like it.
