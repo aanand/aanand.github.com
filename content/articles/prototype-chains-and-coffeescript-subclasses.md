@@ -9,20 +9,19 @@ Context, briefly: nnnnext is a todo list for your music. It’s a single-page Ja
 
 Both interfaces are implemented as a set of classes (provided by CoffeeScript’s [simple classes implementation][coffeescript-classes]) that represent the different UI views. Each UI requires slightly different behaviour for _some_ views. For example, an element might contain a button that (in the desktop UI) appears when the element is hovered, and (in the touch UI) appears/disappears when the element is tapped. Consequently, some view classes are subclassed in one or both UIs in order to implement these differences. The class structure might look like this (implementation code omitted):
 
-<pre><code class="language-coffeescript">
-Views   = {}
-Desktop = {}
-Touch   = {}
+    ```coffeescript
+    Views   = {}
+    Desktop = {}
+    Touch   = {}
 
-class Views.Widget   extends Backbone.View
-class Views.Thinger  extends Backbone.View
-class Views.Sprocket extends Backbone.View
+    class Views.Widget   extends Backbone.View
+    class Views.Thinger  extends Backbone.View
+    class Views.Sprocket extends Backbone.View
 
-class Desktop.Widget extends Views.Widget
+    class Desktop.Widget extends Views.Widget
 
-class Touch.Widget   extends Views.Widget
-class Touch.Thinger  extends Views.Thinger
-</code></pre>
+    class Touch.Widget   extends Views.Widget
+    class Touch.Thinger  extends Views.Thinger
 
 (Whatever you think of classical object-orientation and inheritance, it’s an undeniably good fit for MVC-style UI code—subclasses and the `super` keyword make augmentation of behaviour very straightforward[^classical-oo-and-mvc].)
 
@@ -30,53 +29,49 @@ class Touch.Thinger  extends Views.Thinger
 
 So how, at runtime, might we instantiate the appropriate class? Running all instantiations through a helper method would certainly work:
 
-<pre><code class="language-coffeescript">
-# assume the existence of a `Mobile` boolean variable
+    ```coffeescript
+    # assume the existence of a `Mobile` boolean variable
 
-makeViewObject: -> (name, args...)
-  UI    = if Mobile then Touch else Desktop
-  klass = UI[name] || Views[name]
+    makeViewObject: -> (name, args...)
+      UI    = if Mobile then Touch else Desktop
+      klass = UI[name] || Views[name]
 
-  new klass(args...)
+      new klass(args...)
 
-makeViewObject("Widget")   # => new Desktop.Widget OR new Touch.Widget
-makeViewObject("Thinger")  # => new Desktop.Thinger OR new Views.Thinger
-makeViewObject("Sprocket") # => new Views.Sprocket
-</code></pre>
+    makeViewObject("Widget")   # => new Desktop.Widget OR new Touch.Widget
+    makeViewObject("Thinger")  # => new Desktop.Thinger OR new Views.Thinger
+    makeViewObject("Sprocket") # => new Views.Sprocket
 
 ...and if you’re most people, you’ll stop there. I, on the other hand, had just read Isaac Z. Schlueter’s [Evolution of a Prototypal Language User][evolution], hadn't done anything fun with prototype chains in years and didn’t like the idea of this unsightly helper method peppering my code. So I got to work.
 
 Instead of `Views`, `Desktop` and `Touch` being plain objects, we create a `ViewShop` function, point `Views` at its prototype and make `Desktop` and `Touch` new `ViewShop`s, so that property access falls back to `ViewShop.prototype` (a.k.a. `Views`). Look, it’s easier if I just show you:
 
-<pre><code class="language-coffeescript">
-ViewShop = ->
+    ```coffeescript
+    ViewShop = ->
 
-Views   = ViewShop.prototype
-Desktop = new ViewShop
-Touch   = new ViewShop
-</code></pre>
+    Views   = ViewShop.prototype
+    Desktop = new ViewShop
+    Touch   = new ViewShop
 
 Now, after defining the view classes, access any property of `Desktop` or `Touch`, and prototype chaining works its magic:
 
-<pre><code class="language-coffeescript">
-Desktop.Widget   # => Desktop.Widget
-Desktop.Thinger  # => Views.Thinger
-Desktop.Sprocket # => Views.Sprocket
+    ```coffeescript
+    Desktop.Widget   # => Desktop.Widget
+    Desktop.Thinger  # => Views.Thinger
+    Desktop.Sprocket # => Views.Sprocket
 
-Touch.Widget     # => Touch.Widget
-Touch.Thinger    # => Touch.Thinger
-Touch.Sprocket   # => Views.Sprocket
-</code></pre>
+    Touch.Widget     # => Touch.Widget
+    Touch.Thinger    # => Touch.Thinger
+    Touch.Sprocket   # => Views.Sprocket
 
 We need only make a `UI` variable that points to the right `ViewShop`, and we’re done:
 
-<pre><code class="language-coffeescript">
-UI = if Mobile then Touch else Desktop
+    ```coffeescript
+    UI = if Mobile then Touch else Desktop
 
-new UI.Widget   # => new Desktop.Widget OR new Touch.Widget
-new UI.Thinger  # => new Desktop.Thinger OR new Views.Thinger
-new UI.Sprocket # => new Views.Sprocket
-</code></pre>
+    new UI.Widget   # => new Desktop.Widget OR new Touch.Widget
+    new UI.Thinger  # => new Desktop.Thinger OR new Views.Thinger
+    new UI.Sprocket # => new Views.Sprocket
 
 Well anyway, I like it.
 

@@ -1,16 +1,15 @@
 - render 'default' do
-  - filter :colorize_syntax, colorizers: { coffeescript: :pygmentize }, pygmentize: { encoding: "utf-8" } do
-    .sidebar
-      = time_tag(@item)
-      %br
-      %a.permalink{ :href => @item.path } Permalink
+  .sidebar
+    = time_tag(@item)
+    %br
+    %a.permalink{ :href => @item.path } Permalink
 
-    %article.article.content
-      %h2
-        %span.title= @item[:title]
+  %article.article.content
+    %h2
+      %span.title= @item[:title]
 
-      %details
-        %summary= maruku(item[:summary])
+    %details
+      %summary= maruku(item[:summary])
 
-      ~ yield
+    ~ highlight_syntax(yield)
 
