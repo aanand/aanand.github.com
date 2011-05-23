@@ -59,6 +59,13 @@ h1
     padding:         0 0.25em
     +border-radius(0.25em)
 
+@-moz-document url-prefix()
+  h1 a
+    padding-top: 0.1em
+
+  html.wf-active h1 a
+    padding-top: 0
+
 .header ul
   display:    inline
   list-style: none

@@ -1061,56 +1061,68 @@ h1 a {
   border-radius: 0.25em;
 }
 
-/* line 62, ../compass/sass/screen.sass */
+@-moz-document url-prefix() {
+  /* line 63, ../compass/sass/screen.sass */
+  h1 a {
+    padding-top: 0.1em;
+  }
+
+  /* line 66, ../compass/sass/screen.sass */
+  html.wf-active h1 a {
+    padding-top: 0;
+  }
+}
+
+/* line 69, ../compass/sass/screen.sass */
 .header ul {
   display: inline;
   list-style: none;
   margin: 0;
   padding: 0;
 }
-/* line 68, ../compass/sass/screen.sass */
+/* line 75, ../compass/sass/screen.sass */
 .header ul li {
   display: inline;
 }
-/* line 71, ../compass/sass/screen.sass */
+/* line 78, ../compass/sass/screen.sass */
 .header ul li:before {
   content: "\00b7";
   color: #666666;
 }
 
-/* line 75, ../compass/sass/screen.sass */
+/* line 82, ../compass/sass/screen.sass */
 h2 {
   font-size: 1.5em;
   line-height: 1;
   margin-bottom: 1em;
 }
 
-/* line 80, ../compass/sass/screen.sass */
+/* line 87, ../compass/sass/screen.sass */
 a {
   text-decoration: none;
 }
-/* line 83, ../compass/sass/screen.sass */
+/* line 90, ../compass/sass/screen.sass */
 a:hover {
   text-decoration: underline;
 }
 
-/* line 87, ../compass/sass/screen.sass */
+/* line 94, ../compass/sass/screen.sass */
 .article .title {
   font-weight: 700;
 }
-/* line 90, ../compass/sass/screen.sass */
+/* line 97, ../compass/sass/screen.sass */
 .article .title:after {
   content: ".";
 }
-/* line 93, ../compass/sass/screen.sass */
+/* line 100, ../compass/sass/screen.sass */
 .article time {
   color: #666666;
 }
-/* line 96, ../compass/sass/screen.sass */
+/* line 103, ../compass/sass/screen.sass */
 .article p {
   text-align: justify;
 }
-/* line 99, ../compass/sass/screen.sass */
+/* line 106, ../compass/sass/screen.sass */
 .article hr {
   background: #666666;
   color: #666666;
@@ -1122,24 +1134,24 @@ a:hover {
   border: none;
 }
 
-/* line 102, ../compass/sass/screen.sass */
+/* line 109, ../compass/sass/screen.sass */
 pre, code, tt {
   font-family: "Monaco", monospace;
   font-size: 0.8em;
 }
 
-/* line 106, ../compass/sass/screen.sass */
+/* line 113, ../compass/sass/screen.sass */
 pre {
   padding: 0 15px;
   margin: 30px 0;
 }
 
-/* line 111, ../compass/sass/screen.sass */
+/* line 118, ../compass/sass/screen.sass */
 .footnotes ol {
   font-size: 0.8em;
   line-height: 1.875em;
 }
-/* line 115, ../compass/sass/screen.sass */
+/* line 122, ../compass/sass/screen.sass */
 .footnotes ol p {
   margin: 0;
 }
