@@ -1,5 +1,5 @@
-- filter :colorize_syntax, colorizers: { coffeescript: :pygmentize }, pygmentize: { encoding: "utf-8" } do
-  - render 'default' do
+- render 'default' do
+  - filter :colorize_syntax, colorizers: { coffeescript: :pygmentize }, pygmentize: { encoding: "utf-8" } do
     .sidebar
       = time_tag(@item)
       %br
