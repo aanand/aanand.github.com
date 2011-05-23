@@ -1116,18 +1116,14 @@ a:hover {
   font-weight: 700;
 }
 /* line 104, ../compass/sass/screen.sass */
-.article .title:after {
-  content: ".";
-}
-/* line 107, ../compass/sass/screen.sass */
 .article time {
   color: #666666;
 }
-/* line 110, ../compass/sass/screen.sass */
+/* line 107, ../compass/sass/screen.sass */
 .article p {
   text-align: justify;
 }
-/* line 113, ../compass/sass/screen.sass */
+/* line 110, ../compass/sass/screen.sass */
 .article hr {
   background: #666666;
   color: #666666;
@@ -1139,24 +1135,24 @@ a:hover {
   border: none;
 }
 
-/* line 116, ../compass/sass/screen.sass */
+/* line 113, ../compass/sass/screen.sass */
 pre, code, tt {
   font-family: "Monaco", monospace;
   font-size: 0.8em;
 }
 
-/* line 120, ../compass/sass/screen.sass */
+/* line 117, ../compass/sass/screen.sass */
 pre {
   padding: 0 15px;
   margin: 30px 0;
 }
 
-/* line 125, ../compass/sass/screen.sass */
+/* line 122, ../compass/sass/screen.sass */
 .footnotes ol {
   font-size: 0.8em;
   line-height: 1.875em;
 }
-/* line 129, ../compass/sass/screen.sass */
+/* line 126, ../compass/sass/screen.sass */
 .footnotes ol p {
   margin: 0;
 }
