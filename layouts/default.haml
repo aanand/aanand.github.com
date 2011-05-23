@@ -13,14 +13,14 @@
     /[if lt IE 8]
       %link{:href => "/stylesheets/ie.css", :media => "screen, projection", :rel => "stylesheet", :type => "text/css"}
   %body
-    #container
-      #sidebar
+    .container
+      .sidebar
         %h1 It’s <a href="/">Aanand Prasad</a>.
         %ul
           %li
             %a{:href => "http://twitter.com/aanand"} Twitter
           %li
             %a{:href => "http://github.com/aanand"} Github
-      #content
+      .content
         = yield
             

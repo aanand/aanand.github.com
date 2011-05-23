@@ -14,11 +14,11 @@ body
 form
   +blueprint-form
 
-#container
+.container
   +container
   // +grid-background($blueprint-grid-columns, $blueprint-grid-width, $blueprint-grid-margin, 30px)
 
-#sidebar
+.sidebar
   $sidebar-columns: 4
   +column($sidebar-columns)
   +append(1)
@@ -32,7 +32,7 @@ form
     li a:after
       content: "."
 
-#content
+.content
   $content-columns: 14
   +column($content-columns, true)
 

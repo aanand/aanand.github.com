@@ -968,7 +968,7 @@ form textarea {
 }
 
 /* line 17, ../../compass/sass/screen.sass */
-#container {
+.container {
   width: 950px;
   margin: 0 auto;
   overflow: hidden;
@@ -976,7 +976,7 @@ form textarea {
 }
 
 /* line 21, ../../compass/sass/screen.sass */
-#sidebar {
+.sidebar {
   display: inline;
   float: left;
   margin-right: 10px;
@@ -985,29 +985,29 @@ form textarea {
   text-align: right;
 }
 /* line 147, ../../../../.rvm/gems/ruby-1.9.2-p136/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
-* html #sidebar {
+* html .sidebar {
   overflow-x: hidden;
 }
 /* line 27, ../../compass/sass/screen.sass */
-#sidebar ul {
+.sidebar ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 /* line 32, ../../compass/sass/screen.sass */
-#sidebar ul li a:after {
+.sidebar ul li a:after {
   content: ".";
 }
 
 /* line 35, ../../compass/sass/screen.sass */
-#content {
+.content {
   display: inline;
   float: left;
   margin-right: 0;
   width: 550px;
 }
 /* line 147, ../../../../.rvm/gems/ruby-1.9.2-p136/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
-* html #content {
+* html .content {
   overflow-x: hidden;
 }
 
