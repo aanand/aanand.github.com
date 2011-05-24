@@ -21,6 +21,12 @@ def maruku(code)
   Nanoc3::Filter.named(:maruku).new(@item_rep.assigns).run(code)
 end
 
+def maruku_strip(code)
+  html = maruku(code)
+  doc  = Nokogiri::HTML.fragment(html)
+  doc.text
+end
+
 class SyntaxFilter < Nanoc3::Filter
   identifier :syntax
 

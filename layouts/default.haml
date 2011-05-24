@@ -8,7 +8,12 @@
         = "#{@item[:title]} -"
       Aanand Prasad
 
+    - if @item[:summary]
+      %meta{:name => "description", :content => maruku_strip(@item[:summary])}
+
+    %meta{:name => "author", :content => "Aanand Prasad"}
     %meta{:content => "nanoc 3.1.7", :name => "generator"}
+
     %meta{'http-equiv' => "X-UA-Compatible", 'content' => "IE=edge,chrome=1"}
 
     %link{:href => "/articles.xml", :rel => "alternate", :type => "application/atom+xml"}
