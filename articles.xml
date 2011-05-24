@@ -50,7 +50,7 @@ makeViewObject("Sprocket") # =&amp;gt; new Views.Sprocket&lt;/code&gt;&lt;/pre&g
 
 &lt;p&gt;…and if you’re most people, you’ll stop there. I, on the other hand, had just read Isaac Z. Schlueter’s &lt;a href="http://blog.izs.me/post/4731036392/evolution-of-a-prototypal-language-user"&gt;Evolution of a Prototypal Language User&lt;/a&gt;, hadn’t done anything fun with prototype chains in years and didn’t like the idea of this unsightly helper method peppering my code. So I got to work.&lt;/p&gt;
 
-&lt;p&gt;Instead of &lt;code&gt;Views&lt;/code&gt;, &lt;code&gt;Desktop&lt;/code&gt; and &lt;code&gt;Touch&lt;/code&gt; being plain objects, we create a &lt;code&gt;ViewShop&lt;/code&gt; function, point &lt;code&gt;Views&lt;/code&gt; at its prototype and make &lt;code&gt;Desktop&lt;/code&gt; and &lt;code&gt;Touch&lt;/code&gt; new &lt;code&gt;ViewShop&lt;/code&gt;s, so that property access falls back to &lt;code&gt;ViewShop.prototype&lt;/code&gt; (a.k.a. &lt;code&gt;Views&lt;/code&gt;). Look, it’s easier if I just show you:&lt;/p&gt;
+&lt;p&gt;Instead of &lt;code&gt;Views&lt;/code&gt;, &lt;code&gt;Desktop&lt;/code&gt; and &lt;code&gt;Touch&lt;/code&gt; being plain objects, we create a &lt;code&gt;ViewShop&lt;/code&gt; function, point &lt;code&gt;Views&lt;/code&gt; at its prototype and make &lt;code&gt;Desktop&lt;/code&gt; and &lt;code&gt;Touch&lt;/code&gt; new &lt;code&gt;ViewShop&lt;/code&gt;s, so that property access falls back to &lt;code&gt;ViewShop.prototype&lt;/code&gt;, which we’ve just aliased to &lt;code&gt;Views&lt;/code&gt;… look, I’ll just show you:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;ViewShop = -&amp;gt;
 

@@ -42,9 +42,9 @@ So how, at runtime, might we instantiate the appropriate class? Running all inst
     makeViewObject("Thinger")  # => new Desktop.Thinger OR new Views.Thinger
     makeViewObject("Sprocket") # => new Views.Sprocket
 
-...and if you’re most people, you’ll stop there. I, on the other hand, had just read Isaac Z. Schlueter’s [Evolution of a Prototypal Language User][evolution], hadn't done anything fun with prototype chains in years and didn’t like the idea of this unsightly helper method peppering my code. So I got to work.
+…and if you’re most people, you’ll stop there. I, on the other hand, had just read Isaac Z. Schlueter’s [Evolution of a Prototypal Language User][evolution], hadn't done anything fun with prototype chains in years and didn’t like the idea of this unsightly helper method peppering my code. So I got to work.
 
-Instead of `Views`, `Desktop` and `Touch` being plain objects, we create a `ViewShop` function, point `Views` at its prototype and make `Desktop` and `Touch` new `ViewShop`s, so that property access falls back to `ViewShop.prototype` (a.k.a. `Views`). Look, it’s easier if I just show you:
+Instead of `Views`, `Desktop` and `Touch` being plain objects, we create a `ViewShop` function, point `Views` at its prototype and make `Desktop` and `Touch` new `ViewShop`s, so that property access falls back to `ViewShop.prototype`, which we’ve just aliased to `Views`… look, I’ll just show you:
 
     ```coffeescript
     ViewShop = ->

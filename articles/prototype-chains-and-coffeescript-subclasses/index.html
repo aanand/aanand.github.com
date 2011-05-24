@@ -65,7 +65,7 @@
           
           <p>…and if you’re most people, you’ll stop there. I, on the other hand, had just read Isaac Z. Schlueter’s <a href="http://blog.izs.me/post/4731036392/evolution-of-a-prototypal-language-user">Evolution of a Prototypal Language User</a>, hadn’t done anything fun with prototype chains in years and didn’t like the idea of this unsightly helper method peppering my code. So I got to work.</p>
           
-          <p>Instead of <code>Views</code>, <code>Desktop</code> and <code>Touch</code> being plain objects, we create a <code>ViewShop</code> function, point <code>Views</code> at its prototype and make <code>Desktop</code> and <code>Touch</code> new <code>ViewShop</code>s, so that property access falls back to <code>ViewShop.prototype</code> (a.k.a. <code>Views</code>). Look, it’s easier if I just show you:</p>
+          <p>Instead of <code>Views</code>, <code>Desktop</code> and <code>Touch</code> being plain objects, we create a <code>ViewShop</code> function, point <code>Views</code> at its prototype and make <code>Desktop</code> and <code>Touch</code> new <code>ViewShop</code>s, so that property access falls back to <code>ViewShop.prototype</code>, which we’ve just aliased to <code>Views</code>… look, I’ll just show you:</p>
           
           <pre><code><span class="nv">ViewShop = </span><span class="o">-&gt;</span>&#x000A;&#x000A;<span class="nv">Views   = </span><span class="nx">ViewShop</span><span class="p">.</span><span class="nx">prototype</span>&#x000A;<span class="nv">Desktop = </span><span class="k">new</span> <span class="nx">ViewShop</span>&#x000A;<span class="nv">Touch   = </span><span class="k">new</span> <span class="nx">ViewShop</span>&#x000A;</code></pre>
           
