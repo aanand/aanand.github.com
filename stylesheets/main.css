@@ -836,17 +836,6 @@ form textarea {
   content: "\2022";
 }
 
-.header-rule {
-  background: #bbbbbb;
-  color: #bbbbbb;
-  clear: both;
-  float: none;
-  width: 100%;
-  height: 0.1em;
-  margin: 0 0 1.45em;
-  border: none;
-}
-
 .sidebar {
   display: inline;
   float: left;
@@ -865,6 +854,17 @@ form textarea {
 }
 * html .content {
   overflow-x: hidden;
+}
+
+hr {
+  background: #bbbbbb;
+  color: #bbbbbb;
+  clear: both;
+  float: none;
+  width: 100%;
+  height: 0.1em;
+  margin: 0 0 1.45em;
+  border: none;
 }
 
 h1 {
@@ -942,16 +942,6 @@ a:hover {
 }
 .article p {
   text-align: justify;
-}
-.article hr {
-  background: #666666;
-  color: #666666;
-  clear: both;
-  float: none;
-  width: 100%;
-  height: 0.1em;
-  margin: 0 0 1.45em;
-  border: none;
 }
 
 pre, code, tt {

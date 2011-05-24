@@ -31,9 +31,6 @@ form
     a:before
       content: "\2022"
 
-.header-rule
-  +colruler(#bbb)
-
 .sidebar
   $sidebar-columns: 4
   +column($sidebar-columns)
@@ -41,6 +38,9 @@ form
 .content
   $content-columns: 16
   +column($content-columns, true)
+
+hr
+  +colruler(#bbb)
 
 h1
   display:       inline
@@ -109,9 +109,6 @@ a
 
     code
       @extend .c1
-
-  hr
-    +colruler($quiet-color)
 
 pre, code, tt
   font-family: "Monaco", monospace
