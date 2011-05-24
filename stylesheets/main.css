@@ -121,7 +121,7 @@ a img {
 }
 
 /* Comment.Preproc */
-.c1 {
+.c1, .article p code {
   color: #666666;
   background-color: #ffffff;
 }
