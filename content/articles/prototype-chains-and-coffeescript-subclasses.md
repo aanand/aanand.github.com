@@ -2,7 +2,7 @@
 title: Prototype Chains and CoffeeScript Subclasses
 kind: article
 created_at: 2011-05-20 14:16
-summary: In developing [nnnnext.com](http://nnnnext.com), I tackled a surprising number of problems I’d not faced before as a web developer and programming language enthusiast. Here’s one of the more interesting ones, with what I think is a pretty cute solution.
+summary: In developing [nnnnext.com](http://nnnnext.com), I tackled a surprising number of problems I’d not faced before in my web development career. Here’s one of the more interesting ones, with what I think is a pretty cute solution.
 ---
 
 Context, briefly: nnnnext is a todo list for your music. It’s a single-page JavaScript app written in [CoffeeScript][coffeescript] and utilising [Backbone.js][backbone] for [lightweight][lightweight] MVC. Importantly, it has two similar-but-separate user interfaces: one for desktop web browsers, and another for multitouch devices.
