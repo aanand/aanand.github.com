@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+    <title>
+      Passing Off as a Native with jquery.tappable.js -
+      Aanand Prasad
+    </title>
+    <meta content='Apple may or may not hate the open web, but they certainly don’t make click behaviour pretty in Mobile Safari. Unfortunately, taking control of it is more involved than it perhaps ought to be. jquery.tappable.js does (most of) the hard work for you.' name='description' />
+    <meta content='Aanand Prasad' name='author' />
+    <meta content='nanoc 3.1.7' name='generator' />
+    <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible' />
+    <link href='/articles.xml' rel='alternate' type='application/atom+xml' />
+    <link href='/stylesheets/main.css' rel='stylesheet' type='text/css' />
+    <!--[if lt IE 8]>
+      <link href='/stylesheets/ie.css' rel='stylesheet' type='text/css' />
+    <![endif]-->
+    <script>var _gaq=[['_setAccount','UA-4209567-1'],['_trackPageview']];(function(d,t){
+    var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.async=1;g.src='//www.google-analytics.com/ga.js';s.parentNode.insertBefore(g,s)
+    }(document,'script'))</script>
+    <script type="text/javascript" src="http://use.typekit.com/jzt3kai.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+  </head>
+  <body>
+    <div class='container'>
+      <div class='header'>
+        <h1><a href="/">Aanand Prasad</a></h1>
+        <ul>
+          <li>
+            <a href='http://twitter.com/aanand'>Twitter</a>
+          </li>
+          <li>
+            <a href='http://github.com/aanand'>Github</a>
+          </li>
+          <li>
+            <a href='mailto:aanand.prasad@gmail.com'>Email</a>
+          </li>
+        </ul>
+      </div>
+      <hr class='header-rule' />
+      <div class='sidebar'>
+          <time datetime='2011-07-05'>05 July 2011</time>
+          <br />
+          <a class='permalink' href='/articles/jquery-tappable/'>Permalink</a>
+        </div>
+        <article class='article content'>
+          <h2>
+            <span class='title'>Passing Off as a Native with jquery.tappable.js</span>
+          </h2>
+          <details>
+            <summary><p>Apple may or may not hate the open web, but they certainly don’t make click behaviour pretty in Mobile Safari. Unfortunately, taking control of it is more involved than it perhaps ought to be. <a href='https://github.com/aanand/jquery.tappable.js'>jquery.tappable.js</a> does (most of) the hard work for you.</p></summary>
+          </details>
+          <p>I hope we can all agree that <a href="http://cvil.ly/2011/06/19/pretenders-why-mobile-web-apps-should-stop-trying-to-act-like-native-apps/">mobile web apps shouldn’t pretend to be native apps</a>, but I don’t like the thought of having to accept the current state of most mobile apps as the hand we’ve been dealt. The whole business feels somewhat 2000-era, which is frankly weird—we’ve spent a good decade improving the look and feel of apps in the browser, but the majority of mobile web apps seem content with a half-hearted grey-boxes-and-lines style and a rigid, transitionless interactivity.</p>
+          
+          <p>Does the responsibility lie with the vendors of mobile browsers? Partially. Apple are only now getting round to adding <a href="http://cubiq.org/ios5-the-first-true-web-app-ready-platform">native support for scrollable elements</a>: so far, we’ve been stuck with a range of lovingly crafted fakeries that range from ‘pathetic’ to ‘uncanny valley’. The problem goes beyond the slow pace of change, though—even when the functionality required to implement higher-quality interaction <em>is</em> in place, it’s often in such a way as to leave an inordinate amount of work to the app developer. A perfect example of this is the default behaviour of ‘clickable’ elements in Mobile Safari.</p>
+          
+          <p>Tap a link, a button or indeed any element with a <code>click</code> event defined, and two unpleasant things happen. First, <em>nothing</em>, for 300 milliseconds. Then, an ugly dark-grey overlay—you know the one I’m talking about. Compared to the responsiveness of clickable UI elements in native apps, using a mobile app where every element behaves this way feels like operating your iPhone with someone else’s finger.</p>
+          
+          <p>In developing <a href="http://nnnnext.com">nnnnext</a>, I quickly came to the decision that this was <em>not good enough</em>, and set about trying to fix it. First, I did the simplest thing. For each ‘tappable’ element:</p>
+          
+          <ol>
+          <li>Style the element with <code>-webkit-tap-highlight-color: rgba(0,0,0,0)</code> to hide the overlay.</li>
+          
+          <li>Listen for the <code>touchstart</code> event and add a class to the element so you can style its ‘touched’ state.</li>
+          
+          <li>Listen for the <code>touchmove</code> event, and remove the class if fired. This deactivates the button if the user moves their finger away or scrolls the page.</li>
+          
+          <li>Listen for the <code>touchend</code> event. If the class is still there, remove it and fire the callback. Otherwise, do nothing.</li>
+          </ol><p>For the initial release of nnnnext, this sufficed. Elements reacted <em>instantly</em> when touched, and again when you lifted your finger. There was one niggle, though—if you scrolled the page and happened to touch a tappable element, you’d get a flash of blue as the <code>touchstart</code> and <code>touchmove</code> events fired in quick succession. Turns out that tap-highlighting of elements in iOS lists (for example the Settings app) <em>does</em> have a delay on it (although it’s closer to 150ms<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>), and with good reason.</p>
+          
+          <p>Right then: we need our delay back, except we’ll make it shorter. What are the event listener semantics now?</p>
+          
+          <p>They’re <em>horrible</em>, that’s what.</p>
+          <table>
+          <thead><tr>
+          <th>Event order</th>
+          <th>Desired effect</th>
+          </tr></thead>
+          <tbody>
+          <tr>
+          <td style="text-align: left;">touchstart, timeout, touchend</td>
+          <td style="text-align: left;">Highlight on timeout, de-highlight and fire callback on touchend (“long tap”)</td>
+          </tr>
+          <tr>
+          <td style="text-align: left;">touchstart, touchend, timeout</td>
+          <td style="text-align: left;">Fire callback on timeout (“short tap”)</td>
+          </tr>
+          <tr>
+          <td style="text-align: left;">touchstart, timeout, touchmove, touchend</td>
+          <td style="text-align: left;">Highlight, then de-highlight on touchmove (“long tap” cancelled by scrolling)</td>
+          </tr>
+          <tr>
+          <td style="text-align: left;">touchstart, touchmove, timeout, touchend</td>
+          <td style="text-align: left;">None (scroll)</td>
+          </tr>
+          <tr>
+          <td style="text-align: left;">touchstart, touchmove, touchend, timeout</td>
+          <td style="text-align: left;">None (scroll)</td>
+          </tr>
+          </tbody>
+          </table><p>Good luck figuring that one out. I’ll skip forward now, as I promised up there in the first paragraph that I’d done the hard work for you. <a href="https://github.com/aanand/jquery.tappable.js">jquery.tappable.js</a> implements the above behaviour, and falls back to <code>click</code> events in desktop browsers for good measure. Have fun!</p>
+          <div class="footnotes">
+          <hr>
+          <ol><li id="fn:1">
+          <p>I suspect the reason Mobile Safari’s click delay is 300ms long is to allow time for the user to double-tap; nonetheless, this backwards-compatibility makes 99% of interactions sluggish. I’d have just broken <code>dblclick</code> events and been done with it.</p>
+          <a href="#fnref:1" rev="footnote">↩</a>
+          </li></ol>
+          </div>
+        </article>
+    </div>
+  </body>
+</html>
