@@ -937,6 +937,9 @@ a:hover {
 .article .title {
   font-weight: 700;
 }
+.article summary {
+  font-style: italic;
+}
 .article time {
   color: #666666;
 }
