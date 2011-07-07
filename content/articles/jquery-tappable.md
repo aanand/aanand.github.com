@@ -34,7 +34,32 @@ touchstart, timeout, touchmove, touchend | Highlight, then de-highlight on touch
 touchstart, touchmove, timeout, touchend | None (scroll)
 touchstart, touchmove, touchend, timeout | None (scroll)
 
-Good luck figuring that one out. I’ll skip forward now, as I promised up there in the first paragraph that I’d done the hard work for you. [jquery.tappable.js][jquery-tappable] implements the above behaviour, and falls back to `click` events in desktop browsers for good measure. Have fun!
+Good luck figuring that one out. I’ll skip forward now, as I promised up there in the first paragraph that I’d done the hard work for you. [jquery.tappable.js][jquery-tappable] implements the above behaviour, and falls back to `click` events in desktop browsers for good measure.
+
+    ```javascript
+    // Basic usage
+    $(element).tappable(function() { console.log("Hello World!") })
+
+    // Add a delay
+    $(element).tappable({
+      callback:   function() { console.log("Hello World!") },
+      touchDelay: 150
+    })
+
+    // Don't cancel taps when the user moves their finger
+    $(element).tappable({
+      callback:     function() { console.log("Hello World!") },
+      cancelOnMove: false
+    })
+
+    // Don't highlight the element OR fire the callback unless a
+    // specified condition is met
+    $(element).tappable({
+      callback: function() { console.log("Hello World!") },
+      onlyIf:   function() { return Math.random() > 0.5 }
+    })
+
+Have fun!
 
 [jquery-tappable]: https://github.com/aanand/jquery.tappable.js
 [mobile-native]: http://cvil.ly/2011/06/19/pretenders-why-mobile-web-apps-should-stop-trying-to-act-like-native-apps/
