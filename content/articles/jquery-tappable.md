@@ -22,7 +22,7 @@ For the initial release of nnnnext, this sufficed. Elements reacted _instantly_ 
 
 [^click-delay]: I suspect the reason Mobile Safari’s click delay is 300ms long is to allow time for the user to double-tap; nonetheless, this backwards-compatibility makes 99% of interactions sluggish. I’d have just broken `dblclick` events and been done with it.
 
-Right then: we need our delay back, except we’ll make it shorter. What are the event listener semantics now?
+Right then: for elements that the user is likely to touch when scrolling, we need our delay back (except we’ll make it shorter). What are the event listener semantics now?
 
 They’re _horrible_, that’s what.
 
@@ -55,8 +55,8 @@ Good luck figuring that one out. I’ll skip forward now, as I promised up there
     // Don't highlight the element OR fire the callback unless a
     // specified condition is met
     $(element).tappable({
-      callback: function() { console.log("Hello World!") },
-      onlyIf:   function() { return Math.random() > 0.5 }
+      callback: function()   { console.log("Hello World!")      },
+      onlyIf:   function(el) { return $(el).hasClass('enabled') }
     })
 
 Have fun!
