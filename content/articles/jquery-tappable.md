@@ -1,5 +1,5 @@
 ---
-title: Passing Off as a Native with jquery.tappable.js
+title: Better Touch Behaviour with jquery.tappable.js
 kind: article
 created_at: 2011-07-05 21:13
 summary: Apple may not hate the open web as much as the haters would have you believe, but they certainly don’t make click behaviour pretty in Mobile Safari. Unfortunately, taking control of it is more involved than it perhaps ought to be. [jquery.tappable.js](https://github.com/aanand/jquery.tappable.js) does (most of) the hard work for you.
