@@ -17,6 +17,7 @@ end
 compile '/articles/*/' do
   filter :maruku
   filter :syntax
+  filter :prepend_summary
   layout 'article'
   layout 'default'
 end
@@ -28,6 +29,7 @@ end
 compile '/articles/*/', rep: "feed" do
   filter :maruku
   filter :syntax, colour: false
+  filter :prepend_summary
 end
 
 compile '*' do

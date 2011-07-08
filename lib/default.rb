@@ -58,3 +58,17 @@ class SyntaxFilter < Nanoc3::Filter
     doc.to_html
   end
 end
+
+class PrependSummaryFilter < Nanoc3::Filter
+  identifier :prepend_summary
+
+  def run(content, params={})
+    "".tap do |output|
+      if item[:summary]
+        output << "<details><summary>#{maruku(item[:summary])}</summary></details>"
+      end
+
+      output << content
+    end
+  end
+end
