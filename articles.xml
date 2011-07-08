@@ -2,13 +2,91 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <id>http://aanandprasad.com/</id>
   <title>Aanand Prasad</title>
-  <updated>2011-05-20T13:16:00Z</updated>
+  <updated>2011-07-05T20:13:00Z</updated>
   <link rel="alternate" href="http://aanandprasad.com/"/>
   <link rel="self" href="http://aanandprasad.com/articles.xml"/>
   <author>
     <name>Aanand Prasad</name>
     <uri>http://aanandprasad.com/</uri>
   </author>
+  <entry>
+    <id>tag:aanandprasad.com,2011-07-05:/articles/jquery-tappable/</id>
+    <title type="html">Better Touch Behaviour with jquery.tappable.js</title>
+    <published>2011-07-05T20:13:00Z</published>
+    <updated>2011-07-07T09:39:00Z</updated>
+    <link rel="alternate" href="http://aanandprasad.com/articles/jquery-tappable/"/>
+    <content type="html">&lt;p&gt;I hope we can all agree that &lt;a href="http://cvil.ly/2011/06/19/pretenders-why-mobile-web-apps-should-stop-trying-to-act-like-native-apps/"&gt;mobile web apps shouldn’t pretend to be native apps&lt;/a&gt;, but I don’t like the thought of having to accept the current state of most mobile apps as the hand we’ve been dealt. The whole business feels somewhat 2000-era, which is frankly weird—we’ve spent a good decade improving the look and feel of apps in the browser, but the majority of mobile web apps seem content with a half-hearted grey-boxes-and-lines style and a rigid, transitionless interactivity.&lt;/p&gt;
+
+&lt;p&gt;Does the responsibility lie with the vendors of mobile browsers? Partially. Apple are only now getting round to adding &lt;a href="http://cubiq.org/ios5-the-first-true-web-app-ready-platform"&gt;native support for scrollable elements&lt;/a&gt;: so far, we’ve been stuck with a range of lovingly crafted fakeries that range from ‘pathetic’ to ‘uncanny valley’. The problem goes beyond the slow pace of change, though—even when the functionality required to implement higher-quality interaction &lt;em&gt;is&lt;/em&gt; in place, it’s often in such a way as to leave an inordinate amount of work to the app developer. A perfect example of this is the default behaviour of ‘clickable’ (or, rather, &lt;em&gt;tappable&lt;/em&gt;) elements in Mobile Safari.&lt;/p&gt;
+
+&lt;p&gt;Tap a link, a button or indeed any element with a &lt;code&gt;click&lt;/code&gt; event defined, and two unpleasant things happen. First, &lt;em&gt;nothing&lt;/em&gt;, for around 300 milliseconds. Then, an ugly dark-grey overlay—you know the one I’m talking about. Compared to the responsiveness of tappable UI elements in native apps, using a mobile app where every element behaves this way feels like operating your iPhone with someone else’s finger.&lt;/p&gt;
+
+&lt;p&gt;In developing &lt;a href="http://nnnnext.com"&gt;nnnnext&lt;/a&gt;, I quickly came to the decision that this wasn’t good enough, and set about trying to fix it. While &lt;a href="http://css-infos.net/property/-webkit-tap-highlight-color"&gt;removing the overlay&lt;/a&gt; was easy enough, it quickly became obvious that iOS’ touch behaviour is more complicated than I intitially suspected, primarily in that &lt;em&gt;it treats a “long tap” differently from a “short tap”&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Perform a short tap (i.e. literally just &lt;em&gt;tap&lt;/em&gt; the screen), and the element is immediately highlighted and the appropriate action executed. Perform a long tap (keeping your finger down for a moment), and the element is highlighted after a short delay (around 150ms) and the action executed when you lift your finger—unless you move your finger first, in which case the highlight is immediately removed and the action cancelled.&lt;/p&gt;
+
+&lt;p&gt;The reason for the long-tap highlight delay became apparent after I’d coded my initial implementation: if the element is immediately highlighted when you put your finger down, then every time you scroll you’ll get a flash-of-highlight if you happen to start your scroll by putting your finger on that element. This is, I believe, why the delay is only in place on large, column-spanning elements of the type you can’t avoid touching when you scroll, while buttons and other small widgets react the moment you touch them.&lt;/p&gt;
+
+&lt;p&gt;I realised some of this only after implementing an incorrect solution, releasing it and blogging my ignorance. Another fact I overlooked is that Mobile Safari’s behaviour &lt;em&gt;only&lt;/em&gt; deviates from the rest of the OS on short taps. Long-tap behaviour is the same, but with short taps, both highlighting &lt;em&gt;and&lt;/em&gt; action are delayed, and for around twice as long as the long-tap highlight delay! The reason for this (though I failed to perceive this blindingly obvious fact at the time) is Safari’s &lt;em&gt;double-tap-to-zoom feature&lt;/em&gt;—if there were no delay, or if it were much shorter, double-tapping would be impossible.&lt;/p&gt;
+
+&lt;p&gt;In most mobile-optimised web apps, however, zooming isn’t even enabled, rendering any short-tap delay worse than useless. Here, then, is our desired behaviour, expressed in terms of browser events:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;&lt;tr&gt;
+&lt;th&gt;Event order&lt;/th&gt;
+&lt;th&gt;Desired effect&lt;/th&gt;
+&lt;/tr&gt;&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left;"&gt;touchstart, timeout, touchend&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;Highlight on timeout, fire callback on touchend (long tap)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left;"&gt;touchstart, touchend, timeout&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;Highlight and fire callback on touchend (short tap)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left;"&gt;touchstart, timeout, touchmove, touchend&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;Highlight, then de-highlight on touchmove (long tap cancelled by scrolling)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left;"&gt;touchstart, touchmove, timeout, touchend&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;None (scroll)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left;"&gt;touchstart, touchmove, touchend, timeout&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;None (scroll)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;&lt;p&gt;I promised up there in the first paragraph that I’d done the hard work for you, and here you go: &lt;a href="https://github.com/aanand/jquery.tappable.js"&gt;jquery.tappable.js&lt;/a&gt; implements this behaviour, and falls back to &lt;code&gt;click&lt;/code&gt; events in desktop browsers for good measure.&lt;/p&gt;
+
+&lt;p&gt;It deviates from the above table in one respect, however—the highlight class is removed (or, in the case of a short tap, not added) before firing the callback. This is a matter of code aesthetics for me: I don’t want a library or plugin I’m using to add a transient class to an element without cleaning up after itself. When I need the highlight class to stick around longer (which in the nnnnext codebase is the exception, not the rule), I add it again in the callback function.&lt;/p&gt;
+
+&lt;p&gt;Anyway, examples:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// Basic usage
+$(element).tappable(function() { console.log("Hello World!") })
+
+// Add a delay
+$(element).tappable({
+  callback:   function() { console.log("Hello World!") },
+  touchDelay: 150
+})
+
+// Don't cancel taps when the user moves their finger
+$(element).tappable({
+  callback:     function() { console.log("Hello World!") },
+  cancelOnMove: false
+})
+
+// Don't highlight the element OR fire the callback unless a
+// specified condition is met
+$(element).tappable({
+  callback: function()   { console.log("Hello World!")      },
+  onlyIf:   function(el) { return $(el).hasClass('enabled') }
+})&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Have fun!&lt;/p&gt;</content>
+  </entry>
   <entry>
     <id>tag:aanandprasad.com,2011-05-20:/articles/prototype-chains-and-coffeescript-subclasses/</id>
     <title type="html">Prototype Chains and CoffeeScript Subclasses</title>
