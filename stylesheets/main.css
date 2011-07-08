@@ -934,6 +934,15 @@ a:hover {
   text-decoration: underline;
 }
 
+.sidebar .created, .sidebar .updated, .sidebar .permalink {
+  display: block;
+}
+.sidebar .updated {
+  font-size: 0.75em;
+  line-height: 2;
+  color: #666666;
+}
+
 .article .title {
   font-weight: 700;
 }

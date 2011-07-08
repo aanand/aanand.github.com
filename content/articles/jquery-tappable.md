@@ -2,39 +2,39 @@
 title: Better Touch Behaviour with jquery.tappable.js
 kind: article
 created_at: 2011-07-05 21:13
+updated_at: 2011-07-07 10:39
 summary: Apple may not hate the open web as much as the haters would have you believe, but they certainly don’t make click behaviour pretty in Mobile Safari. Unfortunately, taking control of it is more involved than it perhaps ought to be. [jquery.tappable.js](https://github.com/aanand/jquery.tappable.js) does (most of) the hard work for you.
 ---
 
 I hope we can all agree that [mobile web apps shouldn’t pretend to be native apps][mobile-native], but I don’t like the thought of having to accept the current state of most mobile apps as the hand we’ve been dealt. The whole business feels somewhat 2000-era, which is frankly weird—we’ve spent a good decade improving the look and feel of apps in the browser, but the majority of mobile web apps seem content with a half-hearted grey-boxes-and-lines style and a rigid, transitionless interactivity.
 
-Does the responsibility lie with the vendors of mobile browsers? Partially. Apple are only now getting round to adding [native support for scrollable elements][ios-scrolling]: so far, we’ve been stuck with a range of lovingly crafted fakeries that range from ‘pathetic’ to ‘uncanny valley’. The problem goes beyond the slow pace of change, though—even when the functionality required to implement higher-quality interaction _is_ in place, it’s often in such a way as to leave an inordinate amount of work to the app developer. A perfect example of this is the default behaviour of ‘clickable’ elements in Mobile Safari.
+Does the responsibility lie with the vendors of mobile browsers? Partially. Apple are only now getting round to adding [native support for scrollable elements][ios-scrolling]: so far, we’ve been stuck with a range of lovingly crafted fakeries that range from ‘pathetic’ to ‘uncanny valley’. The problem goes beyond the slow pace of change, though—even when the functionality required to implement higher-quality interaction _is_ in place, it’s often in such a way as to leave an inordinate amount of work to the app developer. A perfect example of this is the default behaviour of ‘clickable’ (or, rather, _tappable_) elements in Mobile Safari.
 
-Tap a link, a button or indeed any element with a `click` event defined, and two unpleasant things happen. First, _nothing_, for 300 milliseconds. Then, an ugly dark-grey overlay—you know the one I'm talking about. Compared to the responsiveness of clickable UI elements in native apps, using a mobile app where every element behaves this way feels like operating your iPhone with someone else’s finger.
+Tap a link, a button or indeed any element with a `click` event defined, and two unpleasant things happen. First, _nothing_, for around 300 milliseconds. Then, an ugly dark-grey overlay—you know the one I'm talking about. Compared to the responsiveness of tappable UI elements in native apps, using a mobile app where every element behaves this way feels like operating your iPhone with someone else’s finger.
 
-In developing [nnnnext](http://nnnnext.com), I quickly came to the decision that this was _not good enough_, and set about trying to fix it. First, I did the simplest thing. For each ‘tappable’ element:
+In developing [nnnnext](http://nnnnext.com), I quickly came to the decision that this wasn’t good enough, and set about trying to fix it. While [removing the overlay][webkit-tap-highlight-color] was easy enough, it quickly became obvious that iOS’ touch behaviour is more complicated than I intitially suspected, primarily in that *it treats a “long tap” differently from a “short tap”*.
 
-1. Style the element with `-webkit-tap-highlight-color: rgba(0,0,0,0)` to hide the overlay.
-2. Listen for the `touchstart` event and add a class to the element so you can style its ‘touched’ state.
-3. Listen for the `touchmove` event, and remove the class if fired. This deactivates the button if the user moves their finger away or scrolls the page.
-4. Listen for the `touchend` event. If the class is still there, remove it and fire the callback. Otherwise, do nothing.
+Perform a short tap (i.e. literally just _tap_ the screen), and the element is immediately highlighted and the appropriate action executed. Perform a long tap (keeping your finger down for a moment), and the element is highlighted after a short delay (around 150ms) and the action executed when you lift your finger—unless you move your finger first, in which case the highlight is immediately removed and the action cancelled.
 
-For the initial release of nnnnext, this sufficed. Elements reacted _instantly_ when touched, and again when you lifted your finger. There was one niggle, though—if you scrolled the page and happened to touch a tappable element, you’d get a flash of blue as the `touchstart` and `touchmove` events fired in quick succession. Turns out that tap-highlighting of elements in iOS lists (for example the Settings app) _does_ have a delay on it (although it’s closer to 150ms[^click-delay]), and with good reason.
+The reason for the long-tap highlight delay became apparent after I’d coded my initial implementation: if the element is immediately highlighted when you put your finger down, then every time you scroll you’ll get a flash-of-highlight if you happen to start your scroll by putting your finger on that element. This is, I believe, why the delay is only in place on large, column-spanning elements of the type you can’t avoid touching when you scroll, while buttons and other small widgets react the moment you touch them.
 
-[^click-delay]: I suspect the reason Mobile Safari’s click delay is 300ms long is to allow time for the user to double-tap; nonetheless, this backwards-compatibility makes 99% of interactions sluggish. I’d have just broken `dblclick` events and been done with it.
+I realised some of this only after implementing an incorrect solution, releasing it and blogging my ignorance. Another fact I overlooked is that Mobile Safari’s behaviour _only_ deviates from the rest of the OS on short taps. Long-tap behaviour is the same, but with short taps, both highlighting _and_ action are delayed, and for around twice as long as the long-tap highlight delay! The reason for this (though I failed to perceive this blindingly obvious fact at the time) is Safari’s _double-tap-to-zoom feature_—if there were no delay, or if it were much shorter, double-tapping would be impossible.
 
-Right then: for elements that the user is likely to touch when scrolling, we need our delay back (except we’ll make it shorter). What are the event listener semantics now?
-
-They’re _horrible_, that’s what.
+In most mobile-optimised web apps, however, zooming isn’t even enabled, rendering any short-tap delay worse than useless. Here, then, is our desired behaviour, expressed in terms of browser events:
 
 Event order                              | Desired effect
 ---------------------------------------- | --------------
-touchstart, timeout, touchend            | Highlight on timeout, de-highlight and fire callback on touchend (“long tap”)
-touchstart, touchend, timeout            | Fire callback on timeout (“short tap”)
-touchstart, timeout, touchmove, touchend | Highlight, then de-highlight on touchmove (“long tap” cancelled by scrolling)
+touchstart, timeout, touchend            | Highlight on timeout, fire callback on touchend (long tap)
+touchstart, touchend, timeout            | Highlight and fire callback on touchend (short tap)
+touchstart, timeout, touchmove, touchend | Highlight, then de-highlight on touchmove (long tap cancelled by scrolling)
 touchstart, touchmove, timeout, touchend | None (scroll)
 touchstart, touchmove, touchend, timeout | None (scroll)
 
-Good luck figuring that one out. I’ll skip forward now, as I promised up there in the first paragraph that I’d done the hard work for you. [jquery.tappable.js][jquery-tappable] implements the above behaviour, and falls back to `click` events in desktop browsers for good measure.
+I promised up there in the first paragraph that I’d done the hard work for you, and here you go: [jquery.tappable.js][jquery-tappable] implements this behaviour, and falls back to `click` events in desktop browsers for good measure.
+
+It deviates from the above table in one respect, however—the highlight class is removed (or, in the case of a short tap, not added) before firing the callback. This is a matter of code aesthetics for me: I don’t want a library or plugin I’m using to add a transient class to an element without cleaning up after itself. When I need the highlight class to stick around longer (which in the nnnnext codebase is the exception, not the rule), I add it again in the callback function.
+
+Anyway, examples:
 
     ```javascript
     // Basic usage
@@ -64,4 +64,5 @@ Have fun!
 [jquery-tappable]: https://github.com/aanand/jquery.tappable.js
 [mobile-native]: http://cvil.ly/2011/06/19/pretenders-why-mobile-web-apps-should-stop-trying-to-act-like-native-apps/
 [ios-scrolling]: http://cubiq.org/ios5-the-first-true-web-app-ready-platform
+[webkit-tap-highlight-color]: http://css-infos.net/property/-webkit-tap-highlight-color
 

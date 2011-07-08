@@ -9,10 +9,10 @@ include Nanoc3::Helpers::Filtering
 include Nanoc3::Helpers::Blogging
 include Nanoc3::Helpers::HTMLEscape
 
-def time_tag(item)
-  created_at   = Time.parse(item[:created_at])
-  datetime     = created_at.strftime("%Y-%m-%d")
-  display_time = created_at.strftime("%d %B %Y")
+def time_tag(item, key=:created_at)
+  time         = Time.parse(item[key])
+  datetime     = time.strftime("%Y-%m-%d")
+  display_time = time.strftime("%d %B %Y")
 
   "<time datetime='#{h(datetime)}'>#{h(display_time)}</time>"
 end

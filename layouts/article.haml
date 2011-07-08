@@ -1,6 +1,9 @@
 .sidebar
-  = time_tag(@item)
-  %br
+  .created= time_tag(@item)
+
+  - if @item[:updated_at]
+    .updated= '(Updated ' + time_tag(@item, :updated_at) + ')'
+
   %a.permalink{ :href => @item.path } Permalink
 
 %article.article.content
