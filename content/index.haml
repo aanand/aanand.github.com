@@ -7,7 +7,7 @@ summary: I’m a programmer and this is my website and I hope that you like it.
     I’m a programmer and this is my website and I hope that you like it. Here are the articles that are on this site which I have written using my fingers:
 
   .index
-    - articles.each do |item|
+    - sorted_articles.each do |item|
       .article
         %a.title{ :href => item.path }= item[:title]
         = time_tag(item)
