@@ -1,13 +1,18 @@
-%article.article.content
-  %h2.title= @item[:title]
+.content
+  = h1
 
-  .metadata
-    .created= time_tag(@item)
+  %article.article
+    %h2.title= @item[:title]
 
-    - if @item[:updated_at]
-      .updated= 'Updated ' + time_tag(@item, :updated_at)
+    ~ yield
 
-    %a.permalink{ :href => @item.path } Permalink
+    %hr
 
-  ~ yield
+    .metadata
+      .created= time_tag(@item)
+
+      - if @item[:updated_at]
+        .updated= 'Updated ' + time_tag(@item, :updated_at)
+
+      %a.permalink{ :href => @item.path } Permalink
 

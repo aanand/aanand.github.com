@@ -9,6 +9,10 @@ include Nanoc3::Helpers::Filtering
 include Nanoc3::Helpers::Blogging
 include Nanoc3::Helpers::HTMLEscape
 
+def h1
+  '<h1><a href="/">Aanand Prasad</a></h1>'
+end
+
 def time_tag(item, key=:created_at)
   time         = Time.parse(item[key])
   datetime     = time.strftime("%Y-%m-%d")

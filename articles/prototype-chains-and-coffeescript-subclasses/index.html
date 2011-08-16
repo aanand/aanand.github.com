@@ -24,62 +24,51 @@
   </head>
   <body>
     <div class='container'>
-      <div class='header'>
-        <h1><a href="/">Aanand Prasad</a></h1>
-        <ul>
-          <li>
-            <a href='http://twitter.com/aanand'>Twitter</a>
-          </li>
-          <li>
-            <a href='http://github.com/aanand'>Github</a>
-          </li>
-          <li>
-            <a href='mailto:aanand.prasad@gmail.com'>Email</a>
-          </li>
-        </ul>
-        <hr />
-      </div>
-      <article class='article content'>
-          <h2 class='title'>Prototype Chains and CoffeeScript Subclasses</h2>
-          <div class='metadata'>
-            <div class='created'><time datetime='2011-05-20'>20 May 2011</time></div>
-            <a class='permalink' href='/articles/prototype-chains-and-coffeescript-subclasses/'>Permalink</a>
-          </div>
-          <div class='summary'><p>In developing <a href='http://nnnnext.com'>nnnnext.com</a>, I tackled a surprising number of problems I’d not faced before in my web development career. Here’s one of the more interesting ones, with what I think is a pretty cute solution.</p></div><hr class='summary-break'/><p>Context, briefly: nnnnext is a todo list for your music. It’s a single-page JavaScript app written in <a href="http://jashkenas.github.com/coffee-script/">CoffeeScript</a> and utilising <a href="http://documentcloud.github.com/backbone/">Backbone.js</a> for <a href="http://twitter.com/hylomorphism/status/71202209618067457">lightweight</a> MVC. Importantly, it has two similar-but-separate user interfaces: one for desktop web browsers, and another for multitouch devices.</p>
-          
-          <p>Both interfaces are implemented as a set of classes (provided by CoffeeScript’s <a href="http://jashkenas.github.com/coffee-script/#classes">simple classes implementation</a>) that represent the different UI views. Each UI requires slightly different behaviour for <em>some</em> views. For example, an element might contain a button that (in the desktop UI) appears when the element is hovered, and (in the touch UI) appears/disappears when the element is tapped. Consequently, some view classes are subclassed in one or both UIs in order to implement these differences. The class structure might look like this (implementation code omitted):</p>
-          
-          <pre><code><span class="nv">Views   = </span><span class="p">{}</span>&#x000A;<span class="nv">Desktop = </span><span class="p">{}</span>&#x000A;<span class="nv">Touch   = </span><span class="p">{}</span>&#x000A;&#x000A;<span class="k">class</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Widget</span>   <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>&#x000A;<span class="k">class</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Thinger</span>  <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>&#x000A;<span class="k">class</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Sprocket</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>&#x000A;&#x000A;<span class="k">class</span> <span class="nx">Desktop</span><span class="p">.</span><span class="nx">Widget</span> <span class="k">extends</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Widget</span>&#x000A;&#x000A;<span class="k">class</span> <span class="nx">Touch</span><span class="p">.</span><span class="nx">Widget</span>   <span class="k">extends</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Widget</span>&#x000A;<span class="k">class</span> <span class="nx">Touch</span><span class="p">.</span><span class="nx">Thinger</span>  <span class="k">extends</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Thinger</span>&#x000A;</code></pre>
-          
-          <p>(Whatever you think of classical object-orientation and inheritance, it’s an undeniably good fit for MVC-style UI code—subclasses and the <code>super</code> keyword make augmentation of behaviour very straightforward<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.)</p>
-          
-          <p>So how, at runtime, might we instantiate the appropriate class? Running all instantiations through a helper method would certainly work:</p>
-          
-          <pre><code><span class="c1"># assume the existence of a `Mobile` boolean variable</span>&#x000A;&#x000A;<span class="nv">makeViewObject: </span><span class="o">-&gt;</span> <span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">args</span><span class="p">...)</span>&#x000A;  <span class="nv">UI    = </span><span class="k">if</span> <span class="nx">Mobile</span> <span class="k">then</span> <span class="nx">Touch</span> <span class="k">else</span> <span class="nx">Desktop</span>&#x000A;  <span class="nv">klass = </span><span class="nx">UI</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">||</span> <span class="nx">Views</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span>&#x000A;&#x000A;  <span class="k">new</span> <span class="nx">klass</span><span class="p">(</span><span class="nx">args</span><span class="p">...)</span>&#x000A;&#x000A;<span class="nx">makeViewObject</span><span class="p">(</span><span class="s2">"Widget"</span><span class="p">)</span>   <span class="c1"># =&gt; new Desktop.Widget OR new Touch.Widget</span>&#x000A;<span class="nx">makeViewObject</span><span class="p">(</span><span class="s2">"Thinger"</span><span class="p">)</span>  <span class="c1"># =&gt; new Desktop.Thinger OR new Views.Thinger</span>&#x000A;<span class="nx">makeViewObject</span><span class="p">(</span><span class="s2">"Sprocket"</span><span class="p">)</span> <span class="c1"># =&gt; new Views.Sprocket</span>&#x000A;</code></pre>
-          
-          <p>…and if you’re most people, you’ll stop there. I, on the other hand, had just read Isaac Z. Schlueter’s <a href="http://blog.izs.me/post/4731036392/evolution-of-a-prototypal-language-user">Evolution of a Prototypal Language User</a>, hadn’t done anything fun with prototype chains in years and didn’t like the idea of this unsightly helper method peppering my code. So I got to work.</p>
-          
-          <p>Instead of <code>Views</code>, <code>Desktop</code> and <code>Touch</code> being plain objects, we create a <code>ViewShop</code> function, point <code>Views</code> at its prototype and make <code>Desktop</code> and <code>Touch</code> new <code>ViewShop</code>s, so that property access falls back to <code>ViewShop.prototype</code>, which we’ve just aliased to <code>Views</code>… look, I’ll just show you:</p>
-          
-          <pre><code><span class="nv">ViewShop = </span><span class="o">-&gt;</span>&#x000A;&#x000A;<span class="nv">Views   = </span><span class="nx">ViewShop</span><span class="p">.</span><span class="nx">prototype</span>&#x000A;<span class="nv">Desktop = </span><span class="k">new</span> <span class="nx">ViewShop</span>&#x000A;<span class="nv">Touch   = </span><span class="k">new</span> <span class="nx">ViewShop</span>&#x000A;</code></pre>
-          
-          <p>Now, after defining the view classes, access any property of <code>Desktop</code> or <code>Touch</code>, and prototype chaining works its magic:</p>
-          
-          <pre><code><span class="nx">Desktop</span><span class="p">.</span><span class="nx">Widget</span>   <span class="c1"># =&gt; Desktop.Widget</span>&#x000A;<span class="nx">Desktop</span><span class="p">.</span><span class="nx">Thinger</span>  <span class="c1"># =&gt; Views.Thinger</span>&#x000A;<span class="nx">Desktop</span><span class="p">.</span><span class="nx">Sprocket</span> <span class="c1"># =&gt; Views.Sprocket</span>&#x000A;&#x000A;<span class="nx">Touch</span><span class="p">.</span><span class="nx">Widget</span>     <span class="c1"># =&gt; Touch.Widget</span>&#x000A;<span class="nx">Touch</span><span class="p">.</span><span class="nx">Thinger</span>    <span class="c1"># =&gt; Touch.Thinger</span>&#x000A;<span class="nx">Touch</span><span class="p">.</span><span class="nx">Sprocket</span>   <span class="c1"># =&gt; Views.Sprocket</span>&#x000A;</code></pre>
-          
-          <p>We need only make a <code>UI</code> variable that points to the right <code>ViewShop</code>, and we’re done:</p>
-          
-          <pre><code><span class="nv">UI = </span><span class="k">if</span> <span class="nx">Mobile</span> <span class="k">then</span> <span class="nx">Touch</span> <span class="k">else</span> <span class="nx">Desktop</span>&#x000A;&#x000A;<span class="k">new</span> <span class="nx">UI</span><span class="p">.</span><span class="nx">Widget</span>   <span class="c1"># =&gt; new Desktop.Widget OR new Touch.Widget</span>&#x000A;<span class="k">new</span> <span class="nx">UI</span><span class="p">.</span><span class="nx">Thinger</span>  <span class="c1"># =&gt; new Desktop.Thinger OR new Views.Thinger</span>&#x000A;<span class="k">new</span> <span class="nx">UI</span><span class="p">.</span><span class="nx">Sprocket</span> <span class="c1"># =&gt; new Views.Sprocket</span>&#x000A;</code></pre>
-          
-          <p>Well anyway, I like it.</p>
-          <div class="footnotes">
-          <hr>
-          <ol><li id="fn:1">
-          <p>I should be careful about using the word “undeniably” though. I’m no expert on object systems. If you feel you can reasonably deny it, I’d love to <a href="mailto:aanand.prasad@gmail.com">hear from you</a>!</p>
-          <a href="#fnref:1" rev="footnote">↩</a>
-          </li></ol>
-          </div>
-        </article>
+      <div class='content'>
+          <h1><a href="/">Aanand Prasad</a></h1>
+          <article class='article'>
+            <h2 class='title'>Prototype Chains and CoffeeScript Subclasses</h2>
+            <div class='summary'><p>In developing <a href='http://nnnnext.com'>nnnnext.com</a>, I tackled a surprising number of problems I’d not faced before in my web development career. Here’s one of the more interesting ones, with what I think is a pretty cute solution.</p></div><hr class='summary-break'/><p>Context, briefly: nnnnext is a todo list for your music. It’s a single-page JavaScript app written in <a href="http://jashkenas.github.com/coffee-script/">CoffeeScript</a> and utilising <a href="http://documentcloud.github.com/backbone/">Backbone.js</a> for <a href="http://twitter.com/hylomorphism/status/71202209618067457">lightweight</a> MVC. Importantly, it has two similar-but-separate user interfaces: one for desktop web browsers, and another for multitouch devices.</p>
+            
+            <p>Both interfaces are implemented as a set of classes (provided by CoffeeScript’s <a href="http://jashkenas.github.com/coffee-script/#classes">simple classes implementation</a>) that represent the different UI views. Each UI requires slightly different behaviour for <em>some</em> views. For example, an element might contain a button that (in the desktop UI) appears when the element is hovered, and (in the touch UI) appears/disappears when the element is tapped. Consequently, some view classes are subclassed in one or both UIs in order to implement these differences. The class structure might look like this (implementation code omitted):</p>
+            
+            <pre><code><span class="nv">Views   = </span><span class="p">{}</span>&#x000A;<span class="nv">Desktop = </span><span class="p">{}</span>&#x000A;<span class="nv">Touch   = </span><span class="p">{}</span>&#x000A;&#x000A;<span class="k">class</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Widget</span>   <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>&#x000A;<span class="k">class</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Thinger</span>  <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>&#x000A;<span class="k">class</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Sprocket</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>&#x000A;&#x000A;<span class="k">class</span> <span class="nx">Desktop</span><span class="p">.</span><span class="nx">Widget</span> <span class="k">extends</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Widget</span>&#x000A;&#x000A;<span class="k">class</span> <span class="nx">Touch</span><span class="p">.</span><span class="nx">Widget</span>   <span class="k">extends</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Widget</span>&#x000A;<span class="k">class</span> <span class="nx">Touch</span><span class="p">.</span><span class="nx">Thinger</span>  <span class="k">extends</span> <span class="nx">Views</span><span class="p">.</span><span class="nx">Thinger</span>&#x000A;</code></pre>
+            
+            <p>(Whatever you think of classical object-orientation and inheritance, it’s an undeniably good fit for MVC-style UI code—subclasses and the <code>super</code> keyword make augmentation of behaviour very straightforward<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.)</p>
+            
+            <p>So how, at runtime, might we instantiate the appropriate class? Running all instantiations through a helper method would certainly work:</p>
+            
+            <pre><code><span class="c1"># assume the existence of a `Mobile` boolean variable</span>&#x000A;&#x000A;<span class="nv">makeViewObject: </span><span class="o">-&gt;</span> <span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">args</span><span class="p">...)</span>&#x000A;  <span class="nv">UI    = </span><span class="k">if</span> <span class="nx">Mobile</span> <span class="k">then</span> <span class="nx">Touch</span> <span class="k">else</span> <span class="nx">Desktop</span>&#x000A;  <span class="nv">klass = </span><span class="nx">UI</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">||</span> <span class="nx">Views</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span>&#x000A;&#x000A;  <span class="k">new</span> <span class="nx">klass</span><span class="p">(</span><span class="nx">args</span><span class="p">...)</span>&#x000A;&#x000A;<span class="nx">makeViewObject</span><span class="p">(</span><span class="s2">"Widget"</span><span class="p">)</span>   <span class="c1"># =&gt; new Desktop.Widget OR new Touch.Widget</span>&#x000A;<span class="nx">makeViewObject</span><span class="p">(</span><span class="s2">"Thinger"</span><span class="p">)</span>  <span class="c1"># =&gt; new Desktop.Thinger OR new Views.Thinger</span>&#x000A;<span class="nx">makeViewObject</span><span class="p">(</span><span class="s2">"Sprocket"</span><span class="p">)</span> <span class="c1"># =&gt; new Views.Sprocket</span>&#x000A;</code></pre>
+            
+            <p>…and if you’re most people, you’ll stop there. I, on the other hand, had just read Isaac Z. Schlueter’s <a href="http://blog.izs.me/post/4731036392/evolution-of-a-prototypal-language-user">Evolution of a Prototypal Language User</a>, hadn’t done anything fun with prototype chains in years and didn’t like the idea of this unsightly helper method peppering my code. So I got to work.</p>
+            
+            <p>Instead of <code>Views</code>, <code>Desktop</code> and <code>Touch</code> being plain objects, we create a <code>ViewShop</code> function, point <code>Views</code> at its prototype and make <code>Desktop</code> and <code>Touch</code> new <code>ViewShop</code>s, so that property access falls back to <code>ViewShop.prototype</code>, which we’ve just aliased to <code>Views</code>… look, I’ll just show you:</p>
+            
+            <pre><code><span class="nv">ViewShop = </span><span class="o">-&gt;</span>&#x000A;&#x000A;<span class="nv">Views   = </span><span class="nx">ViewShop</span><span class="p">.</span><span class="nx">prototype</span>&#x000A;<span class="nv">Desktop = </span><span class="k">new</span> <span class="nx">ViewShop</span>&#x000A;<span class="nv">Touch   = </span><span class="k">new</span> <span class="nx">ViewShop</span>&#x000A;</code></pre>
+            
+            <p>Now, after defining the view classes, access any property of <code>Desktop</code> or <code>Touch</code>, and prototype chaining works its magic:</p>
+            
+            <pre><code><span class="nx">Desktop</span><span class="p">.</span><span class="nx">Widget</span>   <span class="c1"># =&gt; Desktop.Widget</span>&#x000A;<span class="nx">Desktop</span><span class="p">.</span><span class="nx">Thinger</span>  <span class="c1"># =&gt; Views.Thinger</span>&#x000A;<span class="nx">Desktop</span><span class="p">.</span><span class="nx">Sprocket</span> <span class="c1"># =&gt; Views.Sprocket</span>&#x000A;&#x000A;<span class="nx">Touch</span><span class="p">.</span><span class="nx">Widget</span>     <span class="c1"># =&gt; Touch.Widget</span>&#x000A;<span class="nx">Touch</span><span class="p">.</span><span class="nx">Thinger</span>    <span class="c1"># =&gt; Touch.Thinger</span>&#x000A;<span class="nx">Touch</span><span class="p">.</span><span class="nx">Sprocket</span>   <span class="c1"># =&gt; Views.Sprocket</span>&#x000A;</code></pre>
+            
+            <p>We need only make a <code>UI</code> variable that points to the right <code>ViewShop</code>, and we’re done:</p>
+            
+            <pre><code><span class="nv">UI = </span><span class="k">if</span> <span class="nx">Mobile</span> <span class="k">then</span> <span class="nx">Touch</span> <span class="k">else</span> <span class="nx">Desktop</span>&#x000A;&#x000A;<span class="k">new</span> <span class="nx">UI</span><span class="p">.</span><span class="nx">Widget</span>   <span class="c1"># =&gt; new Desktop.Widget OR new Touch.Widget</span>&#x000A;<span class="k">new</span> <span class="nx">UI</span><span class="p">.</span><span class="nx">Thinger</span>  <span class="c1"># =&gt; new Desktop.Thinger OR new Views.Thinger</span>&#x000A;<span class="k">new</span> <span class="nx">UI</span><span class="p">.</span><span class="nx">Sprocket</span> <span class="c1"># =&gt; new Views.Sprocket</span>&#x000A;</code></pre>
+            
+            <p>Well anyway, I like it.</p>
+            <div class="footnotes">
+            <hr>
+            <ol><li id="fn:1">
+            <p>I should be careful about using the word “undeniably” though. I’m no expert on object systems. If you feel you can reasonably deny it, I’d love to <a href="mailto:aanand.prasad@gmail.com">hear from you</a>!</p>
+            <a href="#fnref:1" rev="footnote">↩</a>
+            </li></ol>
+            </div>
+            <hr />
+            <div class='metadata'>
+              <div class='created'><time datetime='2011-05-20'>20 May 2011</time></div>
+              <a class='permalink' href='/articles/prototype-chains-and-coffeescript-subclasses/'>Permalink</a>
+            </div>
+          </article>
+        </div>
     </div>
     <script type='text/javascript'>
       //<![CDATA[

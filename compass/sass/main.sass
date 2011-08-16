@@ -18,57 +18,37 @@ form
   +container
   // +grid-background($blueprint-grid-columns, $blueprint-grid-width, $blueprint-grid-margin, 30px)
 
-.header, .full
-  +column($blueprint-grid-columns)
-
-.header
-  font-size: 1.5em
-  line-height: 1
-  text-align: center
-  +prepend-top(2em)
-
-  hr
-    font-size: 0.67em
-    +colruler(#bbb)
-    +prepend-top(1em)
-
-  .links
-    a:before
-      content: "\2022"
-
-.footnotes
-  hr
-    +colruler(#bbb)
-
-hr.summary-break
-  border:     none
-  margin:     0
-  text-align: center
-  +append-bottom(1em)
-
-  &:after
-    content: "❦"
-    +quiet
+hr
+  +colruler(#bbb)
 
 h1
-  display:       inline
-  font-size:     1em
-  line-height:   inherit
-  margin-bottom: 0
+  font-size: 2em
+  line-height: 0.75em
+  text-align: center
+  +prepend-top(1.5em)
+  +append-bottom(0.75em)
 
   a
     font-family:     $logo-font-family
     font-style:      normal
     text-decoration: none
-    color:           $name-color !important
-    background:      $name-bg
     padding:         0 0.25em
+    color:           $content-name-color !important
+    background:      $content-name-bg
     +border-radius(0.25em)
 
     &:hover
       text-decoration: none
-      color:           $name-hover-color !important
-      background:      $name-hover-bg
+      color:           $content-name-hover-color !important
+      background:      $content-name-hover-bg
+
+.index h1 a
+  color:      $index-name-color !important
+  background: $index-name-bg
+
+  &:hover
+    color:      $index-name-hover-color !important
+    background: $index-name-hover-bg
 
 @-moz-document url-prefix()
   h1 a
@@ -77,11 +57,12 @@ h1
   html.wf-active h1 a
     padding-top: 0
 
-.header ul
-  display:    inline
+.links
   list-style: none
   margin:     0
   padding:    0
+  text-align: center
+  +append-bottom(1.5em)
 
   li
     display: inline
@@ -89,6 +70,9 @@ h1
     &:before
       content: "\00b7"
       color:   $quiet-color
+
+    &:first-child:before
+      display: none
 
 h2
   font-size:     1.5em
@@ -124,7 +108,7 @@ a
   code
     @extend .c1
 
-.article.content
+.content .article
   .title, .metadata
     text-align: center
 

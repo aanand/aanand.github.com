@@ -816,24 +816,7 @@ form textarea {
   *zoom: 1;
 }
 
-.header, .full, .not-found {
-  display: inline;
-  float: left;
-  margin-right: 30px;
-  width: 630px;
-}
-* html .header, * html .full, * html .not-found {
-  overflow-x: hidden;
-}
-
-.header {
-  font-size: 1.5em;
-  line-height: 1;
-  text-align: center;
-  margin-top: 2em;
-}
-.header hr {
-  font-size: 0.67em;
+hr {
   background: #bbbbbb;
   color: #bbbbbb;
   clear: both;
@@ -842,47 +825,22 @@ form textarea {
   height: 0.1em;
   margin: 0 0 1.45em;
   border: none;
-  margin-top: 1em;
-}
-.header .links a:before {
-  content: "\2022";
-}
-
-.footnotes hr {
-  background: #bbbbbb;
-  color: #bbbbbb;
-  clear: both;
-  float: none;
-  width: 100%;
-  height: 0.1em;
-  margin: 0 0 1.45em;
-  border: none;
-}
-
-hr.summary-break {
-  border: none;
-  margin: 0;
-  text-align: center;
-  margin-bottom: 1em;
-}
-hr.summary-break:after {
-  content: "❦";
-  color: #666666;
 }
 
 h1 {
-  display: inline;
-  font-size: 1em;
-  line-height: inherit;
-  margin-bottom: 0;
+  font-size: 2em;
+  line-height: 0.75em;
+  text-align: center;
+  margin-top: 1.5em;
+  margin-bottom: 0.75em;
 }
 h1 a {
   font-family: "lobster-1", "lobster-2", sans-serif;
   font-style: normal;
   text-decoration: none;
-  color: white !important;
-  background: #cc2222;
   padding: 0 0.25em;
+  color: #dddddd !important;
+  background: transparent;
   -moz-border-radius: 0.25em;
   -webkit-border-radius: 0.25em;
   -o-border-radius: 0.25em;
@@ -892,6 +850,15 @@ h1 a {
 }
 h1 a:hover {
   text-decoration: none;
+  color: #cc2222 !important;
+  background: transparent;
+}
+
+.index h1 a {
+  color: white !important;
+  background: #cc2222;
+}
+.index h1 a:hover {
   color: #cc2222 !important;
   background: #ffcc88;
 }
@@ -906,18 +873,22 @@ h1 a:hover {
   }
 }
 
-.header ul {
-  display: inline;
+.links {
   list-style: none;
   margin: 0;
   padding: 0;
+  text-align: center;
+  margin-bottom: 1.5em;
 }
-.header ul li {
+.links li {
   display: inline;
 }
-.header ul li:before {
+.links li:before {
   content: "\00b7";
   color: #666666;
+}
+.links li:first-child:before {
+  display: none;
 }
 
 h2 {
@@ -953,10 +924,10 @@ a:hover {
   text-align: justify;
 }
 
-.article.content .title, .article.content .metadata {
+.content .article .title, .content .article .metadata {
   text-align: center;
 }
-.article.content .metadata {
+.content .article .metadata {
   margin-bottom: 1em;
 }
 
