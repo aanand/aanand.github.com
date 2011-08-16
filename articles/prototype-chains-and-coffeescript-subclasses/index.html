@@ -37,17 +37,15 @@
             <a href='mailto:aanand.prasad@gmail.com'>Email</a>
           </li>
         </ul>
+        <hr />
       </div>
-      <hr class='header-rule' />
-      <div class='sidebar'>
-          <div class='created'><time datetime='2011-05-20'>20 May 2011</time></div>
-          <a class='permalink' href='/articles/prototype-chains-and-coffeescript-subclasses/'>Permalink</a>
-        </div>
-        <article class='article content'>
-          <h2>
-            <span class='title'>Prototype Chains and CoffeeScript Subclasses</span>
-          </h2>
-          <div class='summary'><p>In developing <a href='http://nnnnext.com'>nnnnext.com</a>, I tackled a surprising number of problems I’d not faced before in my web development career. Here’s one of the more interesting ones, with what I think is a pretty cute solution.</p></div><hr/><p>Context, briefly: nnnnext is a todo list for your music. It’s a single-page JavaScript app written in <a href="http://jashkenas.github.com/coffee-script/">CoffeeScript</a> and utilising <a href="http://documentcloud.github.com/backbone/">Backbone.js</a> for <a href="http://twitter.com/hylomorphism/status/71202209618067457">lightweight</a> MVC. Importantly, it has two similar-but-separate user interfaces: one for desktop web browsers, and another for multitouch devices.</p>
+      <article class='article content'>
+          <h2 class='title'>Prototype Chains and CoffeeScript Subclasses</h2>
+          <div class='metadata'>
+            <div class='created'><time datetime='2011-05-20'>20 May 2011</time></div>
+            <a class='permalink' href='/articles/prototype-chains-and-coffeescript-subclasses/'>Permalink</a>
+          </div>
+          <div class='summary'><p>In developing <a href='http://nnnnext.com'>nnnnext.com</a>, I tackled a surprising number of problems I’d not faced before in my web development career. Here’s one of the more interesting ones, with what I think is a pretty cute solution.</p></div><hr class='summary-break'/><p>Context, briefly: nnnnext is a todo list for your music. It’s a single-page JavaScript app written in <a href="http://jashkenas.github.com/coffee-script/">CoffeeScript</a> and utilising <a href="http://documentcloud.github.com/backbone/">Backbone.js</a> for <a href="http://twitter.com/hylomorphism/status/71202209618067457">lightweight</a> MVC. Importantly, it has two similar-but-separate user interfaces: one for desktop web browsers, and another for multitouch devices.</p>
           
           <p>Both interfaces are implemented as a set of classes (provided by CoffeeScript’s <a href="http://jashkenas.github.com/coffee-script/#classes">simple classes implementation</a>) that represent the different UI views. Each UI requires slightly different behaviour for <em>some</em> views. For example, an element might contain a button that (in the desktop UI) appears when the element is hovered, and (in the touch UI) appears/disappears when the element is tapped. Consequently, some view classes are subclassed in one or both UIs in order to implement these differences. The class structure might look like this (implementation code omitted):</p>
           

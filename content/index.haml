@@ -9,7 +9,10 @@ summary: I’m a programmer and this is my website and I hope that you like it.
   .index
     - sorted_articles.each do |item|
       .article
+        .metadata
+          .created= time_tag(item)
+
         %a.title{ :href => item.path }= item[:title]
-        = time_tag(item)
+
         = maruku(item[:summary])
 

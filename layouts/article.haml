@@ -1,14 +1,13 @@
-.sidebar
-  .created= time_tag(@item)
-
-  - if @item[:updated_at]
-    .updated= '(Updated ' + time_tag(@item, :updated_at) + ')'
-
-  %a.permalink{ :href => @item.path } Permalink
-
 %article.article.content
-  %h2
-    %span.title= @item[:title]
+  %h2.title= @item[:title]
+
+  .metadata
+    .created= time_tag(@item)
+
+    - if @item[:updated_at]
+      .updated= 'Updated ' + time_tag(@item, :updated_at)
+
+    %a.permalink{ :href => @item.path } Permalink
 
   ~ yield
 

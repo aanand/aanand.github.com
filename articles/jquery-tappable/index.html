@@ -37,18 +37,16 @@
             <a href='mailto:aanand.prasad@gmail.com'>Email</a>
           </li>
         </ul>
+        <hr />
       </div>
-      <hr class='header-rule' />
-      <div class='sidebar'>
-          <div class='created'><time datetime='2011-07-05'>05 July 2011</time></div>
-          <div class='updated'>(Updated <time datetime='2011-07-07'>07 July 2011</time>)</div>
-          <a class='permalink' href='/articles/jquery-tappable/'>Permalink</a>
-        </div>
-        <article class='article content'>
-          <h2>
-            <span class='title'>Better Tap Behaviour with jquery.tappable.js</span>
-          </h2>
-          <div class='summary'><p>The behaviour of tappable elements in Mobile Safari is unacceptably ugly. Unfortunately, taking control of it is more involved than it perhaps ought to be. <a href='https://github.com/aanand/jquery.tappable.js'>jquery.tappable.js</a> does (most of) the hard work for you.</p></div><hr/><p>I hope we can all agree that <a href="http://cvil.ly/2011/06/19/pretenders-why-mobile-web-apps-should-stop-trying-to-act-like-native-apps/">mobile web apps shouldn’t pretend to be native apps</a>, but I don’t like the thought of having to accept the current state of most mobile apps as the hand we’ve been dealt. The whole business feels somewhat 2000-era, which is frankly weird—we’ve spent a good decade improving the look and feel of apps in the browser, but the majority of mobile web apps seem content with a half-hearted grey-boxes-and-lines style and a rigid, transitionless interactivity.</p>
+      <article class='article content'>
+          <h2 class='title'>Better Tap Behaviour with jquery.tappable.js</h2>
+          <div class='metadata'>
+            <div class='created'><time datetime='2011-07-05'>05 July 2011</time></div>
+            <div class='updated'>Updated <time datetime='2011-07-07'>07 July 2011</time></div>
+            <a class='permalink' href='/articles/jquery-tappable/'>Permalink</a>
+          </div>
+          <div class='summary'><p>The behaviour of tappable elements in Mobile Safari is unacceptably ugly. Unfortunately, taking control of it is more involved than it perhaps ought to be. <a href='https://github.com/aanand/jquery.tappable.js'>jquery.tappable.js</a> does (most of) the hard work for you.</p></div><hr class='summary-break'/><p>I hope we can all agree that <a href="http://cvil.ly/2011/06/19/pretenders-why-mobile-web-apps-should-stop-trying-to-act-like-native-apps/">mobile web apps shouldn’t pretend to be native apps</a>, but I don’t like the thought of having to accept the current state of most mobile apps as the hand we’ve been dealt. The whole business feels somewhat 2000-era, which is frankly weird—we’ve spent a good decade improving the look and feel of apps in the browser, but the majority of mobile web apps seem content with a half-hearted grey-boxes-and-lines style and a rigid, transitionless interactivity.</p>
           
           <p>Does the responsibility lie with the vendors of mobile browsers? Partially. Apple are only now getting round to adding <a href="http://cubiq.org/ios5-the-first-true-web-app-ready-platform">native support for scrollable elements</a>: so far, we’ve been stuck with a range of lovingly crafted fakeries that range from ‘pathetic’ to ‘uncanny valley’. The problem goes beyond the slow pace of change, though—even when the functionality required to implement higher-quality interaction <em>is</em> in place, it’s often in such a way as to leave an inordinate amount of work to the app developer. A perfect example of this is the default behaviour of ‘clickable’ (or, rather, <em>tappable</em>) elements in Mobile Safari.</p>
           

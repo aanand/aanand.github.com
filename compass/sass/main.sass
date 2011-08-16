@@ -24,33 +24,37 @@ form
 .header
   font-size: 1.5em
   line-height: 1
+  text-align: center
   +prepend-top(2em)
-  +append-bottom(1em)
+
+  hr
+    font-size: 0.67em
+    +colruler(#bbb)
+    +prepend-top(1em)
 
   .links
     a:before
       content: "\2022"
 
-.sidebar
-  $sidebar-columns: 4
-  +column($sidebar-columns)
+.footnotes
+  hr
+    +colruler(#bbb)
 
-.content
-  $content-columns: 16
-  +column($content-columns, true)
+hr.summary-break
+  border:     none
+  margin:     0
+  text-align: center
+  +append-bottom(1em)
 
-hr
-  +colruler(#bbb)
+  &:after
+    content: "❦"
+    +quiet
 
 h1
   display:       inline
   font-size:     1em
   line-height:   inherit
   margin-bottom: 0
-
-  &:before
-    content:    "It’s "
-    font-style: italic
 
   a
     font-family:     $logo-font-family
@@ -97,30 +101,42 @@ a
   &:hover
     text-decoration: underline
 
-.sidebar
-  .created, .updated, .permalink
-    display: block
-
-  .updated
-    font-size: 0.75em
-    line-height: 2
-    color: $quiet-color
-
 .article
-  .title
-    font-weight: 700
+  .metadata
+    +quiet
+
+    & > *
+      display: inline
+
+      &:before
+        content: "· "
+        color: $quiet-color !important
+
+      &:first-child:before
+        display: none
 
   .summary
     font-style: italic
-
-  time
-    +quiet
 
   p
     text-align: justify
 
   code
     @extend .c1
+
+.article.content
+  .title, .metadata
+    text-align: center
+
+  .metadata
+    +append-bottom(1em)
+
+.index .article
+  .title
+    font-weight: 700
+
+  .metadata
+    float: right
 
 pre, code, tt
   font-family: "Monaco", monospace
