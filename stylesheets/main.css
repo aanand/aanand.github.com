@@ -891,6 +891,10 @@ h1 a:hover {
   display: none;
 }
 
+.about {
+  text-align: center;
+}
+
 h2 {
   font-size: 1.5em;
   line-height: 1;
