@@ -6,7 +6,7 @@ gem "builder"
 gem "adsf"
 gem "compass"
 gem "foreman"
-gem "haml"
+gem "slim"
 gem "maruku"
 gem "nokogiri"
 

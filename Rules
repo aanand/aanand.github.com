@@ -33,7 +33,7 @@ compile '/articles/*/', rep: "feed" do
 end
 
 compile '*' do
-  filter :haml
+  filter :slim
   layout 'default'
 end
 
@@ -53,4 +53,4 @@ route '*' do
   item.identifier + 'index.html'
 end
 
-layout '*', :haml
+layout '*', :slim

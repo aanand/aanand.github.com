@@ -1,6 +1,9 @@
 # All files in the 'lib' directory will be loaded
 # before nanoc starts compiling.
 
+require 'slim'
+Slim::Engine.set_default_options :pretty => true
+
 require "time"
 require "nokogiri"
 

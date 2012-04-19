@@ -1,106 +1,111 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="en">
   <head>
-    <meta charset='utf-8' />
-    <title>
-      Better Tap Behaviour with jquery.tappable.js -
-      Aanand Prasad
-    </title>
-    <meta content='The behaviour of tappable elements in Mobile Safari is unacceptably ugly. Unfortunately, taking control of it is more involved than it perhaps ought to be. jquery.tappable.js does (most of) the hard work for you.' name='description' />
-    <meta content='Aanand Prasad' name='author' />
-    <meta content='nanoc 3.1.7' name='generator' />
-    <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible' />
-    <link href='/articles.xml' rel='alternate' type='application/atom+xml' />
-    <link href='/stylesheets/main.css' rel='stylesheet' type='text/css' />
-    <!--[if lt IE 8]>
-      <link href='/stylesheets/ie.css' rel='stylesheet' type='text/css' />
-    <![endif]-->
-    <script>var _gaq=[['_setAccount','UA-4209567-1'],['_trackPageview']];(function(d,t){
+    <meta charset="utf-8" />
+    <title>Better Tap Behaviour with jquery.tappable.js -Aanand Prasad</title>
+    <meta content="The behaviour of tappable elements in Mobile Safari is unacceptably ugly. Unfortunately, taking control of it is more involved than it perhaps ought to be. jquery.tappable.js does (most of) the hard work for you." name="description" />
+    <meta content="Aanand Prasad" name="author" />
+    <meta content="nanoc 3.1.7" name="generator" />
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+    <link href="/articles.xml" rel="alternate" type="application/atom+xml" />
+    <link href="/stylesheets/main.css" rel="stylesheet" type="text/css" />
+    <!--[if lt IE 8]
+    link href="/stylesheets/ie.css" rel="stylesheet" type="text/css"--><script>var _gaq=[['_setAccount','UA-4209567-1'],['_trackPageview']];(function(d,t){
     var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
     g.async=1;g.src='//www.google-analytics.com/ga.js';s.parentNode.insertBefore(g,s)
-    }(document,'script'))</script>
+    }(document,'script'))</script> 
     <script type="text/javascript" src="http://use.typekit.com/jzt3kai.js"></script>
-    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-  </head>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script></head>
   <body>
-    <div class='container'>
-      <div class='content'>
-          <h1><a href="/">Aanand Prasad</a></h1>
-          <article class='article'>
-            <h2 class='title'>Better Tap Behaviour with jquery.tappable.js</h2>
-            <div class='summary'><p>The behaviour of tappable elements in Mobile Safari is unacceptably ugly. Unfortunately, taking control of it is more involved than it perhaps ought to be. <a href='https://github.com/aanand/jquery.tappable.js'>jquery.tappable.js</a> does (most of) the hard work for you.</p></div><hr class='summary-break'/><p>I hope we can all agree that <a href="http://cvil.ly/2011/06/19/pretenders-why-mobile-web-apps-should-stop-trying-to-act-like-native-apps/">mobile web apps shouldn’t pretend to be native apps</a>, but I don’t like the thought of having to accept the current state of most mobile apps as the hand we’ve been dealt. The whole business feels somewhat 2000-era, which is frankly weird—we’ve spent a good decade improving the look and feel of apps in the browser, but the majority of mobile web apps seem content with a half-hearted grey-boxes-and-lines style and a rigid, transitionless interactivity.</p>
-            
-            <p>Does the responsibility lie with the vendors of mobile browsers? Partially. Apple are only now getting round to adding <a href="http://cubiq.org/ios5-the-first-true-web-app-ready-platform">native support for scrollable elements</a>: so far, we’ve been stuck with a range of lovingly crafted fakeries that range from ‘pathetic’ to ‘uncanny valley’. The problem goes beyond the slow pace of change, though—even when the functionality required to implement higher-quality interaction <em>is</em> in place, it’s often in such a way as to leave an inordinate amount of work to the app developer. A perfect example of this is the default behaviour of ‘clickable’ (or, rather, <em>tappable</em>) elements in Mobile Safari.</p>
-            
-            <p>Tap a link, a button or indeed any element with a <code>click</code> event defined, and two unpleasant things happen. First, <em>nothing</em>, for around 300 milliseconds. Then, an ugly dark-grey overlay—you know the one I’m talking about. Compared to the responsiveness of tappable UI elements in native apps, using a mobile app where every element behaves this way feels like operating your iPhone with someone else’s finger.</p>
-            
-            <p>In developing <a href="http://nnnnext.com">nnnnext</a>, I quickly came to the decision that this wasn’t good enough, and set about trying to fix it. While <a href="http://css-infos.net/property/-webkit-tap-highlight-color">removing the overlay</a> was easy enough, it quickly became obvious that iOS’ touch behaviour is more complicated than I intitially suspected, primarily in that <em>it treats a “long tap” differently from a “short tap”</em>.</p>
-            
-            <p>Perform a short tap (i.e. literally just <em>tap</em> the screen), and the element is immediately highlighted and the appropriate action executed. Perform a long tap (keeping your finger down for a moment), and the element is highlighted after a short delay (around 150ms) and the action executed when you lift your finger—unless you move your finger first, in which case the highlight is immediately removed and the action cancelled.</p>
-            
-            <p>The reason for the long-tap highlight delay became apparent after I’d coded my initial implementation: if the element is immediately highlighted when you put your finger down, then every time you scroll you’ll get a flash-of-highlight if you happen to start your scroll by putting your finger on that element. This is, I believe, why the delay is only in place on large, column-spanning elements of the type you can’t avoid touching when you scroll, while buttons and other small widgets react the moment you touch them.</p>
-            
-            <p>I realised some of this only after implementing an incorrect solution, releasing it and blogging my ignorance. Another fact I overlooked is that Mobile Safari’s behaviour <em>only</em> deviates from the rest of the OS on short taps. Long-tap behaviour is the same, but with short taps, both highlighting <em>and</em> action are delayed, and for around twice as long as the long-tap highlight delay! The reason for this (though I failed to perceive this blindingly obvious fact at the time) is Safari’s <em>double-tap-to-zoom feature</em>—if there were no delay, or if it were much shorter, double-tapping would be impossible.</p>
-            
-            <p>In most mobile-optimised web apps, however, zooming isn’t even enabled, rendering any short-tap delay worse than useless. Here, then, is our desired behaviour, expressed in terms of browser events:</p>
-            <table>
-            <thead><tr>
-            <th>Event order</th>
-            <th>Desired effect</th>
-            </tr></thead>
-            <tbody>
-            <tr>
-            <td style="text-align: left;">touchstart, timeout, touchend</td>
-            <td style="text-align: left;">Highlight on timeout, fire callback on touchend (long tap)</td>
-            </tr>
-            <tr>
-            <td style="text-align: left;">touchstart, touchend, timeout</td>
-            <td style="text-align: left;">Highlight and fire callback on touchend (short tap)</td>
-            </tr>
-            <tr>
-            <td style="text-align: left;">touchstart, timeout, touchmove, touchend</td>
-            <td style="text-align: left;">Highlight, then de-highlight on touchmove (long tap cancelled by scrolling)</td>
-            </tr>
-            <tr>
-            <td style="text-align: left;">touchstart, touchmove, timeout, touchend</td>
-            <td style="text-align: left;">None (scroll)</td>
-            </tr>
-            <tr>
-            <td style="text-align: left;">touchstart, touchmove, touchend, timeout</td>
-            <td style="text-align: left;">None (scroll)</td>
-            </tr>
-            </tbody>
-            </table><p>I promised up there in the first paragraph that I’d done the hard work for you, and here you go: <a href="https://github.com/aanand/jquery.tappable.js">jquery.tappable.js</a> implements this behaviour, and falls back to <code>click</code> events in desktop browsers for good measure.</p>
-            
-            <p>It deviates from the above table in one respect, however—the highlight class is removed (or, in the case of a short tap, not added) before firing the callback. This is a matter of code aesthetics for me: I don’t want a library or plugin I’m using to add a transient class to an element without cleaning up after itself. When I need the highlight class to stick around longer (which in the nnnnext codebase is the exception, not the rule), I add it again in the callback function.</p>
-            
-            <p>Anyway, examples:</p>
-            
-            <pre><code><span class="c1">// Basic usage</span>&#x000A;<span class="nx">$</span><span class="p">(</span><span class="nx">element</span><span class="p">).</span><span class="nx">tappable</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Hello World!"</span><span class="p">)</span> <span class="p">})</span>&#x000A;&#x000A;<span class="c1">// Add a delay</span>&#x000A;<span class="nx">$</span><span class="p">(</span><span class="nx">element</span><span class="p">).</span><span class="nx">tappable</span><span class="p">({</span>&#x000A;  <span class="nx">callback</span><span class="o">:</span>   <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Hello World!"</span><span class="p">)</span> <span class="p">},</span>&#x000A;  <span class="nx">touchDelay</span><span class="o">:</span> <span class="mi">150</span>&#x000A;<span class="p">})</span>&#x000A;&#x000A;<span class="c1">// Don't cancel taps when the user moves their finger</span>&#x000A;<span class="nx">$</span><span class="p">(</span><span class="nx">element</span><span class="p">).</span><span class="nx">tappable</span><span class="p">({</span>&#x000A;  <span class="nx">callback</span><span class="o">:</span>     <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Hello World!"</span><span class="p">)</span> <span class="p">},</span>&#x000A;  <span class="nx">cancelOnMove</span><span class="o">:</span> <span class="kc">false</span>&#x000A;<span class="p">})</span>&#x000A;&#x000A;<span class="c1">// Don't highlight the element OR fire the callback unless a</span>&#x000A;<span class="c1">// specified condition is met</span>&#x000A;<span class="nx">$</span><span class="p">(</span><span class="nx">element</span><span class="p">).</span><span class="nx">tappable</span><span class="p">({</span>&#x000A;  <span class="nx">callback</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span>   <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Hello World!"</span><span class="p">)</span>      <span class="p">},</span>&#x000A;  <span class="nx">onlyIf</span><span class="o">:</span>   <span class="kd">function</span><span class="p">(</span><span class="nx">el</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">$</span><span class="p">(</span><span class="nx">el</span><span class="p">).</span><span class="nx">hasClass</span><span class="p">(</span><span class="s1">'enabled'</span><span class="p">)</span> <span class="p">}</span>&#x000A;<span class="p">})</span>&#x000A;</code></pre>
-            
-            <p>Have fun!</p>
-            <hr />
-            <div class='metadata'>
-              <div class='created'><time datetime='2011-07-05'>05 July 2011</time></div>
-              <div class='updated'>Updated <time datetime='2011-07-07'>07 July 2011</time></div>
-              <a class='permalink' href='/articles/jquery-tappable/'>Permalink</a>
-            </div>
-          </article>
-        </div>
+    <div class="container"><div class="content"><h1><a href="/">Aanand Prasad</a></h1><article class="article">
+    <h2 class="title">Better Tap Behaviour with jquery.tappable.js</h2><div class='summary'><p>The behaviour of tappable elements in Mobile Safari is unacceptably ugly. Unfortunately, taking control of it is more involved than it perhaps ought to be. <a href='https://github.com/aanand/jquery.tappable.js'>jquery.tappable.js</a> does (most of) the hard work for you.</p></div><hr class='summary-break'/><p>I hope we can all agree that <a href="http://cvil.ly/2011/06/19/pretenders-why-mobile-web-apps-should-stop-trying-to-act-like-native-apps/">mobile web apps shouldn’t pretend to be native apps</a>, but I don’t like the thought of having to accept the current state of most mobile apps as the hand we’ve been dealt. The whole business feels somewhat 2000-era, which is frankly weird—we’ve spent a good decade improving the look and feel of apps in the browser, but the majority of mobile web apps seem content with a half-hearted grey-boxes-and-lines style and a rigid, transitionless interactivity.</p>
+
+<p>Does the responsibility lie with the vendors of mobile browsers? Partially. Apple are only now getting round to adding <a href="http://cubiq.org/ios5-the-first-true-web-app-ready-platform">native support for scrollable elements</a>: so far, we’ve been stuck with a range of lovingly crafted fakeries that range from ‘pathetic’ to ‘uncanny valley’. The problem goes beyond the slow pace of change, though—even when the functionality required to implement higher-quality interaction <em>is</em> in place, it’s often in such a way as to leave an inordinate amount of work to the app developer. A perfect example of this is the default behaviour of ‘clickable’ (or, rather, <em>tappable</em>) elements in Mobile Safari.</p>
+
+<p>Tap a link, a button or indeed any element with a <code>click</code> event defined, and two unpleasant things happen. First, <em>nothing</em>, for around 300 milliseconds. Then, an ugly dark-grey overlay—you know the one I’m talking about. Compared to the responsiveness of tappable UI elements in native apps, using a mobile app where every element behaves this way feels like operating your iPhone with someone else’s finger.</p>
+
+<p>In developing <a href="http://nnnnext.com">nnnnext</a>, I quickly came to the decision that this wasn’t good enough, and set about trying to fix it. While <a href="http://css-infos.net/property/-webkit-tap-highlight-color">removing the overlay</a> was easy enough, it quickly became obvious that iOS’ touch behaviour is more complicated than I intitially suspected, primarily in that <em>it treats a “long tap” differently from a “short tap”</em>.</p>
+
+<p>Perform a short tap (i.e. literally just <em>tap</em> the screen), and the element is immediately highlighted and the appropriate action executed. Perform a long tap (keeping your finger down for a moment), and the element is highlighted after a short delay (around 150ms) and the action executed when you lift your finger—unless you move your finger first, in which case the highlight is immediately removed and the action cancelled.</p>
+
+<p>The reason for the long-tap highlight delay became apparent after I’d coded my initial implementation: if the element is immediately highlighted when you put your finger down, then every time you scroll you’ll get a flash-of-highlight if you happen to start your scroll by putting your finger on that element. This is, I believe, why the delay is only in place on large, column-spanning elements of the type you can’t avoid touching when you scroll, while buttons and other small widgets react the moment you touch them.</p>
+
+<p>I realised some of this only after implementing an incorrect solution, releasing it and blogging my ignorance. Another fact I overlooked is that Mobile Safari’s behaviour <em>only</em> deviates from the rest of the OS on short taps. Long-tap behaviour is the same, but with short taps, both highlighting <em>and</em> action are delayed, and for around twice as long as the long-tap highlight delay! The reason for this (though I failed to perceive this blindingly obvious fact at the time) is Safari’s <em>double-tap-to-zoom feature</em>—if there were no delay, or if it were much shorter, double-tapping would be impossible.</p>
+
+<p>In most mobile-optimised web apps, however, zooming isn’t even enabled, rendering any short-tap delay worse than useless. Here, then, is our desired behaviour, expressed in terms of browser events:</p>
+<table>
+<thead><tr>
+<th>Event order</th>
+<th>Desired effect</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: left;">touchstart, timeout, touchend</td>
+<td style="text-align: left;">Highlight on timeout, fire callback on touchend (long tap)</td>
+</tr>
+<tr>
+<td style="text-align: left;">touchstart, touchend, timeout</td>
+<td style="text-align: left;">Highlight and fire callback on touchend (short tap)</td>
+</tr>
+<tr>
+<td style="text-align: left;">touchstart, timeout, touchmove, touchend</td>
+<td style="text-align: left;">Highlight, then de-highlight on touchmove (long tap cancelled by scrolling)</td>
+</tr>
+<tr>
+<td style="text-align: left;">touchstart, touchmove, timeout, touchend</td>
+<td style="text-align: left;">None (scroll)</td>
+</tr>
+<tr>
+<td style="text-align: left;">touchstart, touchmove, touchend, timeout</td>
+<td style="text-align: left;">None (scroll)</td>
+</tr>
+</tbody>
+</table><p>I promised up there in the first paragraph that I’d done the hard work for you, and here you go: <a href="https://github.com/aanand/jquery.tappable.js">jquery.tappable.js</a> implements this behaviour, and falls back to <code>click</code> events in desktop browsers for good measure.</p>
+
+<p>It deviates from the above table in one respect, however—the highlight class is removed (or, in the case of a short tap, not added) before firing the callback. This is a matter of code aesthetics for me: I don’t want a library or plugin I’m using to add a transient class to an element without cleaning up after itself. When I need the highlight class to stick around longer (which in the nnnnext codebase is the exception, not the rule), I add it again in the callback function.</p>
+
+<p>Anyway, examples:</p>
+
+<pre><code><span class="c1">// Basic usage</span>
+<span class="nx">$</span><span class="p">(</span><span class="nx">element</span><span class="p">).</span><span class="nx">tappable</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Hello World!"</span><span class="p">)</span> <span class="p">})</span>
+
+<span class="c1">// Add a delay</span>
+<span class="nx">$</span><span class="p">(</span><span class="nx">element</span><span class="p">).</span><span class="nx">tappable</span><span class="p">({</span>
+  <span class="nx">callback</span><span class="o">:</span>   <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Hello World!"</span><span class="p">)</span> <span class="p">},</span>
+  <span class="nx">touchDelay</span><span class="o">:</span> <span class="mi">150</span>
+<span class="p">})</span>
+
+<span class="c1">// Don't cancel taps when the user moves their finger</span>
+<span class="nx">$</span><span class="p">(</span><span class="nx">element</span><span class="p">).</span><span class="nx">tappable</span><span class="p">({</span>
+  <span class="nx">callback</span><span class="o">:</span>     <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Hello World!"</span><span class="p">)</span> <span class="p">},</span>
+  <span class="nx">cancelOnMove</span><span class="o">:</span> <span class="kc">false</span>
+<span class="p">})</span>
+
+<span class="c1">// Don't highlight the element OR fire the callback unless a</span>
+<span class="c1">// specified condition is met</span>
+<span class="nx">$</span><span class="p">(</span><span class="nx">element</span><span class="p">).</span><span class="nx">tappable</span><span class="p">({</span>
+  <span class="nx">callback</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span>   <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Hello World!"</span><span class="p">)</span>      <span class="p">},</span>
+  <span class="nx">onlyIf</span><span class="o">:</span>   <span class="kd">function</span><span class="p">(</span><span class="nx">el</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">$</span><span class="p">(</span><span class="nx">el</span><span class="p">).</span><span class="nx">hasClass</span><span class="p">(</span><span class="s1">'enabled'</span><span class="p">)</span> <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<p>Have fun!</p><hr />
+    <div class="metadata">
+      <div class="created"><time datetime='2011-07-05'>05 July 2011</time></div>
+      <div class="updated">Updated <time datetime='2011-07-07'>07 July 2011</time></div>
+      <a class="permalink" href="&#47;articles&#47;jquery-tappable&#47;">Permalink</a>
     </div>
-    <script type='text/javascript'>
-      //<![CDATA[
-        var GoSquared={};
-        GoSquared.acct = "GSN-228492-O";
-        (function(w){
-            function gs(){
-                w._gstc_lt=+(new Date); var d=document;
-                var g = d.createElement("script"); g.type = "text/javascript"; g.async = true; g.src = "//d1l6p2sc9645hc.cloudfront.net/tracker.js";
-                var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(g, s);
-            }
-            w.addEventListener?w.addEventListener("load",gs,false):w.attachEvent("onload",gs);
-        })(window);
-      //]]>
-    </script>
+  </article>
+</div></div>
+    <script type="text/javascript">var GoSquared={};
+      GoSquared.acct = "GSN-228492-O";
+      (function(w){
+          function gs(){
+              w._gstc_lt=+(new Date); var d=document;
+              var g = d.createElement("script"); g.type = "text/javascript"; g.async = true; g.src = "//d1l6p2sc9645hc.cloudfront.net/tracker.js";
+              var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(g, s);
+          }
+          w.addEventListener?w.addEventListener("load",gs,false):w.attachEvent("onload",gs);
+      })(window);</script>
   </body>
 </html>

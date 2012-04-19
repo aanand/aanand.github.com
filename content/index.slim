@@ -3,26 +3,27 @@ summary: I’m a programmer; this is where I write about programming.
 ---
 
 .index
-  = h1
+  == h1
 
-  %ul.links
-    %li
-      %a{:href => "http://twitter.com/aanand"} Twitter
-    %li
-      %a{:href => "http://github.com/aanand"} Github
-    %li
-      %a{:href => "mailto:aanand.prasad@gmail.com"} Email
+  ul.links
+    li
+      a href="http://twitter.com/aanand" Twitter
+    li
+      a href="http://github.com/aanand" Github
+    li
+      a href="mailto:aanand.prasad@gmail.com" Email
 
-  %p.about
-    I’m a programmer; this is where I write about programming.
+  p.about
+    | I’m a programmer; this is where I write about programming.
 
   .articles
     - sorted_articles.each do |item|
       .article
         .metadata
-          .created= time_tag(item)
+          .created== time_tag(item)
 
-        %a.title{ :href => item.path }= item[:title]
+        a.title href=(item.path )
+          = item[:title]
 
-        = maruku(item[:summary])
+        == maruku(item[:summary])
 
