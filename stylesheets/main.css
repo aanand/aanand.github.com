@@ -701,7 +701,7 @@ pre, code, tt {
 
 @media screen and (min-width: 480px) {
   .index {
-    width: 384px;
+    width: 440px;
     margin: 40px auto;
   }
   .index .projects, .index .articles {
@@ -710,7 +710,7 @@ pre, code, tt {
   .index .project, .index .article {
     display: inline-block;
     vertical-align: top;
-    width: 304px;
+    width: 360px;
     margin-right: 38px;
     margin-bottom: 40px;
   }

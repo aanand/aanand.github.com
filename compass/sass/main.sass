@@ -6,7 +6,11 @@
 .container
   margin: 20px
 
-=columns($container-width, $gutter, $num-columns)
+$side-margin: 60px
+$gutter: 40px
+
+=columns($viewport-width, $num-columns)
+  $container-width: $viewport-width - $side-margin*2
   $column-width: ($container-width + $gutter) / $num-columns - $gutter
 
   width: $container-width + $gutter*2
@@ -24,19 +28,19 @@
 
 @media screen and (min-width: 480px)
   .index
-    +columns(424px - 60px*2, 40px, 1)
+    +columns(480px, 1)
 
   .content
-    margin: 40px auto
-    max-width: 768px - 60px*2
+    margin: $gutter auto
+    max-width: 768px - $side-margin*2
 
 @media screen and (min-width: 768px)
   .index
-    +columns(768px - 60px*2, 40px, 2)
+    +columns(768px, 2)
 
 @media screen and (min-width: 1112px)
   .index
-    +columns(1112px - 60px*2, 40px, 3)
+    +columns(1112px, 3)
 
 hr
   //+colruler(#bbb)
