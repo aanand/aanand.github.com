@@ -1,5 +1,6 @@
 @import blueprint/typography
 @import compass/css3/border-radius
+@import compass/css3/box-sizing
 
 $blueprint-font-family: $base-font-family
 
@@ -21,10 +22,10 @@ $blueprint-font-family: $base-font-family
     display:     inline-block
     width:       $site-header-diameter
     height:      $site-header-diameter
-    box-sizing:  border-box
     padding-top: $site-header-diameter/2
 
     +border-radius(50%)
+    +box-sizing(border-box)
 
     span
       position: relative

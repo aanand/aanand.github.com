@@ -780,7 +780,6 @@ header .logo a {
   display: inline-block;
   width: 150px;
   height: 150px;
-  box-sizing: border-box;
   padding-top: 75px;
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
@@ -788,6 +787,10 @@ header .logo a {
   -ms-border-radius: 50%;
   -khtml-border-radius: 50%;
   border-radius: 50%;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
 }
 header .logo a span {
   position: relative;
