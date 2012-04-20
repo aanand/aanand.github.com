@@ -480,6 +480,14 @@ body {
   letter-spacing: 0;
 }
 
+@media screen and (min-width: 480px) {
+  body {
+    line-height: 1.5;
+    font-family: "Lato", sans-serif;
+    color: #777777;
+    font-size: 112.5%;
+  }
+}
 h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
   color: #666666;
@@ -703,7 +711,7 @@ a:hover {
 
 pre, code, tt {
   font-family: "Ubuntu Mono", monospace;
-  font-size: 14px;
+  font-size: 1em;
   overflow: auto;
 }
 

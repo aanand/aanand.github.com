@@ -37,6 +37,10 @@ body
   font-weight:    $base-font-weight
   letter-spacing: $base-letter-spacing
 
+@media screen and (min-width: 480px)
+  body
+    +blueprint-typography-body($wide-font-size)
+
 +blueprint-typography-defaults
 
 .logo
