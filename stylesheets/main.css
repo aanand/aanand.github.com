@@ -809,6 +809,7 @@ h2 {
 .project img {
   display: block;
   width: 100%;
+  margin-bottom: 16px;
 }
 
 .project .title, .article .title {
