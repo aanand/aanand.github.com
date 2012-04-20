@@ -13,10 +13,44 @@ summary: I’m a programmer; this is where I write about programming.
     li
       a href="mailto:aanand.prasad@gmail.com" Email
 
-  p.about
-    | I’m a programmer; this is where I write about programming.
+  .projects
+    h2 Projects
+
+    .project
+      img src="images/projects/composit.png"
+      a.title href="http://aanandprasad.com/composit" composit
+      p Webapp that composites the 100 most relevant Flickr photos for any search term you give it.
+
+    .project
+      img src="images/projects/parkamour.png"
+      a.title href="http://parkamour.com" parkamour
+      p
+        ' A &ldquo;romantic parkour game&rdquo; made with friends for the
+        ' <a href="http://www.whatwouldmolydeux.com/">2012 MolyJam</a>.
+
+    .project
+      img src="images/projects/gogol.png"
+      a.title href="http://gogol.herokuapp.com" gogol
+      p Little text-based time-rewinding puzzle game.
+
+    .project
+      img src="images/projects/nnnnext.png"
+      a.title href="http://nnnnext.com" nnnnext.com
+      p HTML5 todo app for music you want to listen to, with a fast mobile interface, offline support and multi-device syncing.
+
+    .project
+      img src="images/projects/deadweight.png"
+      a.title href="https://github.com/aanand/deadweight" deadweight
+      p Tool to find unused CSS selectors by scraping HTML pages. Run it at the command-line against any website, make a Rake task, or integrate it into your acceptance tests.
+
+    .project
+      img src="images/projects/git-up.png"
+      a.title href="https://github.com/aanand/git-up" git-up
+      p A friendly and polite alternative to <code>git pull</code> that fetches and rebases all locally-tracked remote branches.
 
   .articles
+    h2 Articles
+
     - sorted_articles.each do |item|
       .article
         .metadata

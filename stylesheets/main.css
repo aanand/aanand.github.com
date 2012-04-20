@@ -123,7 +123,7 @@ a img {
 }
 
 /* Comment.Preproc */
-.c1, .article code {
+.c1, .project code, .article code {
   color: #666666;
   background-color: #ffffff;
 }
@@ -776,34 +776,35 @@ pre, code, tt {
   display: none;
 }
 
-.about {
-  text-align: center;
-}
-
 h2 {
   margin-bottom: 1em;
 }
 
-.article .title {
+.project img {
+  display: block;
+  width: 100%;
+}
+
+.project .title, .article .title {
   font-weight: 700;
 }
-.article .metadata {
+.project .metadata, .article .metadata {
   color: #aaaaaa;
 }
-.article .metadata > * {
+.project .metadata > *, .article .metadata > * {
   display: inline;
 }
-.article .metadata > *:before {
+.project .metadata > *:before, .article .metadata > *:before {
   content: "· ";
   color: #aaaaaa !important;
 }
-.article .metadata > *:first-child:before {
+.project .metadata > *:first-child:before, .article .metadata > *:first-child:before {
   display: none;
 }
-.article .summary {
+.project .summary, .article .summary {
   font-style: italic;
 }
-.article p {
+.project p, .article p {
   text-align: justify;
 }
 
