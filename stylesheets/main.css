@@ -673,22 +673,30 @@ caption {
 .logo {
   font-family: "Lobster", sans-serif;
   font-size: 2em;
-  line-height: 0.75em;
+  line-height: 1em;
   text-align: center;
 }
 .logo a {
   font-family: "Lobster", sans-serif;
   font-style: normal;
   text-decoration: none;
-  padding: 0 0.25em;
-  color: #dddddd !important;
-  background: transparent;
-  -moz-border-radius: 0.25em;
-  -webkit-border-radius: 0.25em;
-  -o-border-radius: 0.25em;
-  -ms-border-radius: 0.25em;
-  -khtml-border-radius: 0.25em;
-  border-radius: 0.25em;
+  color: white !important;
+  background: #dddddd;
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  box-sizing: border-box;
+  padding-top: 75px;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -o-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -khtml-border-radius: 50%;
+  border-radius: 50%;
+}
+.logo a span {
+  position: relative;
+  top: -1em;
 }
 .logo a:hover {
   text-decoration: none;

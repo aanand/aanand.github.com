@@ -14,10 +14,20 @@ $blueprint-font-family: $base-font-family
     font-family:     $logo-font-family
     font-style:      normal
     text-decoration: none
-    padding:         0 0.25em
     color:           $content-logo-color !important
     background:      $content-logo-bg
-    +border-radius(0.25em)
+
+    display:     inline-block
+    width:       $logo-diameter
+    height:      $logo-diameter
+    box-sizing:  border-box
+    padding-top: $logo-diameter/2
+
+    +border-radius(50%)
+
+    span
+      position: relative
+      top: -$logo-line-height
 
     &:hover
       text-decoration: none
