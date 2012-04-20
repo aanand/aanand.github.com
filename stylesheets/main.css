@@ -699,9 +699,51 @@ pre, code, tt {
   margin: 20px;
 }
 
+@media screen and (min-width: 480px) {
+  .container {
+    width: 384px;
+    margin: 40px auto;
+  }
+
+  .index .projects, .index .articles {
+    padding-left: 40px;
+  }
+  .index .project, .index .article {
+    display: inline-block;
+    vertical-align: top;
+    width: 304px;
+    margin-right: 38px;
+    margin-bottom: 40px;
+  }
+
+  .content {
+    padding: 0 40px;
+  }
+}
 @media screen and (min-width: 768px) {
   .container {
     width: 728px;
+    margin: 40px auto;
+  }
+
+  .index .projects, .index .articles {
+    padding-left: 40px;
+  }
+  .index .project, .index .article {
+    display: inline-block;
+    vertical-align: top;
+    width: 304px;
+    margin-right: 38px;
+    margin-bottom: 40px;
+  }
+
+  .content {
+    padding: 0 40px;
+  }
+}
+@media screen and (min-width: 1112px) {
+  .container {
+    width: 1072px;
     margin: 40px auto;
   }
 

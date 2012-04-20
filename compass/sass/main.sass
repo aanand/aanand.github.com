@@ -27,8 +27,14 @@
   .content
     padding: 0 $gutter
 
+@media screen and (min-width: 480px)
+  +columns(424px - 60px*2, 40px, 1)
+
 @media screen and (min-width: 768px)
   +columns(768px - 60px*2, 40px, 2)
+
+@media screen and (min-width: 1112px)
+  +columns(1112px - 60px*2, 40px, 3)
 
 hr
   //+colruler(#bbb)
