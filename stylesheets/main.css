@@ -701,17 +701,17 @@ pre, code, tt {
 
 @media screen and (min-width: 480px) {
   .index {
-    width: 440px;
+    width: 360px;
     margin: 40px auto;
   }
   .index .projects, .index .articles {
-    padding-left: 40px;
+    margin-left: -40px;
   }
   .index .project, .index .article {
     display: inline-block;
     vertical-align: top;
     width: 360px;
-    margin-right: 38px;
+    margin-left: 38px;
     margin-bottom: 40px;
   }
 
@@ -722,33 +722,33 @@ pre, code, tt {
 }
 @media screen and (min-width: 768px) {
   .index {
-    width: 728px;
+    width: 648px;
     margin: 40px auto;
   }
   .index .projects, .index .articles {
-    padding-left: 40px;
+    margin-left: -40px;
   }
   .index .project, .index .article {
     display: inline-block;
     vertical-align: top;
     width: 304px;
-    margin-right: 38px;
+    margin-left: 38px;
     margin-bottom: 40px;
   }
 }
 @media screen and (min-width: 1112px) {
   .index {
-    width: 1072px;
+    width: 992px;
     margin: 40px auto;
   }
   .index .projects, .index .articles {
-    padding-left: 40px;
+    margin-left: -40px;
   }
   .index .project, .index .article {
     display: inline-block;
     vertical-align: top;
     width: 304px;
-    margin-right: 38px;
+    margin-left: 38px;
     margin-bottom: 40px;
   }
 }

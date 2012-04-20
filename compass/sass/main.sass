@@ -13,17 +13,17 @@ $gutter: 40px
   $container-width: $viewport-width - $side-margin*2
   $column-width: ($container-width + $gutter) / $num-columns - $gutter
 
-  width: $container-width + $gutter*2
+  width: $container-width
   margin: $gutter auto
 
   .projects, .articles
-    padding-left: $gutter
+    margin-left: -$gutter
 
   .project, .article
     display: inline-block
     vertical-align: top
     width: $column-width
-    margin-right: $gutter - 2px
+    margin-left: $gutter - 2px
     margin-bottom: $gutter
 
 @media screen and (min-width: 480px)
