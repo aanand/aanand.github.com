@@ -676,40 +676,6 @@ caption {
   color: #555555;
 }
 
-.logo {
-  font-family: "Lobster", sans-serif;
-  font-size: 2em;
-  line-height: 1em;
-  text-align: center;
-}
-.logo a {
-  font-family: "Lobster", sans-serif;
-  font-style: normal;
-  text-decoration: none;
-  color: white !important;
-  background: #dddddd;
-  display: inline-block;
-  width: 150px;
-  height: 150px;
-  box-sizing: border-box;
-  padding-top: 75px;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  -o-border-radius: 50%;
-  -ms-border-radius: 50%;
-  -khtml-border-radius: 50%;
-  border-radius: 50%;
-}
-.logo a span {
-  position: relative;
-  top: -1em;
-}
-.logo a:hover {
-  text-decoration: none;
-  color: #cc2222 !important;
-  background: transparent;
-}
-
 h2 {
   font-size: 1.5em;
   font-weight: inherit;
@@ -739,15 +705,6 @@ pre, code, tt {
     margin-right: 60px;
   }
 }
-.index .logo a {
-  color: white !important;
-  background: #cc2222;
-}
-.index .logo a:hover {
-  color: #cc2222 !important;
-  background: #ffcc88;
-}
-
 @-moz-document url-prefix() {
   h1 a {
     padding-top: 0.1em;
@@ -758,12 +715,66 @@ pre, code, tt {
   }
 }
 
+header {
+  text-align: center;
+  margin-bottom: 1.5em;
+}
+header a {
+  color: #cc2222;
+}
+header .logo {
+  font-size: 1em;
+}
+header .logo a {
+  font-family: "Lobster", sans-serif;
+  font-size: 2em;
+  line-height: 1em;
+  font-style: normal;
+  text-decoration: none;
+  color: white !important;
+  background: #cc2222;
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  box-sizing: border-box;
+  padding-top: 75px;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -o-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -khtml-border-radius: 50%;
+  border-radius: 50%;
+}
+header .logo a span {
+  position: relative;
+  top: -1em;
+}
+header .logo a:hover {
+  text-decoration: none;
+  color: #cc2222 !important;
+  background: #ffcc88;
+}
+
+.content header a {
+  color: #dddddd;
+}
+.content header a:hover {
+  color: #cc2222;
+}
+.content header .logo a {
+  color: white !important;
+  background: #dddddd;
+}
+.content header .logo a:hover {
+  color: #cc2222 !important;
+  background: transparent;
+}
+
 .links {
   list-style: none;
   margin: 0;
   padding: 0;
   text-align: center;
-  margin-bottom: 1.5em;
 }
 .links li {
   display: inline;

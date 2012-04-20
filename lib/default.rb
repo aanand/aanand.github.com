@@ -12,8 +12,8 @@ include Nanoc3::Helpers::Filtering
 include Nanoc3::Helpers::Blogging
 include Nanoc3::Helpers::HTMLEscape
 
-def h1
-  '<h1 class="logo"><a href="/"><span>Aanand Prasad</span></a></h1>'
+def header
+  render '_header'
 end
 
 def time_tag(item, key=:created_at)

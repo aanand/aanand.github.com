@@ -3,45 +3,55 @@
 
 $blueprint-font-family: $base-font-family
 
-=logo
-  font-family: $logo-font-family
-  font-size:   $logo-font-size
-  line-height: $logo-line-height
-
+=header
   text-align: center
 
   a
-    font-family:     $logo-font-family
+    color: $site-header-bg
+
+  .logo
+    font-size: 1em
+
+  .logo a
+    font-family: $site-header-font-family
+    font-size:   $site-header-font-size
+    line-height: $site-header-line-height
     font-style:      normal
     text-decoration: none
-    color:           $content-logo-color !important
-    background:      $content-logo-bg
+    color:           $site-header-color !important
+    background:      $site-header-bg
 
     display:     inline-block
-    width:       $logo-diameter
-    height:      $logo-diameter
+    width:       $site-header-diameter
+    height:      $site-header-diameter
     box-sizing:  border-box
-    padding-top: $logo-diameter/2
+    padding-top: $site-header-diameter/2
 
     +border-radius(50%)
 
     span
       position: relative
-      top: -$logo-line-height
+      top: -$site-header-line-height
 
     &:hover
       text-decoration: none
-      color:           $content-logo-hover-color !important
-      background:      $content-logo-hover-bg
+      color:           $site-header-hover-color !important
+      background:      $site-header-hover-bg
 
-=quiet-logo
+=quiet-header
   a
-    color:      $index-logo-color !important
-    background: $index-logo-bg
+    color: $quiet-header-bg
 
     &:hover
-      color:      $index-logo-hover-color !important
-      background: $index-logo-hover-bg
+      color: $quiet-header-hover-color
+
+  .logo a
+    color:      $quiet-header-color !important
+    background: $quiet-header-bg
+
+    &:hover
+      color:      $quiet-header-hover-color !important
+      background: $quiet-header-hover-bg
 
 body
   +blueprint-typography-body($base-font-size)
@@ -58,9 +68,6 @@ body
     font-weight: $retina-font-weight
 
 +blueprint-typography-defaults
-
-.logo
-  +logo
 
 h2
   font-size:   $heading-font-size
