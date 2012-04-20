@@ -758,6 +758,12 @@ pre, code, tt {
     margin-bottom: 40px;
   }
 }
+hr {
+  border: 1px solid #dddddd;
+  border-width: 1px 0;
+  margin-bottom: 1.5em;
+}
+
 @-moz-document url-prefix() {
   h1 a {
     padding-top: 0.1em;
