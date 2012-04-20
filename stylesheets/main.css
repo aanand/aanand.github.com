@@ -706,12 +706,14 @@ pre, code, tt {
   }
   .index .projects, .index .articles {
     margin-left: -40px;
+    font-size: 0px;
   }
   .index .project, .index .article {
+    font-size: 18px;
     display: inline-block;
     vertical-align: top;
     width: 360px;
-    margin-left: 38px;
+    margin-left: 40px;
     margin-bottom: 40px;
   }
 
@@ -727,12 +729,14 @@ pre, code, tt {
   }
   .index .projects, .index .articles {
     margin-left: -40px;
+    font-size: 0px;
   }
   .index .project, .index .article {
+    font-size: 18px;
     display: inline-block;
     vertical-align: top;
     width: 304px;
-    margin-left: 38px;
+    margin-left: 40px;
     margin-bottom: 40px;
   }
 }
@@ -743,12 +747,14 @@ pre, code, tt {
   }
   .index .projects, .index .articles {
     margin-left: -40px;
+    font-size: 0px;
   }
   .index .project, .index .article {
+    font-size: 18px;
     display: inline-block;
     vertical-align: top;
     width: 304px;
-    margin-left: 38px;
+    margin-left: 40px;
     margin-bottom: 40px;
   }
 }
