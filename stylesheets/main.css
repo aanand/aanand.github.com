@@ -488,6 +488,12 @@ body {
     font-size: 112.5%;
   }
 }
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+  body {
+    color: #777777;
+    font-weight: 400;
+  }
+}
 h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
   color: #666666;
@@ -723,12 +729,6 @@ pre, code, tt {
   overflow: auto;
 }
 
-@media screen and (-webkit-min-device-pixel-ratio: 2) {
-  body {
-    color: #777777;
-    font-weight: 400;
-  }
-}
 .container {
   margin: 20px;
 }

@@ -52,6 +52,11 @@ body
   body
     +blueprint-typography-body($wide-font-size)
 
+@media screen and (-webkit-min-device-pixel-ratio: 2)
+  body
+    color:       $retina-font-color
+    font-weight: $retina-font-weight
+
 +blueprint-typography-defaults
 
 .logo
@@ -72,9 +77,4 @@ pre, code, tt
   font-family: $monospace-font-family
   font-size:   $monospace-font-size
   overflow: auto
-
-@media screen and (-webkit-min-device-pixel-ratio: 2)
-  body
-    color:       $retina-font-color
-    font-weight: $retina-font-weight
 
