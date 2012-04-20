@@ -2,13 +2,14 @@
 @import compass/css3/border-radius
 @import blueprint/reset
 @import partials/pygments
-@import blueprint
+@import blueprint/utilities
+@import blueprint/interaction
+@import blueprint/typography
 
 +blueprint-typography
 
 body
   +blueprint-utilities
-  +blueprint-debug
   +blueprint-interaction
 
   font-weight:    $base-font-weight
@@ -19,22 +20,19 @@ body
     color:       $retina-font-color
     font-weight: $retina-font-weight
 
-form
-  +blueprint-form
-
 .container
-  +container
+  //+container
   // +grid-background($blueprint-grid-columns, $blueprint-grid-width, $blueprint-grid-margin, 30px)
 
 hr
-  +colruler(#bbb)
+  //+colruler(#bbb)
 
 h1
   font-size: 2em
   line-height: 0.75em
   text-align: center
-  +prepend-top(1.5em)
-  +append-bottom(0.75em)
+  //+prepend-top(1.5em)
+  //+append-bottom(0.75em)
 
   a
     font-family:     $logo-font-family
@@ -70,7 +68,7 @@ h1
   margin:     0
   padding:    0
   text-align: center
-  +append-bottom(1.5em)
+  //+append-bottom(1.5em)
 
   li
     display: inline
@@ -129,7 +127,7 @@ a
     text-align: center
 
   .metadata
-    +append-bottom(1em)
+    //+append-bottom(1em)
 
 .index .article
   .metadata

@@ -700,18 +700,6 @@ body .bottom {
   margin-bottom: 0;
   padding-bottom: 0;
 }
-body .showgrid {
-  background-image: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(5%, rgba(0, 0, 0, 0.5)), color-stop(5%, rgba(0, 0, 0, 0))), -webkit-gradient(linear, 0% 50%, 660 50%, color-stop(0%, rgba(0, 0, 0, 0)), color-stop(0%, rgba(100, 100, 225, 0.25)), color-stop(12.121%, rgba(100, 100, 225, 0.25)), color-stop(12.121%, rgba(0, 0, 0, 0)), color-stop(16.667%, rgba(0, 0, 0, 0)), color-stop(16.667%, rgba(100, 100, 225, 0.25)), color-stop(28.788%, rgba(100, 100, 225, 0.25)), color-stop(28.788%, rgba(0, 0, 0, 0)), color-stop(33.333%, rgba(0, 0, 0, 0)), color-stop(33.333%, rgba(100, 100, 225, 0.25)), color-stop(45.455%, rgba(100, 100, 225, 0.25)), color-stop(45.455%, rgba(0, 0, 0, 0)), color-stop(50%, rgba(0, 0, 0, 0)), color-stop(50%, rgba(100, 100, 225, 0.25)), color-stop(62.121%, rgba(100, 100, 225, 0.25)), color-stop(62.121%, rgba(0, 0, 0, 0)), color-stop(66.667%, rgba(0, 0, 0, 0)), color-stop(66.667%, rgba(100, 100, 225, 0.25)), color-stop(78.788%, rgba(100, 100, 225, 0.25)), color-stop(78.788%, rgba(0, 0, 0, 0)), color-stop(83.333%, rgba(0, 0, 0, 0)), color-stop(83.333%, rgba(100, 100, 225, 0.25)), color-stop(95.455%, rgba(100, 100, 225, 0.25)), color-stop(95.455%, rgba(0, 0, 0, 0)), color-stop(100%, rgba(0, 0, 0, 0)));
-  background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.5) 5%, rgba(0, 0, 0, 0) 5%), -webkit-linear-gradient(left, rgba(0, 0, 0, 0) 0px, rgba(100, 100, 225, 0.25) 0px, rgba(100, 100, 225, 0.25) 80px, rgba(0, 0, 0, 0) 80px, rgba(0, 0, 0, 0) 110px, rgba(100, 100, 225, 0.25) 110px, rgba(100, 100, 225, 0.25) 190px, rgba(0, 0, 0, 0) 190px, rgba(0, 0, 0, 0) 220px, rgba(100, 100, 225, 0.25) 220px, rgba(100, 100, 225, 0.25) 300px, rgba(0, 0, 0, 0) 300px, rgba(0, 0, 0, 0) 330px, rgba(100, 100, 225, 0.25) 330px, rgba(100, 100, 225, 0.25) 410px, rgba(0, 0, 0, 0) 410px, rgba(0, 0, 0, 0) 440px, rgba(100, 100, 225, 0.25) 440px, rgba(100, 100, 225, 0.25) 520px, rgba(0, 0, 0, 0) 520px, rgba(0, 0, 0, 0) 550px, rgba(100, 100, 225, 0.25) 550px, rgba(100, 100, 225, 0.25) 630px, rgba(0, 0, 0, 0) 630px, rgba(0, 0, 0, 0) 660px);
-  background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.5) 5%, rgba(0, 0, 0, 0) 5%), -moz-linear-gradient(left, rgba(0, 0, 0, 0) 0px, rgba(100, 100, 225, 0.25) 0px, rgba(100, 100, 225, 0.25) 80px, rgba(0, 0, 0, 0) 80px, rgba(0, 0, 0, 0) 110px, rgba(100, 100, 225, 0.25) 110px, rgba(100, 100, 225, 0.25) 190px, rgba(0, 0, 0, 0) 190px, rgba(0, 0, 0, 0) 220px, rgba(100, 100, 225, 0.25) 220px, rgba(100, 100, 225, 0.25) 300px, rgba(0, 0, 0, 0) 300px, rgba(0, 0, 0, 0) 330px, rgba(100, 100, 225, 0.25) 330px, rgba(100, 100, 225, 0.25) 410px, rgba(0, 0, 0, 0) 410px, rgba(0, 0, 0, 0) 440px, rgba(100, 100, 225, 0.25) 440px, rgba(100, 100, 225, 0.25) 520px, rgba(0, 0, 0, 0) 520px, rgba(0, 0, 0, 0) 550px, rgba(100, 100, 225, 0.25) 550px, rgba(100, 100, 225, 0.25) 630px, rgba(0, 0, 0, 0) 630px, rgba(0, 0, 0, 0) 660px);
-  background-image: -o-linear-gradient(bottom, rgba(0, 0, 0, 0.5) 5%, rgba(0, 0, 0, 0) 5%), -o-linear-gradient(left, rgba(0, 0, 0, 0) 0px, rgba(100, 100, 225, 0.25) 0px, rgba(100, 100, 225, 0.25) 80px, rgba(0, 0, 0, 0) 80px, rgba(0, 0, 0, 0) 110px, rgba(100, 100, 225, 0.25) 110px, rgba(100, 100, 225, 0.25) 190px, rgba(0, 0, 0, 0) 190px, rgba(0, 0, 0, 0) 220px, rgba(100, 100, 225, 0.25) 220px, rgba(100, 100, 225, 0.25) 300px, rgba(0, 0, 0, 0) 300px, rgba(0, 0, 0, 0) 330px, rgba(100, 100, 225, 0.25) 330px, rgba(100, 100, 225, 0.25) 410px, rgba(0, 0, 0, 0) 410px, rgba(0, 0, 0, 0) 440px, rgba(100, 100, 225, 0.25) 440px, rgba(100, 100, 225, 0.25) 520px, rgba(0, 0, 0, 0) 520px, rgba(0, 0, 0, 0) 550px, rgba(100, 100, 225, 0.25) 550px, rgba(100, 100, 225, 0.25) 630px, rgba(0, 0, 0, 0) 630px, rgba(0, 0, 0, 0) 660px);
-  background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.5) 5%, rgba(0, 0, 0, 0) 5%), linear-gradient(left, rgba(0, 0, 0, 0) 0px, rgba(100, 100, 225, 0.25) 0px, rgba(100, 100, 225, 0.25) 80px, rgba(0, 0, 0, 0) 80px, rgba(0, 0, 0, 0) 110px, rgba(100, 100, 225, 0.25) 110px, rgba(100, 100, 225, 0.25) 190px, rgba(0, 0, 0, 0) 190px, rgba(0, 0, 0, 0) 220px, rgba(100, 100, 225, 0.25) 220px, rgba(100, 100, 225, 0.25) 300px, rgba(0, 0, 0, 0) 300px, rgba(0, 0, 0, 0) 330px, rgba(100, 100, 225, 0.25) 330px, rgba(100, 100, 225, 0.25) 410px, rgba(0, 0, 0, 0) 410px, rgba(0, 0, 0, 0) 440px, rgba(100, 100, 225, 0.25) 440px, rgba(100, 100, 225, 0.25) 520px, rgba(0, 0, 0, 0) 520px, rgba(0, 0, 0, 0) 550px, rgba(100, 100, 225, 0.25) 550px, rgba(100, 100, 225, 0.25) 630px, rgba(0, 0, 0, 0) 630px, rgba(0, 0, 0, 0) 660px);
-  -moz-background-size: 100% 20px, auto;
-  -webkit-background-size: 100% 20px, auto;
-  -o-background-size: 100% 20px, auto;
-  background-size: 100% 20px, auto;
-  background-position: left top;
-}
 body .feedback, body .error, body .alert, body .notice, body .success, body .info {
   padding: 0.8em;
   margin-bottom: 1em;
@@ -770,81 +758,10 @@ body .removed {
     font-weight: 400;
   }
 }
-form label {
-  font-weight: bold;
-}
-form fieldset {
-  padding: 1.4em;
-  margin: 0 0 1.5em 0;
-}
-form legend {
-  font-weight: bold;
-  font-size: 1.2em;
-}
-form input.text, form input.title, form input[type=email], form input[type=text], form input[type=password] {
-  margin: 0.5em 0;
-  background-color: white;
-  padding: 5px;
-}
-form input.title {
-  font-size: 1.5em;
-}
-form textarea {
-  margin: 0.5em 0;
-  padding: 5px;
-}
-form select {
-  margin: 0.5em 0;
-}
-form fieldset {
-  border: 1px solid #cccccc;
-}
-form input.text, form input.title, form input[type=email], form input[type=text], form input[type=password],
-form textarea {
-  background-color: #fff;
-  border: 1px solid #bbbbbb;
-}
-form input.text:focus, form input.title:focus, form input[type=email]:focus, form input[type=text]:focus, form input[type=password]:focus,
-form textarea:focus {
-  border: 1px solid #666666;
-}
-form select {
-  background-color: #fff;
-  border-width: 1px;
-  border-style: solid;
-}
-form input.text, form input.title, form input[type=email], form input[type=text], form input[type=password] {
-  width: 300px;
-}
-form textarea {
-  width: 390px;
-  height: 250px;
-}
-
-.container {
-  width: 630px;
-  margin: 0 auto;
-  overflow: hidden;
-  *zoom: 1;
-}
-
-hr {
-  background: #bbbbbb;
-  color: #bbbbbb;
-  clear: both;
-  float: none;
-  width: 100%;
-  height: 0.1em;
-  margin: 0 0 1.45em;
-  border: none;
-}
-
 h1 {
   font-size: 2em;
   line-height: 0.75em;
   text-align: center;
-  margin-top: 1.5em;
-  margin-bottom: 0.75em;
 }
 h1 a {
   font-family: "lobster-1", "lobster-2", sans-serif;
@@ -890,7 +807,6 @@ h1 a:hover {
   margin: 0;
   padding: 0;
   text-align: center;
-  margin-bottom: 1.5em;
 }
 .links li {
   display: inline;
@@ -946,9 +862,6 @@ a:hover {
 
 .content .article .title, .content .article .metadata {
   text-align: center;
-}
-.content .article .metadata {
-  margin-bottom: 1em;
 }
 
 .index .article .metadata {
