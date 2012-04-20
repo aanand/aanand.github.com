@@ -700,11 +700,10 @@ pre, code, tt {
 }
 
 @media screen and (min-width: 480px) {
-  .container {
+  .index {
     width: 384px;
     margin: 40px auto;
   }
-
   .index .projects, .index .articles {
     padding-left: 40px;
   }
@@ -717,15 +716,15 @@ pre, code, tt {
   }
 
   .content {
-    padding: 0 40px;
+    margin: 40px auto;
+    max-width: 648px;
   }
 }
 @media screen and (min-width: 768px) {
-  .container {
+  .index {
     width: 728px;
     margin: 40px auto;
   }
-
   .index .projects, .index .articles {
     padding-left: 40px;
   }
@@ -735,18 +734,13 @@ pre, code, tt {
     width: 304px;
     margin-right: 38px;
     margin-bottom: 40px;
-  }
-
-  .content {
-    padding: 0 40px;
   }
 }
 @media screen and (min-width: 1112px) {
-  .container {
+  .index {
     width: 1072px;
     margin: 40px auto;
   }
-
   .index .projects, .index .articles {
     padding-left: 40px;
   }
@@ -756,10 +750,6 @@ pre, code, tt {
     width: 304px;
     margin-right: 38px;
     margin-bottom: 40px;
-  }
-
-  .content {
-    padding: 0 40px;
   }
 }
 @-moz-document url-prefix() {

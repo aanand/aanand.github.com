@@ -9,32 +9,34 @@
 =columns($container-width, $gutter, $num-columns)
   $column-width: ($container-width + $gutter) / $num-columns - $gutter
 
-  .container
-    width: $container-width + $gutter*2
-    margin: $gutter auto
+  width: $container-width + $gutter*2
+  margin: $gutter auto
 
-  .index
-    .projects, .articles
-      padding-left: $gutter
+  .projects, .articles
+    padding-left: $gutter
 
-    .project, .article
-      display: inline-block
-      vertical-align: top
-      width: $column-width
-      margin-right: $gutter - 2px
-      margin-bottom: $gutter
-
-  .content
-    padding: 0 $gutter
+  .project, .article
+    display: inline-block
+    vertical-align: top
+    width: $column-width
+    margin-right: $gutter - 2px
+    margin-bottom: $gutter
 
 @media screen and (min-width: 480px)
-  +columns(424px - 60px*2, 40px, 1)
+  .index
+    +columns(424px - 60px*2, 40px, 1)
+
+  .content
+    margin: 40px auto
+    max-width: 768px - 60px*2
 
 @media screen and (min-width: 768px)
-  +columns(768px - 60px*2, 40px, 2)
+  .index
+    +columns(768px - 60px*2, 40px, 2)
 
 @media screen and (min-width: 1112px)
-  +columns(1112px - 60px*2, 40px, 3)
+  .index
+    +columns(1112px - 60px*2, 40px, 3)
 
 hr
   //+colruler(#bbb)
