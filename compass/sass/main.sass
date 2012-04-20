@@ -6,10 +6,29 @@
 .container
   margin: 20px
 
-@media screen and (min-width: 480px)
+=columns($container-width, $gutter, $num-columns)
+  $column-width: ($container-width + $gutter) / $num-columns - $gutter
+
   .container
-    margin-left: 60px
-    margin-right: 60px
+    width: $container-width + $gutter*2
+    margin: $gutter auto
+
+  .index
+    .projects, .articles
+      padding-left: $gutter
+
+    .project, .article
+      display: inline-block
+      vertical-align: top
+      width: $column-width
+      margin-right: $gutter - 2px
+      margin-bottom: $gutter
+
+  .content
+    padding: 0 $gutter
+
+@media screen and (min-width: 768px)
+  +columns(768px - 60px*2, 40px, 2)
 
 hr
   //+colruler(#bbb)
