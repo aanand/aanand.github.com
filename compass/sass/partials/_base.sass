@@ -2,32 +2,35 @@
 @import url(http://fonts.googleapis.com/css?family=Lato:400,400italic) (-webkit-min-device-pixel-ratio: 2)
 
 $font-color:         #777
+$quiet-color:        #aaa
 
 $link-color:         #c22
 $link-hover-color:   $link-color
 $link-visited-color: $link-color
 $link-active-color:  #fc8
 
-$index-name-color:       white
-$index-name-bg:          #c22
-$index-name-hover-color: #c22
-$index-name-hover-bg:    #fc8
+$index-logo-color:       white
+$index-logo-bg:          #c22
+$index-logo-hover-color: #c22
+$index-logo-hover-bg:    #fc8
 
-$content-name-color:       #ddd
-$content-name-bg:          transparent
-$content-name-hover-color: #c22
-$content-name-hover-bg:    transparent
+$content-logo-color:       #ddd
+$content-logo-bg:          transparent
+$content-logo-hover-color: #c22
+$content-logo-hover-bg:    transparent
 
 $blueprint-grid-columns:   6
 $blueprint-grid-width:     80px
 $blueprint-grid-margin:    30px
 
-$blueprint-font-family: "Lato", sans-serif
-$blueprint-font-size:   14px
+$base-font-family:      "Lato", sans-serif
+$base-font-size:        14px
 $base-font-weight:      300
 $base-letter-spacing:   0
 
 $logo-font-family: "Lobster", sans-serif
+$logo-font-size:   2em
+$logo-line-height: 0.75em
 
 $header-font-size:      1.5em
 $header-line-height:    1
@@ -40,6 +43,9 @@ $monospace-font-size:   14px
 
 $retina-font-color:  $font-color
 $retina-font-weight: 400
+
+=quiet
+  color: $quiet-color
 
 // Use this to calculate the width based on the total width.
 // Or you can set $blueprint-grid-width to a fixed value and unset $blueprint-container-size -- it will be calculated for you.
