@@ -2,31 +2,10 @@
 @import blueprint/reset
 @import partials/pygments
 @import partials/typography
+@import partials/grid
 
 .container
   margin: 20px
-
-$side-margin: 60px
-$gutter: 40px
-
-=columns($viewport-width, $num-columns)
-  $container-width: $viewport-width - $side-margin*2
-  $column-width: ($container-width + $gutter) / $num-columns - $gutter
-
-  width: $container-width
-  margin: $gutter auto
-
-  .projects, .articles
-    margin-left: -$gutter
-    font-size: 0px
-
-  .project, .article
-    font-size: $wide-font-size
-    display: inline-block
-    vertical-align: top
-    width: $column-width
-    margin-left: $gutter
-    margin-bottom: $gutter
 
 @media screen and (min-width: 480px)
   .index
