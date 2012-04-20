@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:300,700,300italic)
+
 @import compass/css3/border-radius
 @import blueprint/reset
 @import partials/base
@@ -10,6 +12,9 @@ body
   +blueprint-utilities
   +blueprint-debug
   +blueprint-interaction
+
+  font-weight:    $base-font-weight
+  letter-spacing: $base-letter-spacing
 
 form
   +blueprint-form
@@ -78,8 +83,10 @@ h1
   text-align: center
 
 h2
-  font-size:     1.5em
-  line-height:   1
+  font-size:   $header-font-size
+  font-weight: $header-font-weight
+  line-height: $header-line-height
+
   margin-bottom: 1em
 
 a
@@ -89,6 +96,9 @@ a
     text-decoration: underline
 
 .article
+  .title
+    font-weight: 700
+
   .metadata
     +quiet
 
@@ -119,15 +129,12 @@ a
     +append-bottom(1em)
 
 .index .article
-  .title
-    font-weight: 700
-
   .metadata
     float: right
 
 pre, code, tt
-  font-family: "Monaco", monospace
-  font-size: 0.8em
+  font-family: $monospace-font-family
+  font-size:   $monospace-font-size
 
 pre
   padding: 0 15px

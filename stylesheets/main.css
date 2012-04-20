@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import url(http://fonts.googleapis.com/css?family=Lato:300,700,300italic);
 html {
   margin: 0;
   padding: 0;
@@ -471,14 +472,14 @@ a img {
 /* Literal.Number.Integer.Long */
 body {
   line-height: 1.5;
-  font-family: "calluna-1", "calluna-2", "Georgia", serif;
-  color: #333333;
-  font-size: 125%;
+  font-family: "Lato", sans-serif;
+  color: #777777;
+  font-size: 112.5%;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
-  color: #222222;
+  color: #666666;
 }
 h1 img, h2 img, h3 img, h4 img, h5 img, h6 img {
   margin: 0;
@@ -651,13 +652,17 @@ caption {
 }
 
 .quiet {
-  color: #666666;
+  color: #aaaaaa;
 }
 
 .loud {
-  color: #111111;
+  color: #555555;
 }
 
+body {
+  font-weight: 300;
+  letter-spacing: 0;
+}
 body .clear {
   clear: both;
 }
@@ -885,7 +890,7 @@ h1 a:hover {
 }
 .links li:before {
   content: "\00b7";
-  color: #666666;
+  color: #aaaaaa;
 }
 .links li:first-child:before {
   display: none;
@@ -897,6 +902,7 @@ h1 a:hover {
 
 h2 {
   font-size: 1.5em;
+  font-weight: 300;
   line-height: 1;
   margin-bottom: 1em;
 }
@@ -908,15 +914,18 @@ a:hover {
   text-decoration: underline;
 }
 
+.article .title {
+  font-weight: 700;
+}
 .article .metadata {
-  color: #666666;
+  color: #aaaaaa;
 }
 .article .metadata > * {
   display: inline;
 }
 .article .metadata > *:before {
   content: "· ";
-  color: #666666 !important;
+  color: #aaaaaa !important;
 }
 .article .metadata > *:first-child:before {
   display: none;
@@ -935,16 +944,13 @@ a:hover {
   margin-bottom: 1em;
 }
 
-.index .article .title {
-  font-weight: 700;
-}
 .index .article .metadata {
   float: right;
 }
 
 pre, code, tt {
   font-family: "Monaco", monospace;
-  font-size: 0.8em;
+  font-size: 14px;
 }
 
 pre {
