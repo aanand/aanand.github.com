@@ -554,19 +554,19 @@ p .right {
 
 a {
   text-decoration: underline;
-  color: #cc2222;
+  color: #105f94;
 }
 a:visited {
-  color: #cc2222;
+  color: #105f94;
 }
 a:focus {
-  color: #cc2222;
+  color: #105f94;
 }
 a:hover {
-  color: #cc2222;
+  color: #105f94;
 }
 a:active {
-  color: #ffcc88;
+  color: #88ccff;
 }
 
 blockquote {
@@ -779,7 +779,7 @@ header {
   margin-bottom: 1.5em;
 }
 header a {
-  color: #cc2222;
+  color: #105f94;
 }
 header .logo a {
   font-family: "Lato", sans-serif;
@@ -791,7 +791,7 @@ header .logo a {
   text-decoration: none;
   text-transform: uppercase;
   color: white !important;
-  background: #cc2222;
+  background: #105f94;
   display: inline-block;
   width: 150px;
   height: 150px;
@@ -813,22 +813,22 @@ header .logo a span {
 }
 header .logo a:hover {
   text-decoration: none;
-  color: #cc2222 !important;
-  background: #ffcc88;
+  color: #105f94 !important;
+  background: #88ccff;
 }
 
 .content header a {
   color: #dddddd;
 }
 .content header a:hover {
-  color: #cc2222;
+  color: #105f94;
 }
 .content header .logo a {
   color: white !important;
   background: #dddddd;
 }
 .content header .logo a:hover {
-  color: #cc2222 !important;
+  color: #105f94 !important;
   background: transparent;
 }
 
