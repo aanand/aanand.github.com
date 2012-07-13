@@ -829,7 +829,7 @@ header .logo a:hover {
 }
 .content header .logo a:hover {
   color: #105f94 !important;
-  background: transparent;
+  background: #88ccff;
 }
 
 .links {
