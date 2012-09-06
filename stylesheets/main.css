@@ -894,6 +894,13 @@ h2 {
   float: right;
 }
 
+.jam {
+  text-align: center;
+}
+.jam .jam-text:after {
+  content: ".";
+}
+
 pre {
   padding: 0 15px;
   margin: 30px 0;
