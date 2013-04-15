@@ -2,13 +2,21 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <id>http://aanandprasad.com/</id>
   <title>Aanand Prasad</title>
-  <updated>2011-08-13T22:11:00Z</updated>
+  <updated>2013-04-15T14:45:00Z</updated>
   <link rel="alternate" href="http://aanandprasad.com/"/>
   <link rel="self" href="http://aanandprasad.com/articles.xml"/>
   <author>
     <name>Aanand Prasad</name>
     <uri>http://aanandprasad.com/</uri>
   </author>
+  <entry>
+    <id>tag:aanandprasad.com,2013-04-15:/articles/negronis/</id>
+    <title type="html">The Abstracted Negroni</title>
+    <published>2013-04-15T14:45:00Z</published>
+    <updated>2013-04-15T14:45:00Z</updated>
+    <link rel="alternate" href="http://aanandprasad.com/articles/negronis/"/>
+    <content type="html"></content>
+  </entry>
   <entry>
     <id>tag:aanandprasad.com,2011-08-13:/articles/offline/</id>
     <title type="html">Offline Support is Valuable, and You Can’t Add it Later</title>
