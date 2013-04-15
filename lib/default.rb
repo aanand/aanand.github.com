@@ -84,3 +84,13 @@ class PrependSummaryFilter < Nanoc3::Filter
     end
   end
 end
+
+class LiterateCoffeeFilter < Nanoc3::Filter
+  identifier :literate_coffee
+
+  def run(content, params={})
+    raise "no :litcoffee key found" unless item[:litcoffee]
+    File.read("litcoffee/" + item[:litcoffee])
+  end
+end
+

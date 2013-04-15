@@ -15,8 +15,9 @@ compile '/articles/feed/' do
 end
 
 compile '/articles/*/' do
+  filter :literate_coffee if item[:litcoffee]
   filter :maruku
-  filter :syntax
+  filter :syntax, language: (item[:litcoffee] && 'coffeescript')
   filter :prepend_summary
   layout 'article'
   layout 'default'
