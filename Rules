@@ -28,6 +28,7 @@ compile '/articles/feed/', rep: "feed" do
 end
 
 compile '/articles/*/', rep: "feed" do
+  filter :literate_coffee if item[:litcoffee]
   filter :maruku
   filter :syntax, colour: false
   filter :prepend_summary

@@ -15,7 +15,188 @@
     <published>2013-04-15T14:45:00Z</published>
     <updated>2013-04-15T14:45:00Z</updated>
     <link rel="alternate" href="http://aanandprasad.com/articles/negronis/"/>
-    <content type="html"></content>
+    <content type="html">&lt;p&gt;I was out last Friday at a bar where they had a &amp;#8220;Negroni Tic-Tac-Toe&amp;#8221; offer&amp;#8212;you could custom-build your drink from a selection of 3 gins, 3 vermouths and 3 amari, and if you got &amp;#8220;3 in a row&amp;#8221; you&amp;#8217;d get &amp;#163;5 off your bill. It&amp;#8217;s a laughably stingy deal, but it got me thinking. About functional programming, I mean.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Negroni
+  constructor: (@gin, @vermouth, @amaro) -&amp;gt;
+    # Build over ice, stir well
+
+  inspect: -&amp;gt; "Negroni(#{@gin}, #{@vermouth}, #{@amaro})"&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The Negroni is often described as a &amp;#8220;manly&amp;#8221; drink, but fuck your gender-essentialism&amp;#8212;let&amp;#8217;s just call it &lt;em&gt;badass&lt;/em&gt;. Everything I ever needed to know about it, by the way, I learned from &lt;a href="http://manhattansproject.com/on-the-negroni/"&gt;Felix&lt;/a&gt;. I personally find Punt e Mes a shade too bitter when combined with Campari, but that&amp;#8217;s just me.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# some shorthands for the Node console
+print = (args...) -&amp;gt; console.log(args...)
+inspect = (thing) -&amp;gt; if thing.inspect then thing.inspect() else thing.toString()
+
+print "Here's how I make it at home:",
+  new Negroni("Botanist", "Martini Rosso", "Campari")
+  # =&amp;gt; Negroni(Botanist, Martini Rosso, Campari)&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Point is, there are 3&amp;#215;3&amp;#215;3&amp;#160;=&amp;#160;27 possible combinations at that bar, a delicious Rubik&amp;#8217;s Cube of liver damage. How would you enumerate them all?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;assemble = (g, v, a) -&amp;gt;
+  g.map (gin) -&amp;gt;
+    v.map (vermouth) -&amp;gt;
+      a.map (amaro) -&amp;gt;
+        new Negroni(gin, vermouth, amaro)
+
+allGins      = ["Botanist", "Bombay Sapphire", "Blackwoods 60%"]
+allVermouths = ["Martini Rosso", "Cocchi", "Punt e Mes"]
+allAmari     = ["Campari", "Aperol", "Cynar"]
+
+print assemble(allGins, allVermouths, allAmari)
+
+# =&amp;gt; [ [ [ Negroni(Botanist, Martini Rosso, Campari),
+#          Negroni(Botanist, Martini Rosso, Aperol),
+#          Negroni(Botanist, Martini Rosso, Cynar) ],
+#        [ Negroni(Botanist, Cocchi, Campari),
+#          Negroni(Botanist, Cocchi, Aperol),
+#          Negroni(Botanist, Cocchi, Cynar) ],
+#      ...]
+#    ...]&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Hmmm. It&amp;#8217;s a start, but that&amp;#8217;s altogether too much nesting. We&amp;#8217;ll never get anything done if we&amp;#8217;re spending all our time unboxing drinks.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Array.prototype.flatMap = (fn) -&amp;gt;
+  this.map(fn).reduce(((a, b) -&amp;gt; a.concat(b)), [])
+
+assemble = (g, v, a) -&amp;gt;
+  g.flatMap (gin) -&amp;gt;
+    v.flatMap (vermouth) -&amp;gt;
+      a.map (amaro) -&amp;gt;
+        new Negroni(gin, vermouth, amaro)&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The outer two &lt;code&gt;map&lt;/code&gt;s are replaced with &lt;code&gt;flatMap&lt;/code&gt;, which maps and then flattens the resulting array.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;print assemble(allGins, allVermouths, allAmari)
+
+# =&amp;gt; [ Negroni(Botanist, Martini Rosso, Campari),
+#      Negroni(Botanist, Martini Rosso, Aperol),
+#      Negroni(Botanist, Martini Rosso, Cynar),
+#      Negroni(Botanist, Cocchi, Campari),
+#      Negroni(Botanist, Cocchi, Aperol),
+#      Negroni(Botanist, Cocchi, Cynar),
+#      Negroni(Botanist, Punt e Mes, Campari),
+#    ...]&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Much better.&lt;/p&gt;
+
+&lt;p&gt;Of course, it&amp;#8217;s almost never a good idea to make 27 cocktails. Let&amp;#8217;s row back a bit and consider a much more common scenario: you&amp;#8217;ve got a guest round and they&amp;#8217;d fancy just one Negroni. They don&amp;#8217;t much mind &lt;em&gt;what&lt;/em&gt; gin, vermouth or amaro it&amp;#8217;s made with&amp;#8212;you&amp;#8217;re more worried about whether you have them at all. Can you satisfy them?&lt;/p&gt;
+
+&lt;p&gt;We need to represent the &lt;em&gt;potential presence or absence&lt;/em&gt; of a thing.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;yep = (thing) -&amp;gt;
+  {
+    inspect: -&amp;gt; "yep(#{inspect(thing)})"
+  }
+
+nope =
+  {
+    inspect: -&amp;gt; "nope"
+  }
+
+print "Here's something:", yep("Gin")
+print "Here's nothing:", nope&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So, time to write a new &lt;code&gt;assemble()&lt;/code&gt; method, right? To check individually for the presence or absence of each of our ingredients, and only return a &lt;code&gt;yep()&lt;/code&gt; if we&amp;#8217;ve got all 3?&lt;/p&gt;
+
+&lt;p&gt;Nope. &lt;code&gt;assemble()&lt;/code&gt; can stay as it is. We just need to implement &lt;code&gt;map&lt;/code&gt; and &lt;code&gt;flatMap&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;yep = (thing) -&amp;gt;
+  {
+    inspect: -&amp;gt; "yep(#{inspect(thing)})"
+
+    map:     (f) -&amp;gt; yep(f(thing))
+    flatMap: (f) -&amp;gt; f(thing)
+  }
+
+nope =
+  {
+    inspect: -&amp;gt; "nope"
+
+    map:     (f) -&amp;gt; nope
+    flatMap: (f) -&amp;gt; nope
+  }
+
+print "If we have no ingredients:",
+  assemble(nope, nope, nope)
+  # =&amp;gt; nope
+
+print "If we have only gin and amaro:",
+  assemble(yep("Gin"), nope, yep("Amaro"))
+  # =&amp;gt; nope
+
+print "If we have gin, vermouth and amaro:",
+  assemble(yep("Gin"), yep("Vermouth"), yep("Amaro"))
+  # =&amp;gt; yep(Negroni(Gin, Vermouth, Amaro))&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Magic. &lt;code&gt;assemble()&lt;/code&gt; will accept anything that supports those two methods. All it expresses is that you need all 3 ingredients to make a Negroni&amp;#8212;not how to get them, or how many to make. That logic lives entirely in the definitions of &lt;code&gt;map&lt;/code&gt; and &lt;code&gt;flatMap&lt;/code&gt;: for arrays, all possible combinations of elements are enumerated; for &lt;code&gt;yep&lt;/code&gt; and &lt;code&gt;nope&lt;/code&gt;, we only ever have zero or one of something, and we short-circuit as soon as the first zero (a.k.a. &lt;code&gt;nope&lt;/code&gt;) is encountered.&lt;/p&gt;
+
+&lt;p&gt;Sadly, it turns out we don&amp;#8217;t have any of the ingredients to hand. You can order them online, though! Indeed, you have 3 fast-delivery specialist suppliers (one per ingredient&amp;#8212;they&amp;#8217;re &lt;em&gt;highly&lt;/em&gt; specialised) bookmarked for this very purpose. Within a few moments, each one has promised that a bottle is on its way to you, and you can thus pass on the promise of a Negroni to your patient, thirsty guest.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Promise = require("promise")
+
+Promise.prototype.map     = (fn) -&amp;gt; this.then(fn)
+Promise.prototype.flatMap = (fn) -&amp;gt; this.then(fn)
+
+order = (name) -&amp;gt;
+  new Promise (resolve) -&amp;gt;
+    setTimeout((-&amp;gt; resolve(name)), 1000)
+
+g = order("Gin")      # a Promise of "Gin"
+v = order("Vermouth") # a Promise of "Vermouth"
+a = order("Amaro")    # a Promise of "Amaro"
+
+promisedNegroni = assemble(g, v, a) # a Promise of a Negroni
+
+print "Your Negroni is on its way. Any second now..."
+
+promisedNegroni.then (negroni) -&amp;gt;
+  print "Ah! It's here:", negroni
+  # =&amp;gt; Negroni(Gin, Vermouth, Amaro)&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;&lt;p&gt;I&amp;#8217;m not the first one to point out that &lt;a href="http://blog.jcoglan.com/2011/03/11/promises-are-the-monad-of-asynchronous-programming/"&gt;promises are the monad of asynchronous programming&lt;/a&gt;, but the topic has become pertinent, because &lt;a href="https://github.com/promises-aplus"&gt;the Promises/A+ spec&lt;/a&gt; is still in formation. If programmers can rely on a monadic interface for promises, this opens up the possibility of writing code which will work with &lt;em&gt;any&lt;/em&gt; monad, not just promises&amp;#8212;as I&amp;#8217;ve tried to demonstrate with &lt;code&gt;assemble()&lt;/code&gt; above.&lt;/p&gt;
+
+&lt;p&gt;The spec as it stands is not enough: for one thing, a monad must provide a means of wrapping a plain value, e.g. &lt;code&gt;Array.of(1)&lt;/code&gt; or &lt;code&gt;Promise.of(1)&lt;/code&gt;. I avoided implementing such a method in the examples above for simplicity&amp;#8217;s sake, and used &lt;code&gt;map&lt;/code&gt; instead, but the following are equivalent:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[1, 2, 3].map(fn)
+
+Array.prototype.of = (x) -&amp;gt; [x]
+[1, 2, 3].flatMap (x) -&amp;gt; Array.of(fn(x))&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A thornier issue is that a promise&amp;#8217;s &lt;code&gt;then&lt;/code&gt; method, as specified, treats the return value of the passed-in function differently depending on whether it&amp;#8217;s a promise&amp;#8212;essentially, it must try to intelligently determine whether to be &lt;code&gt;map&lt;/code&gt; or &lt;code&gt;flatMap&lt;/code&gt;&amp;#8212;which is why the two methods we implemented on &lt;code&gt;Promise.prototype&lt;/code&gt; are identical.&lt;/p&gt;
+
+&lt;p&gt;Besides the inherent unreliability of trying to determine an object&amp;#8217;s type in a dynamically-typed language, such overloading is likely to lead to difficult-to-predict bugs and difficult-to-reason-about code when promises are &lt;em&gt;treated&lt;/em&gt; like well-behaved monads, but &lt;em&gt;aren&amp;#8217;t&lt;/em&gt;. We got away with it this time, but I wouldn&amp;#8217;t feel confident writing more complex code, knowing that &amp;#8220;smart&amp;#8221; logic was there.&lt;/p&gt;
+
+&lt;p&gt;There &lt;a href="http://brianmckenna.org/blog/category_theory_promisesaplus"&gt;has&lt;/a&gt; &lt;a href="https://github.com/promises-aplus/resolvers-spec/issues/24"&gt;been&lt;/a&gt; &lt;a href="https://github.com/promises-aplus/promises-spec/issues/94"&gt;some&lt;/a&gt; &lt;a href="https://github.com/promises-aplus/promises-spec/issues/97"&gt;discussion&lt;/a&gt; on this topic in the last few days. Sadly, the authors have so far been difficult to convince. This is understandable&amp;#8212;the theory is difficult to explain, and examples of the potential problems non-obvious (I am personally unable to produce a simple example).&lt;/p&gt;
+
+&lt;p&gt;A more directly appealing argument was made by &lt;a href="https://github.com/promises-aplus/promises-spec/issues/94#issuecomment-16294840"&gt;Reg&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;A long time ago in a company far, far away, there was a young engineer given a herculean task within an impossible deadline. He created LiveScript. One of the decisions he made was to make functions first-class values rather than have them be &amp;#8220;something else&amp;#8221; like the other popular languages of the day. Another was to use prototypical inheritance rather than classical inheritance, like the other popular languages of the day.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;It would take years for the programming community to embrace the power of functions as first-class values in his language. Most people agree that Crockford got the ball rolling, followed by Oliver Steele and you can trace a direct line down to Jeremy Ashkenas and Underscore from there. Today, it is unthinkable to imagine a JavaScript without functions that can return functions or apply functions.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Conversely, prototypical inheritance hasn&amp;#8217;t reached a tipping point. The vast majority of programmers simply emulate classical inheritance and do not exploit its power in any way.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;What does this history tell me about promises?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I think that promises-that-are-monads are in the same category as these two ideas I cited. If we embrace the idea of promises being first-class monads, we will likely have a lot of &amp;#8220;meh&amp;#8221; for a year or maybe three. Then someone will write a library or give a talk and the light will go on. It is had to imagine what wonderful thing will be created when that happens.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This speaks to me. The power of first-class functions had already been amply demonstrated when LiveScript was designed&amp;#8212;just not in the mainstream. Similarly, the power of the monad abstraction has been amply demonstrated in functional languages, but not yet in the mainstream.&lt;/p&gt;
+
+&lt;p&gt;It may be too late for &lt;code&gt;then&lt;/code&gt;&amp;#8212;too much code already relies on its current behaviour, and besides, it&amp;#8217;s useful. A &lt;a href="https://github.com/pufuwozu/fantasy-land"&gt;concurrent spec for monads&lt;/a&gt; (they call it &lt;code&gt;chain&lt;/code&gt;, not &lt;code&gt;flatMap&lt;/code&gt;) has been started, and we could just hope that most promise implementors choose to support that too&amp;#8230; but I strongly suspect the majority won&amp;#8217;t bother, even though it&amp;#8217;d be trivial.&lt;/p&gt;
+
+&lt;p&gt;To have the &lt;code&gt;chain&lt;/code&gt; and &lt;code&gt;of&lt;/code&gt; methods required in Promises/A+ would be a &lt;em&gt;much&lt;/em&gt; bigger win.&lt;/p&gt;</content>
   </entry>
   <entry>
     <id>tag:aanandprasad.com,2011-08-13:/articles/offline/</id>
