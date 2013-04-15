@@ -11,8 +11,11 @@ I was out last Friday at a bar where they had a "Negroni Tic-Tac-Toe' offer---yo
 
 The Negroni is often described as a "manly" drink, but fuck your gender-essentialism---let's just call it _badass_. Everything I ever needed to know about it, by the way, I learned from [Felix](http://manhattansproject.com/on-the-negroni/). I personally find Punt e Mes a shade too bitter when combined with Campari, but that's just me.
 
-    console.log "Here's how I make it at home:"
-    console.log new Negroni("Botanist", "Martini Rosso", "Campari")
+    # just a shorthand
+    print = (obj) -> console.log(obj)
+
+    print "Here's how I make it at home:"
+    print new Negroni("Botanist", "Martini Rosso", "Campari")
 
 Point is, there are 3&times;3&times;3&nbsp;=&nbsp;27 possible combinations at that bar, a delicious Rubik's Cube of liver damage. How would you enumerate them all?
 
@@ -26,7 +29,7 @@ Point is, there are 3&times;3&times;3&nbsp;=&nbsp;27 possible combinations at th
     allVermouths = ["Martini Rosso", "Cocchi", "Punt e Mes"]
     allAmari     = ["Campari", "Aperol", "Cynar"]
     
-    console.log assemble(allGins, allVermouths, allAmari)
+    print assemble(allGins, allVermouths, allAmari)
 
     # => [ [ [ Negroni(Botanist, Martini Rosso, Campari),
     #          Negroni(Botanist, Martini Rosso, Aperol),
@@ -50,7 +53,7 @@ Hmmm. It's a start, but that's altogether too much nesting. We'll never get anyt
 
 The outer two `map`s are replaced with `flatMap`, which maps and then flattens the resulting array.
 
-    console.log assemble(allGins, allVermouths, allAmari)
+    print assemble(allGins, allVermouths, allAmari)
 
     # => [ Negroni(Botanist, Martini Rosso, Campari),
     #      Negroni(Botanist, Martini Rosso, Aperol),
@@ -70,17 +73,15 @@ We need to represent the _potential presence or absence_ of a thing.
     yep = (thing) ->
       {
         toString: -> "yep(#{thing})"
-        inspect:  -> @toString()
       }
 
     nope =
       {
         toString: -> "nope"
-        inspect:  -> @toString()
       }
 
-    console.log yep("Gin") # => yep(Gin)
-    console.log nope       # => nope
+    print "Here's something: #{yep("Gin")}"
+    print "Here's nothing: #{nope}"
 
 So, time to write a new `assemble()` method, right? To check individually for the presence or absence of each of our ingredients, and only return a `yep()` if we've got all 3?
 
@@ -89,7 +90,6 @@ Nope. `assemble()` can stay as it is. We just need to implement `map` and `flatM
     yep = (thing) ->
       {
         toString: -> "yep(#{thing})"
-        inspect:  -> @toString()
 
         map:     (f) -> yep(f(thing))
         flatMap: (f) -> f(thing)
@@ -98,22 +98,18 @@ Nope. `assemble()` can stay as it is. We just need to implement `map` and `flatM
     nope =
       {
         toString: -> "nope"
-        inspect:  -> @toString()
 
         map:     (f) -> nope
         flatMap: (f) -> nope
       }
 
-    console.log "If we have no ingredients:"
-    console.log assemble(nope, nope, nope)
+    print "If we have no ingredients: " + assemble(nope, nope, nope)
     # => nope
     
-    console.log "If we have only gin and vermouth:"
-    console.log assemble(yep("Gin"), yep("Vermouth"), nope)
+    print "If we have only gin and vermouth: " + assemble(yep("Gin"), yep("Vermouth"), nope)
     # => nope
 
-    console.log "If we have gin and vermouth and amaro:"
-    console.log assemble(yep("Gin"), yep("Vermouth"), yep("Amaro"))
+    print "If we have gin, vermouth and amaro: " + assemble(yep("Gin"), yep("Vermouth"), yep("Amaro"))
     # => yep(Negroni(Gin, Vermouth, Amaro))
 
 Magic. `assemble()` will accept anything that supports those two methods. All it expresses is that you need all 3 ingredients to make a Negroni---not how to get them, or how many to make.
@@ -135,10 +131,9 @@ Sadly, it turns out we don't have any of the ingredients to hand. You can go onl
 
     promisedNegroni = assemble(g, v, a) # a promise of a Negroni
 
-    console.log "Your Negroni is on its way. Here's your order:"
-    console.log promisedNegroni
-    console.log "Any second now..."
+    print "Your Negroni is on its way. Here's your order: " + promisedNegroni
+    print "Any second now..."
 
     promisedNegroni.then (negroni) ->
-      console.log "Ah! It's here: #{negroni}"
+      print "Ah! It's here: #{negroni}"
 
