@@ -6,6 +6,7 @@ Slim::Engine.set_default_options :pretty => true
 
 require "time"
 require "nokogiri"
+require "pygments"
 
 include Nanoc3::Helpers::Rendering
 include Nanoc3::Helpers::Filtering
@@ -42,22 +43,25 @@ class SyntaxFilter < Nanoc3::Filter
     code_blocks = doc.search('pre>code')
 
     code_blocks.each do |block|
-      text = block.text.strip
-      first_line, rest = text.split("\n", 2)
+      code = block.text.strip
+      first_line, remaining_lines = code.split("\n", 2)
+      language = params[:language]
 
       if first_line =~ %r{^```(\w+)}
-        if params.fetch(:colour, true)
-          command = "pygmentize -l #{$1} -f html -O encoding=utf-8,nowrap"
+        language = $1
+        code = remaining_lines
+      end
 
-          highlighted_text = IO.popen(command, "r+") do |f|
-            f.write(rest)
-            f.close_write
-            f.read
-          end
+      if language
+        if params.fetch(:colour, true)
+          highlighted_text = Pygments.highlight(code,
+            lexer: language,
+            formatter: 'html',
+            options: { encoding: 'utf-8', nowrap: true })
 
           block.inner_html = highlighted_text
         else
-          block.content = rest
+          block.content = code
         end
       end
     end
