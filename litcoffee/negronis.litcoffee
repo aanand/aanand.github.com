@@ -82,9 +82,9 @@ We need to represent the _potential presence or absence_ of a thing.
     print "Here's something:", yep("Gin")
     print "Here's nothing:", nope
 
-So, time to write a new `assemble()` method, right? To check individually for the presence or absence of each of our ingredients, and only return a `yep()` if we've got all 3?
+So, time to write a new `assemble` method, right? To check individually for the presence or absence of each of our ingredients, and only return a `yep()` if we've got all 3?
 
-Nope. `assemble()` can stay as it is. We just need to implement `map` and `flatMap`.
+Nope. `assemble` can stay as it is. We just need to implement `map` and `flatMap`.
 
     yep = (thing) ->
       {
@@ -114,7 +114,7 @@ Nope. `assemble()` can stay as it is. We just need to implement `map` and `flatM
       assemble(yep("Gin"), yep("Vermouth"), yep("Amaro"))
       # => yep(Negroni(Gin, Vermouth, Amaro))
 
-Magic. `assemble()` will accept anything that supports those two methods. All it expresses is that you need all 3 ingredients to make a Negroni---not how to get them, or how many to make. That logic lives entirely in the definitions of `map` and `flatMap`: for arrays, all possible combinations of elements are enumerated; for `yep` and `nope`, we only ever have zero or one of something, and we short-circuit as soon as the first zero (a.k.a. `nope`) is encountered.
+Magic. `assemble` will accept anything that supports those two methods. All it expresses is that you need all 3 ingredients to make a Negroni---not how to get them, or how many to make. That logic lives entirely in the definitions of `map` and `flatMap`: for arrays, all possible combinations of elements are enumerated; for `yep` and `nope`, we only ever have zero or one of something, and we short-circuit as soon as the first zero (a.k.a. `nope`) is encountered.
 
 Sadly, it turns out we don't have any of the ingredients to hand. You can order them online, though! Indeed, you have 3 fast-delivery specialist suppliers (one per ingredient---they're _highly_ specialised) bookmarked for this very purpose. Within a few moments, each one has promised that a bottle is on its way to you, and you can thus pass on the promise of a Negroni to your patient, thirsty guest.
 
@@ -139,16 +139,13 @@ Sadly, it turns out we don't have any of the ingredients to hand. You can order 
       print "Ah! It's here:", negroni
       # => Negroni(Gin, Vermouth, Amaro)
 
+Once again, we didn't have to change `assemble`---just implement `map` and `flatMap`.
+
 ---
 
-I'm not the first one to point out that [promises are the monad of asynchronous programming](http://blog.jcoglan.com/2011/03/11/promises-are-the-monad-of-asynchronous-programming/), but the topic has become pertinent, because [the Promises/A+ spec](https://github.com/promises-aplus) is still in formation. If programmers can rely on a monadic interface for promises, this opens up the possibility of writing code which will work with _any_ monad, not just promises---as I've tried to demonstrate with `assemble()` above.
+I'm not the first one to point out that [promises are the monad of asynchronous programming](http://blog.jcoglan.com/2011/03/11/promises-are-the-monad-of-asynchronous-programming/), but the topic has become pertinent, because [the Promises/A+ spec](https://github.com/promises-aplus) is still in formation. If programmers can rely on a monadic interface for promises, this opens up the possibility of writing code which will work with _any_ monad, not just promises---as I've tried to demonstrate with `assemble` above.
 
-The spec as it stands is not enough: for one thing, a monad must provide a means of wrapping a plain value, e.g. `Array.of(1)` or `Promise.of(1)`. I avoided implementing such a method in the examples above for simplicity's sake, and used `map` instead, but the following are equivalent:
-
-    [1, 2, 3].map(fn)
-
-    Array.prototype.of = (x) -> [x]
-    [1, 2, 3].flatMap (x) -> Array.of(fn(x))
+The spec as it stands is not enough: for one thing, a monad must provide a means of wrapping a plain value, e.g. `Array.of("Gin")` or `Promise.of("Gin")`. (I avoided implementing such a method in the examples above for simplicity's sake, and used `map` instead.)
 
 A thornier issue is that a promise's `then` method, as specified, treats the return value of the passed-in function differently depending on whether it's a promise---essentially, it must try to intelligently determine whether to be `map` or `flatMap`---which is why the two methods we implemented on `Promise.prototype` are identical.
 

@@ -99,9 +99,9 @@ nope =
 print "Here's something:", yep("Gin")
 print "Here's nothing:", nope&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;So, time to write a new &lt;code&gt;assemble()&lt;/code&gt; method, right? To check individually for the presence or absence of each of our ingredients, and only return a &lt;code&gt;yep()&lt;/code&gt; if we&amp;#8217;ve got all 3?&lt;/p&gt;
+&lt;p&gt;So, time to write a new &lt;code&gt;assemble&lt;/code&gt; method, right? To check individually for the presence or absence of each of our ingredients, and only return a &lt;code&gt;yep()&lt;/code&gt; if we&amp;#8217;ve got all 3?&lt;/p&gt;
 
-&lt;p&gt;Nope. &lt;code&gt;assemble()&lt;/code&gt; can stay as it is. We just need to implement &lt;code&gt;map&lt;/code&gt; and &lt;code&gt;flatMap&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Nope. &lt;code&gt;assemble&lt;/code&gt; can stay as it is. We just need to implement &lt;code&gt;map&lt;/code&gt; and &lt;code&gt;flatMap&lt;/code&gt;.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;yep = (thing) -&amp;gt;
   {
@@ -131,7 +131,7 @@ print "If we have gin, vermouth and amaro:",
   assemble(yep("Gin"), yep("Vermouth"), yep("Amaro"))
   # =&amp;gt; yep(Negroni(Gin, Vermouth, Amaro))&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Magic. &lt;code&gt;assemble()&lt;/code&gt; will accept anything that supports those two methods. All it expresses is that you need all 3 ingredients to make a Negroni&amp;#8212;not how to get them, or how many to make. That logic lives entirely in the definitions of &lt;code&gt;map&lt;/code&gt; and &lt;code&gt;flatMap&lt;/code&gt;: for arrays, all possible combinations of elements are enumerated; for &lt;code&gt;yep&lt;/code&gt; and &lt;code&gt;nope&lt;/code&gt;, we only ever have zero or one of something, and we short-circuit as soon as the first zero (a.k.a. &lt;code&gt;nope&lt;/code&gt;) is encountered.&lt;/p&gt;
+&lt;p&gt;Magic. &lt;code&gt;assemble&lt;/code&gt; will accept anything that supports those two methods. All it expresses is that you need all 3 ingredients to make a Negroni&amp;#8212;not how to get them, or how many to make. That logic lives entirely in the definitions of &lt;code&gt;map&lt;/code&gt; and &lt;code&gt;flatMap&lt;/code&gt;: for arrays, all possible combinations of elements are enumerated; for &lt;code&gt;yep&lt;/code&gt; and &lt;code&gt;nope&lt;/code&gt;, we only ever have zero or one of something, and we short-circuit as soon as the first zero (a.k.a. &lt;code&gt;nope&lt;/code&gt;) is encountered.&lt;/p&gt;
 
 &lt;p&gt;Sadly, it turns out we don&amp;#8217;t have any of the ingredients to hand. You can order them online, though! Indeed, you have 3 fast-delivery specialist suppliers (one per ingredient&amp;#8212;they&amp;#8217;re &lt;em&gt;highly&lt;/em&gt; specialised) bookmarked for this very purpose. Within a few moments, each one has promised that a bottle is on its way to you, and you can thus pass on the promise of a Negroni to your patient, thirsty guest.&lt;/p&gt;
 
@@ -155,14 +155,11 @@ print "Your Negroni is on its way. Any second now..."
 promisedNegroni.then (negroni) -&amp;gt;
   print "Ah! It's here:", negroni
   # =&amp;gt; Negroni(Gin, Vermouth, Amaro)&lt;/code&gt;&lt;/pre&gt;
-&lt;hr&gt;&lt;p&gt;I&amp;#8217;m not the first one to point out that &lt;a href="http://blog.jcoglan.com/2011/03/11/promises-are-the-monad-of-asynchronous-programming/"&gt;promises are the monad of asynchronous programming&lt;/a&gt;, but the topic has become pertinent, because &lt;a href="https://github.com/promises-aplus"&gt;the Promises/A+ spec&lt;/a&gt; is still in formation. If programmers can rely on a monadic interface for promises, this opens up the possibility of writing code which will work with &lt;em&gt;any&lt;/em&gt; monad, not just promises&amp;#8212;as I&amp;#8217;ve tried to demonstrate with &lt;code&gt;assemble()&lt;/code&gt; above.&lt;/p&gt;
 
-&lt;p&gt;The spec as it stands is not enough: for one thing, a monad must provide a means of wrapping a plain value, e.g. &lt;code&gt;Array.of(1)&lt;/code&gt; or &lt;code&gt;Promise.of(1)&lt;/code&gt;. I avoided implementing such a method in the examples above for simplicity&amp;#8217;s sake, and used &lt;code&gt;map&lt;/code&gt; instead, but the following are equivalent:&lt;/p&gt;
+&lt;p&gt;Once again, we didn&amp;#8217;t have to change &lt;code&gt;assemble&lt;/code&gt;&amp;#8212;just implement &lt;code&gt;map&lt;/code&gt; and &lt;code&gt;flatMap&lt;/code&gt;.&lt;/p&gt;
+&lt;hr&gt;&lt;p&gt;I&amp;#8217;m not the first one to point out that &lt;a href="http://blog.jcoglan.com/2011/03/11/promises-are-the-monad-of-asynchronous-programming/"&gt;promises are the monad of asynchronous programming&lt;/a&gt;, but the topic has become pertinent, because &lt;a href="https://github.com/promises-aplus"&gt;the Promises/A+ spec&lt;/a&gt; is still in formation. If programmers can rely on a monadic interface for promises, this opens up the possibility of writing code which will work with &lt;em&gt;any&lt;/em&gt; monad, not just promises&amp;#8212;as I&amp;#8217;ve tried to demonstrate with &lt;code&gt;assemble&lt;/code&gt; above.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;[1, 2, 3].map(fn)
-
-Array.prototype.of = (x) -&amp;gt; [x]
-[1, 2, 3].flatMap (x) -&amp;gt; Array.of(fn(x))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The spec as it stands is not enough: for one thing, a monad must provide a means of wrapping a plain value, e.g. &lt;code&gt;Array.of("Gin")&lt;/code&gt; or &lt;code&gt;Promise.of("Gin")&lt;/code&gt;. (I avoided implementing such a method in the examples above for simplicity&amp;#8217;s sake, and used &lt;code&gt;map&lt;/code&gt; instead.)&lt;/p&gt;
 
 &lt;p&gt;A thornier issue is that a promise&amp;#8217;s &lt;code&gt;then&lt;/code&gt; method, as specified, treats the return value of the passed-in function differently depending on whether it&amp;#8217;s a promise&amp;#8212;essentially, it must try to intelligently determine whether to be &lt;code&gt;map&lt;/code&gt; or &lt;code&gt;flatMap&lt;/code&gt;&amp;#8212;which is why the two methods we implemented on &lt;code&gt;Promise.prototype&lt;/code&gt; are identical.&lt;/p&gt;
 

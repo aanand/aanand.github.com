@@ -121,9 +121,9 @@
 <span class="nx">print</span> <span class="s">"Here's something:"</span><span class="p">,</span> <span class="nx">yep</span><span class="p">(</span><span class="s">"Gin"</span><span class="p">)</span>
 <span class="nx">print</span> <span class="s">"Here's nothing:"</span><span class="p">,</span> <span class="nx">nope</span></code></pre>
 
-<p>So, time to write a new <code>assemble()</code> method, right? To check individually for the presence or absence of each of our ingredients, and only return a <code>yep()</code> if we&#8217;ve got all 3?</p>
+<p>So, time to write a new <code>assemble</code> method, right? To check individually for the presence or absence of each of our ingredients, and only return a <code>yep()</code> if we&#8217;ve got all 3?</p>
 
-<p>Nope. <code>assemble()</code> can stay as it is. We just need to implement <code>map</code> and <code>flatMap</code>.</p>
+<p>Nope. <code>assemble</code> can stay as it is. We just need to implement <code>map</code> and <code>flatMap</code>.</p>
 
 <pre><code><span class="nv">yep = </span><span class="nf">(thing) -&gt;</span>
   <span class="p">{</span>
@@ -153,7 +153,7 @@
   <span class="nx">assemble</span><span class="p">(</span><span class="nx">yep</span><span class="p">(</span><span class="s">"Gin"</span><span class="p">),</span> <span class="nx">yep</span><span class="p">(</span><span class="s">"Vermouth"</span><span class="p">),</span> <span class="nx">yep</span><span class="p">(</span><span class="s">"Amaro"</span><span class="p">))</span>
   <span class="c1"># =&gt; yep(Negroni(Gin, Vermouth, Amaro))</span></code></pre>
 
-<p>Magic. <code>assemble()</code> will accept anything that supports those two methods. All it expresses is that you need all 3 ingredients to make a Negroni&#8212;not how to get them, or how many to make. That logic lives entirely in the definitions of <code>map</code> and <code>flatMap</code>: for arrays, all possible combinations of elements are enumerated; for <code>yep</code> and <code>nope</code>, we only ever have zero or one of something, and we short-circuit as soon as the first zero (a.k.a. <code>nope</code>) is encountered.</p>
+<p>Magic. <code>assemble</code> will accept anything that supports those two methods. All it expresses is that you need all 3 ingredients to make a Negroni&#8212;not how to get them, or how many to make. That logic lives entirely in the definitions of <code>map</code> and <code>flatMap</code>: for arrays, all possible combinations of elements are enumerated; for <code>yep</code> and <code>nope</code>, we only ever have zero or one of something, and we short-circuit as soon as the first zero (a.k.a. <code>nope</code>) is encountered.</p>
 
 <p>Sadly, it turns out we don&#8217;t have any of the ingredients to hand. You can order them online, though! Indeed, you have 3 fast-delivery specialist suppliers (one per ingredient&#8212;they&#8217;re <em>highly</em> specialised) bookmarked for this very purpose. Within a few moments, each one has promised that a bottle is on its way to you, and you can thus pass on the promise of a Negroni to your patient, thirsty guest.</p>
 
@@ -177,14 +177,11 @@
 <span class="nx">promisedNegroni</span><span class="p">.</span><span class="nx">then</span> <span class="nf">(negroni) -&gt;</span>
   <span class="nx">print</span> <span class="s">"Ah! It's here:"</span><span class="p">,</span> <span class="nx">negroni</span>
   <span class="c1"># =&gt; Negroni(Gin, Vermouth, Amaro)</span></code></pre>
-<hr><p>I&#8217;m not the first one to point out that <a href="http://blog.jcoglan.com/2011/03/11/promises-are-the-monad-of-asynchronous-programming/">promises are the monad of asynchronous programming</a>, but the topic has become pertinent, because <a href="https://github.com/promises-aplus">the Promises/A+ spec</a> is still in formation. If programmers can rely on a monadic interface for promises, this opens up the possibility of writing code which will work with <em>any</em> monad, not just promises&#8212;as I&#8217;ve tried to demonstrate with <code>assemble()</code> above.</p>
 
-<p>The spec as it stands is not enough: for one thing, a monad must provide a means of wrapping a plain value, e.g. <code>Array.of(1)</code> or <code>Promise.of(1)</code>. I avoided implementing such a method in the examples above for simplicity&#8217;s sake, and used <code>map</code> instead, but the following are equivalent:</p>
+<p>Once again, we didn&#8217;t have to change <code>assemble</code>&#8212;just implement <code>map</code> and <code>flatMap</code>.</p>
+<hr><p>I&#8217;m not the first one to point out that <a href="http://blog.jcoglan.com/2011/03/11/promises-are-the-monad-of-asynchronous-programming/">promises are the monad of asynchronous programming</a>, but the topic has become pertinent, because <a href="https://github.com/promises-aplus">the Promises/A+ spec</a> is still in formation. If programmers can rely on a monadic interface for promises, this opens up the possibility of writing code which will work with <em>any</em> monad, not just promises&#8212;as I&#8217;ve tried to demonstrate with <code>assemble</code> above.</p>
 
-<pre><code><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">].</span><span class="nx">map</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span>
-
-<span class="nb">Array</span><span class="p">.</span><span class="nv">prototype.of = </span><span class="nf">(x) -&gt;</span> <span class="p">[</span><span class="nx">x</span><span class="p">]</span>
-<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">].</span><span class="nx">flatMap</span> <span class="nf">(x) -&gt;</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">of</span><span class="p">(</span><span class="nx">fn</span><span class="p">(</span><span class="nx">x</span><span class="p">))</span></code></pre>
+<p>The spec as it stands is not enough: for one thing, a monad must provide a means of wrapping a plain value, e.g. <code>Array.of("Gin")</code> or <code>Promise.of("Gin")</code>. (I avoided implementing such a method in the examples above for simplicity&#8217;s sake, and used <code>map</code> instead.)</p>
 
 <p>A thornier issue is that a promise&#8217;s <code>then</code> method, as specified, treats the return value of the passed-in function differently depending on whether it&#8217;s a promise&#8212;essentially, it must try to intelligently determine whether to be <code>map</code> or <code>flatMap</code>&#8212;which is why the two methods we implemented on <code>Promise.prototype</code> are identical.</p>
 
