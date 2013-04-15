@@ -42,18 +42,16 @@
   <span class="nv">constructor: </span><span class="nf">(@gin, @vermouth, @amaro) -&gt;</span>
     <span class="c1"># Build over ice, stir well</span>
 
-  <span class="nv">toString: </span><span class="nf">-&gt;</span> <span class="s">"Negroni(</span><span class="si">#{</span><span class="nx">@gin</span><span class="si">}</span><span class="s">, </span><span class="si">#{</span><span class="nx">@vermouth</span><span class="si">}</span><span class="s">, </span><span class="si">#{</span><span class="nx">@amaro</span><span class="si">}</span><span class="s">)"</span>
-
-  <span class="c1"># for the Node console</span>
-  <span class="nv">inspect: </span><span class="nf">-&gt;</span> <span class="nx">@toString</span><span class="p">()</span></code></pre>
+  <span class="nv">inspect: </span><span class="nf">-&gt;</span> <span class="s">"Negroni(</span><span class="si">#{</span><span class="nx">@gin</span><span class="si">}</span><span class="s">, </span><span class="si">#{</span><span class="nx">@vermouth</span><span class="si">}</span><span class="s">, </span><span class="si">#{</span><span class="nx">@amaro</span><span class="si">}</span><span class="s">)"</span></code></pre>
 
 <p>The Negroni is often described as a &#8220;manly&#8221; drink, but fuck your gender-essentialism&#8212;let&#8217;s just call it <em>badass</em>. Everything I ever needed to know about it, by the way, I learned from <a href="http://manhattansproject.com/on-the-negroni/">Felix</a>. I personally find Punt e Mes a shade too bitter when combined with Campari, but that&#8217;s just me.</p>
 
-<pre><code><span class="c1"># just a shorthand</span>
-<span class="nv">print = </span><span class="nf">(obj) -&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span>
+<pre><code><span class="c1"># some shorthands for the Node console</span>
+<span class="nv">print = </span><span class="nf">(args...) -&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">args</span><span class="p">...)</span>
+<span class="nv">inspect = </span><span class="nf">(thing) -&gt;</span> <span class="k">if</span> <span class="nx">thing</span><span class="p">.</span><span class="nx">inspect</span> <span class="k">then</span> <span class="nx">thing</span><span class="p">.</span><span class="nx">inspect</span><span class="p">()</span> <span class="k">else</span> <span class="nx">thing</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span>
 
-<span class="nx">print</span> <span class="s">"Here's how I make it at home:"</span>
-<span class="nx">print</span> <span class="k">new</span> <span class="nx">Negroni</span><span class="p">(</span><span class="s">"Botanist"</span><span class="p">,</span> <span class="s">"Martini Rosso"</span><span class="p">,</span> <span class="s">"Campari"</span><span class="p">)</span></code></pre>
+<span class="nx">print</span> <span class="s">"Here's how I make it at home:"</span><span class="p">,</span>
+  <span class="k">new</span> <span class="nx">Negroni</span><span class="p">(</span><span class="s">"Botanist"</span><span class="p">,</span> <span class="s">"Martini Rosso"</span><span class="p">,</span> <span class="s">"Campari"</span><span class="p">)</span></code></pre>
 
 <p>Point is, there are 3&#215;3&#215;3&#160;=&#160;27 possible combinations at that bar, a delicious Rubik&#8217;s Cube of liver damage. How would you enumerate them all?</p>
 
@@ -110,16 +108,16 @@
 
 <pre><code><span class="nv">yep = </span><span class="nf">(thing) -&gt;</span>
   <span class="p">{</span>
-    <span class="nv">toString: </span><span class="nf">-&gt;</span> <span class="s">"yep(</span><span class="si">#{</span><span class="nx">thing</span><span class="si">}</span><span class="s">)"</span>
+    <span class="nv">inspect: </span><span class="nf">-&gt;</span> <span class="s">"yep(</span><span class="si">#{</span><span class="nx">inspect</span><span class="p">(</span><span class="nx">thing</span><span class="p">)</span><span class="si">}</span><span class="s">)"</span>
   <span class="p">}</span>
 
 <span class="nv">nope =</span>
   <span class="p">{</span>
-    <span class="nv">toString: </span><span class="nf">-&gt;</span> <span class="s">"nope"</span>
+    <span class="nv">inspect: </span><span class="nf">-&gt;</span> <span class="s">"nope"</span>
   <span class="p">}</span>
 
-<span class="nx">print</span> <span class="s">"Here's something: </span><span class="si">#{</span><span class="nx">yep</span><span class="p">(</span><span class="s">"Gin"</span><span class="p">)</span><span class="si">}</span><span class="s">"</span>
-<span class="nx">print</span> <span class="s">"Here's nothing: </span><span class="si">#{</span><span class="nx">nope</span><span class="si">}</span><span class="s">"</span></code></pre>
+<span class="nx">print</span> <span class="s">"Here's something:"</span><span class="p">,</span> <span class="nx">yep</span><span class="p">(</span><span class="s">"Gin"</span><span class="p">)</span>
+<span class="nx">print</span> <span class="s">"Here's nothing:"</span><span class="p">,</span> <span class="nx">nope</span></code></pre>
 
 <p>So, time to write a new <code>assemble()</code> method, right? To check individually for the presence or absence of each of our ingredients, and only return a <code>yep()</code> if we&#8217;ve got all 3?</p>
 
@@ -127,7 +125,7 @@
 
 <pre><code><span class="nv">yep = </span><span class="nf">(thing) -&gt;</span>
   <span class="p">{</span>
-    <span class="nv">toString: </span><span class="nf">-&gt;</span> <span class="s">"yep(</span><span class="si">#{</span><span class="nx">thing</span><span class="si">}</span><span class="s">)"</span>
+    <span class="nv">inspect: </span><span class="nf">-&gt;</span> <span class="s">"yep(</span><span class="si">#{</span><span class="nx">inspect</span><span class="p">(</span><span class="nx">thing</span><span class="p">)</span><span class="si">}</span><span class="s">)"</span>
 
     <span class="nv">map: </span>    <span class="nf">(f) -&gt;</span> <span class="nx">yep</span><span class="p">(</span><span class="nx">f</span><span class="p">(</span><span class="nx">thing</span><span class="p">))</span>
     <span class="nv">flatMap: </span><span class="nf">(f) -&gt;</span> <span class="nx">f</span><span class="p">(</span><span class="nx">thing</span><span class="p">)</span>
@@ -135,20 +133,23 @@
 
 <span class="nv">nope =</span>
   <span class="p">{</span>
-    <span class="nv">toString: </span><span class="nf">-&gt;</span> <span class="s">"nope"</span>
+    <span class="nv">inspect: </span><span class="nf">-&gt;</span> <span class="s">"nope"</span>
 
     <span class="nv">map: </span>    <span class="nf">(f) -&gt;</span> <span class="nx">nope</span>
     <span class="nv">flatMap: </span><span class="nf">(f) -&gt;</span> <span class="nx">nope</span>
   <span class="p">}</span>
 
-<span class="nx">print</span> <span class="s">"If we have no ingredients: "</span> <span class="o">+</span> <span class="nx">assemble</span><span class="p">(</span><span class="nx">nope</span><span class="p">,</span> <span class="nx">nope</span><span class="p">,</span> <span class="nx">nope</span><span class="p">)</span>
-<span class="c1"># =&gt; nope</span>
+<span class="nx">print</span> <span class="s">"If we have no ingredients:"</span><span class="p">,</span>
+  <span class="nx">assemble</span><span class="p">(</span><span class="nx">nope</span><span class="p">,</span> <span class="nx">nope</span><span class="p">,</span> <span class="nx">nope</span><span class="p">)</span>
+  <span class="c1"># =&gt; nope</span>
 
-<span class="nx">print</span> <span class="s">"If we have only gin and vermouth: "</span> <span class="o">+</span> <span class="nx">assemble</span><span class="p">(</span><span class="nx">yep</span><span class="p">(</span><span class="s">"Gin"</span><span class="p">),</span> <span class="nx">yep</span><span class="p">(</span><span class="s">"Vermouth"</span><span class="p">),</span> <span class="nx">nope</span><span class="p">)</span>
-<span class="c1"># =&gt; nope</span>
+<span class="nx">print</span> <span class="s">"If we have only gin and amaro:"</span><span class="p">,</span>
+  <span class="nx">assemble</span><span class="p">(</span><span class="nx">yep</span><span class="p">(</span><span class="s">"Gin"</span><span class="p">),</span> <span class="nx">nope</span><span class="p">,</span> <span class="nx">yep</span><span class="p">(</span><span class="s">"Amaro"</span><span class="p">))</span>
+  <span class="c1"># =&gt; nope</span>
 
-<span class="nx">print</span> <span class="s">"If we have gin, vermouth and amaro: "</span> <span class="o">+</span> <span class="nx">assemble</span><span class="p">(</span><span class="nx">yep</span><span class="p">(</span><span class="s">"Gin"</span><span class="p">),</span> <span class="nx">yep</span><span class="p">(</span><span class="s">"Vermouth"</span><span class="p">),</span> <span class="nx">yep</span><span class="p">(</span><span class="s">"Amaro"</span><span class="p">))</span>
-<span class="c1"># =&gt; yep(Negroni(Gin, Vermouth, Amaro))</span></code></pre>
+<span class="nx">print</span> <span class="s">"If we have gin, vermouth and amaro:"</span><span class="p">,</span>
+  <span class="nx">assemble</span><span class="p">(</span><span class="nx">yep</span><span class="p">(</span><span class="s">"Gin"</span><span class="p">),</span> <span class="nx">yep</span><span class="p">(</span><span class="s">"Vermouth"</span><span class="p">),</span> <span class="nx">yep</span><span class="p">(</span><span class="s">"Amaro"</span><span class="p">))</span>
+  <span class="c1"># =&gt; yep(Negroni(Gin, Vermouth, Amaro))</span></code></pre>
 
 <p>Magic. <code>assemble()</code> will accept anything that supports those two methods. All it expresses is that you need all 3 ingredients to make a Negroni&#8212;not how to get them, or how many to make.</p>
 
@@ -163,17 +164,20 @@
   <span class="k">new</span> <span class="nx">Promise</span> <span class="nf">(resolve) -&gt;</span>
     <span class="nx">setTimeout</span><span class="p">((</span><span class="nf">-&gt;</span> <span class="nx">resolve</span><span class="p">(</span><span class="nx">name</span><span class="p">)),</span> <span class="mi">1000</span><span class="p">)</span>
 
-<span class="nv">g = </span><span class="nx">order</span><span class="p">(</span><span class="s">"Gin"</span><span class="p">)</span>      <span class="c1"># a promise of gin</span>
-<span class="nv">v = </span><span class="nx">order</span><span class="p">(</span><span class="s">"Vermouth"</span><span class="p">)</span> <span class="c1"># a promise of vermouth</span>
-<span class="nv">a = </span><span class="nx">order</span><span class="p">(</span><span class="s">"Amaro"</span><span class="p">)</span>    <span class="c1"># a promise of amaro</span>
+<span class="nv">g = </span><span class="nx">order</span><span class="p">(</span><span class="s">"Gin"</span><span class="p">)</span>      <span class="c1"># a Promise of "Gin"</span>
+<span class="nv">v = </span><span class="nx">order</span><span class="p">(</span><span class="s">"Vermouth"</span><span class="p">)</span> <span class="c1"># a Promise of "Vermouth"</span>
+<span class="nv">a = </span><span class="nx">order</span><span class="p">(</span><span class="s">"Amaro"</span><span class="p">)</span>    <span class="c1"># a Promise of "Amaro"</span>
 
-<span class="nv">promisedNegroni = </span><span class="nx">assemble</span><span class="p">(</span><span class="nx">g</span><span class="p">,</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">a</span><span class="p">)</span> <span class="c1"># a promise of a Negroni</span>
+<span class="nv">promisedNegroni = </span><span class="nx">assemble</span><span class="p">(</span><span class="nx">g</span><span class="p">,</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">a</span><span class="p">)</span> <span class="c1"># a Promise of a Negroni</span>
 
-<span class="nx">print</span> <span class="s">"Your Negroni is on its way. Here's your order: "</span> <span class="o">+</span> <span class="nx">promisedNegroni</span>
+<span class="nx">print</span> <span class="s">"Your Negroni is on its way. Here's your order: "</span><span class="p">,</span>
+  <span class="nx">promisedNegroni</span>
+
 <span class="nx">print</span> <span class="s">"Any second now..."</span>
 
 <span class="nx">promisedNegroni</span><span class="p">.</span><span class="nx">then</span> <span class="nf">(negroni) -&gt;</span>
-  <span class="nx">print</span> <span class="s">"Ah! It's here: </span><span class="si">#{</span><span class="nx">negroni</span><span class="si">}</span><span class="s">"</span></code></pre><hr />
+  <span class="nx">print</span> <span class="s">"Ah! It's here:"</span><span class="p">,</span> <span class="nx">negroni</span>
+  <span class="c1"># =&gt; Negroni(Gin, Vermouth, Amaro)</span></code></pre><hr />
     <div class="metadata">
       <div class="created"><time datetime='2013-04-15'>15 April 2013</time></div>
       <a class="permalink" href="&#47;articles&#47;negronis&#47;">Permalink</a>
