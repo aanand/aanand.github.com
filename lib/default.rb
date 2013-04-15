@@ -75,7 +75,7 @@ class PrependSummaryFilter < Nanoc3::Filter
 
   def run(content, params={})
     "".tap do |output|
-      if item[:summary]
+      if item[:summary] and !item[:hide_summary]
         summary_html = maruku(item[:summary])
         output << "<div class='summary'>#{summary_html}</div><hr class='summary-break'/>"
       end
