@@ -39,18 +39,21 @@ Point is, there are 3&times;3&times;3&nbsp;=&nbsp;27 possible combinations at th
     #      ...]
     #    ...]
 
-Hmmm. It's a start, but that's altogether too much nesting. We'll never get anything done if we're spending all our time unboxing drinks.
+Hmmm. It's a start, but that's altogether too much nesting. We'll never get anything done if we're spending all our time unwrapping.
 
-    Array.prototype.flatMap = (fn) ->
-      this.map(fn).reduce(((a, b) -> a.concat(b)), [])
+    Array.prototype.unwrap = ->
+      append = (a, b) -> a.concat(b)
+      this.reduce(append, [])
 
     assemble = (g, v, a) ->
-      g.flatMap (gin) ->
-        v.flatMap (vermouth) ->
+      (g.map (gin) ->
+        (v.map (vermouth) ->
           a.map (amaro) ->
             new Negroni(gin, vermouth, amaro)
+        ).unwrap()
+      ).unwrap()
 
-The outer two `map`s are replaced with `flatMap`, which maps and then flattens the resulting array.
+The outer two `map`s are followed by an `unwrap`, which turns an array-of-arrays into a single array. (The innermost `map` gives us an array of Negronis, which is what we want, so unwrapping is uncalled for---and would fail).
 
     print assemble(allGins, allVermouths, allAmari)
 
@@ -84,22 +87,25 @@ We need to represent the _potential presence or absence_ of a thing.
 
 So, time to write a new `assemble` method, right? To check individually for the presence or absence of each of our ingredients, and only return a `yep()` if we've got all 3?
 
-Nope. `assemble` can stay as it is. We just need to implement `map` and `flatMap`.
+Nope. `assemble` can stay as it is. We just need to implement `map` and `unwrap`.
 
     yep = (thing) ->
       {
         inspect: -> "yep(#{inspect(thing)})"
 
-        map:     (f) -> yep(f(thing))
-        flatMap: (f) -> f(thing)
+        # Apply f to our thing
+        map: (f) -> yep(f(thing))
+        
+        # Turn a yep(yep(...)) into a yep(...)
+        unwrap: -> thing
       }
 
     nope =
       {
         inspect: -> "nope"
 
-        map:     (f) -> nope
-        flatMap: (f) -> nope
+        map: (f) -> nope
+        unwrap:  -> nope
       }
 
     print "If we have no ingredients:",
@@ -114,14 +120,14 @@ Nope. `assemble` can stay as it is. We just need to implement `map` and `flatMap
       assemble(yep("Gin"), yep("Vermouth"), yep("Amaro"))
       # => yep(Negroni(Gin, Vermouth, Amaro))
 
-Magic. `assemble` will accept anything that supports those two methods. All it expresses is that you need all 3 ingredients to make a Negroni---not how to get them, or how many to make. That logic lives entirely in the definitions of `map` and `flatMap`: for arrays, all possible combinations of elements are enumerated; for `yep` and `nope`, we only ever have zero or one of something, and we short-circuit as soon as the first zero (a.k.a. `nope`) is encountered.
+Magic. `assemble` will accept anything that supports those two methods. All it expresses is that you need all 3 ingredients to make a Negroni---not how to get them, or how many to make. That logic lives entirely in the definitions of `map` and `unwrap`: for arrays, all possible combinations of elements are enumerated; for `yep` and `nope`, we only ever have zero or one of something, and we short-circuit as soon as the first zero (a.k.a. `nope`) is encountered.
 
 Sadly, it turns out we don't have any of the ingredients to hand. You can order them online, though! Indeed, you have 3 fast-delivery specialist suppliers (one per ingredient---they're _highly_ specialised) bookmarked for this very purpose. Within a few moments, each one has promised that a bottle is on its way to you, and you can thus pass on the promise of a Negroni to your patient, thirsty guest.
 
     Promise = require("promise")
 
-    Promise.prototype.map     = (fn) -> this.then(fn)
-    Promise.prototype.flatMap = (fn) -> this.then(fn)
+    Promise.prototype.map = (fn) -> this.then(fn)
+    Promise.prototype.unwrap   = -> this
 
     order = (name) ->
       new Promise (resolve) ->
@@ -139,7 +145,9 @@ Sadly, it turns out we don't have any of the ingredients to hand. You can order 
       print "Ah! It's here:", negroni
       # => Negroni(Gin, Vermouth, Amaro)
 
-Once again, we didn't have to change `assemble`---just implement `map` and `flatMap`.
+Once again, we didn't have to change `assemble`---just implement `map` and `unwrap`.
+
+I think it's kind of fucking incredible that we can write code like `assemble`, which doesn't care how its pieces work---just that they fit together right---and plug any kind of delivery mechanism we want into it: arrays-of-things, maybe-things-maybe-nots, promises-of-things. This is a huge step up from just writing HTML templates that don't care what database table your objects came from. This is writing operations and not caring how they're put together. If you think this is cool too, we're probably going to get along.
 
 ---
 
