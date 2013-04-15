@@ -93,7 +93,7 @@ a img {
 }
 
 /* Comment.Preproc */
-.c1, .project code, .article code {
+.c1 {
   color: #999988;
   font-style: italic;
 }
@@ -797,6 +797,9 @@ h2 {
 }
 .project p a, .article p a {
   text-decoration: underline;
+}
+.project p code, .article p code {
+  color: #444444;
 }
 
 .content .article .title, .content .article .metadata {
