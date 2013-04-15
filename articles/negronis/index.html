@@ -36,7 +36,7 @@
       </li>
     </ul>
   </header><article class="article">
-    <h2 class="title">The Abstracted Negroni</h2><p>I was out last Friday at a bar where they had a &#8220;Negroni Tic-Tac-Toe&#8217; offer&#8212;you could custom-build your drink from a selection of 3 gins, 3 vermouths and 3 amari, and if you got &#8220;3 in a row&#8221; you&#8217;d get &#163;5 off your bill. It&#8217;s a laughably stingy deal, but it got me thinking.</p>
+    <h2 class="title">The Abstracted Negroni</h2><p>I was out last Friday at a bar where they had a &#8220;Negroni Tic-Tac-Toe&#8221; offer&#8212;you could custom-build your drink from a selection of 3 gins, 3 vermouths and 3 amari, and if you got &#8220;3 in a row&#8221; you&#8217;d get &#163;5 off your bill. It&#8217;s a laughably stingy deal, but it got me thinking. About functional programming, I mean.</p>
 
 <pre><code><span class="k">class</span> <span class="nx">Negroni</span>
   <span class="nv">constructor: </span><span class="nf">(@gin, @vermouth, @amaro) -&gt;</span>
@@ -51,7 +51,8 @@
 <span class="nv">inspect = </span><span class="nf">(thing) -&gt;</span> <span class="k">if</span> <span class="nx">thing</span><span class="p">.</span><span class="nx">inspect</span> <span class="k">then</span> <span class="nx">thing</span><span class="p">.</span><span class="nx">inspect</span><span class="p">()</span> <span class="k">else</span> <span class="nx">thing</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span>
 
 <span class="nx">print</span> <span class="s">"Here's how I make it at home:"</span><span class="p">,</span>
-  <span class="k">new</span> <span class="nx">Negroni</span><span class="p">(</span><span class="s">"Botanist"</span><span class="p">,</span> <span class="s">"Martini Rosso"</span><span class="p">,</span> <span class="s">"Campari"</span><span class="p">)</span></code></pre>
+  <span class="k">new</span> <span class="nx">Negroni</span><span class="p">(</span><span class="s">"Botanist"</span><span class="p">,</span> <span class="s">"Martini Rosso"</span><span class="p">,</span> <span class="s">"Campari"</span><span class="p">)</span>
+  <span class="c1"># =&gt; Negroni(Botanist, Martini Rosso, Campari)</span></code></pre>
 
 <p>Point is, there are 3&#215;3&#215;3&#160;=&#160;27 possible combinations at that bar, a delicious Rubik&#8217;s Cube of liver damage. How would you enumerate them all?</p>
 
@@ -102,7 +103,7 @@
 
 <p>Much better.</p>
 
-<p>Of course, it&#8217;s almost never a good idea to make 27 cocktails. Let&#8217;s row back a bit and consider a much more common scenario: you&#8217;ve got a guest round and they&#8217;d fancy just one. They don&#8217;t much mind <em>what</em> gin, vermouth or amaro it&#8217;s made with&#8212;you&#8217;re more worried about whether you have them at all. Can you satisfy them?</p>
+<p>Of course, it&#8217;s almost never a good idea to make 27 cocktails. Let&#8217;s row back a bit and consider a much more common scenario: you&#8217;ve got a guest round and they&#8217;d fancy just one Negroni. They don&#8217;t much mind <em>what</em> gin, vermouth or amaro it&#8217;s made with&#8212;you&#8217;re more worried about whether you have them at all. Can you satisfy them?</p>
 
 <p>We need to represent the <em>potential presence or absence</em> of a thing.</p>
 
@@ -151,9 +152,9 @@
   <span class="nx">assemble</span><span class="p">(</span><span class="nx">yep</span><span class="p">(</span><span class="s">"Gin"</span><span class="p">),</span> <span class="nx">yep</span><span class="p">(</span><span class="s">"Vermouth"</span><span class="p">),</span> <span class="nx">yep</span><span class="p">(</span><span class="s">"Amaro"</span><span class="p">))</span>
   <span class="c1"># =&gt; yep(Negroni(Gin, Vermouth, Amaro))</span></code></pre>
 
-<p>Magic. <code>assemble()</code> will accept anything that supports those two methods. All it expresses is that you need all 3 ingredients to make a Negroni&#8212;not how to get them, or how many to make.</p>
+<p>Magic. <code>assemble()</code> will accept anything that supports those two methods. All it expresses is that you need all 3 ingredients to make a Negroni&#8212;not how to get them, or how many to make. That logic lives entirely in the definitions of <code>map</code> and <code>flatMap</code>: for arrays, all possible combinations of elements are enumerated; for <code>yep</code> and <code>nope</code>, we only ever have zero or one of something, and we short-circuit as soon as the first zero (a.k.a. <code>nope</code>) is encountered.</p>
 
-<p>Sadly, it turns out we don&#8217;t have any of the ingredients to hand. You can go online and order them, though, and indeed have 3 fast-delivery specialist suppliers (one per ingredient&#8212;they&#8217;re <em>highly</em> specialised) bookmarked for this very purpose. Within a few moments, each one has promised that a bottle is on its way to you, and you can thus pass on the promise of a Negroni to your patient, thirsty guest.</p>
+<p>Sadly, it turns out we don&#8217;t have any of the ingredients to hand. You can order them online, though! Indeed, you have 3 fast-delivery specialist suppliers (one per ingredient&#8212;they&#8217;re <em>highly</em> specialised) bookmarked for this very purpose. Within a few moments, each one has promised that a bottle is on its way to you, and you can thus pass on the promise of a Negroni to your patient, thirsty guest.</p>
 
 <pre><code><span class="nv">Promise = </span><span class="nx">require</span><span class="p">(</span><span class="s">"promise"</span><span class="p">)</span>
 
@@ -170,14 +171,53 @@
 
 <span class="nv">promisedNegroni = </span><span class="nx">assemble</span><span class="p">(</span><span class="nx">g</span><span class="p">,</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">a</span><span class="p">)</span> <span class="c1"># a Promise of a Negroni</span>
 
-<span class="nx">print</span> <span class="s">"Your Negroni is on its way. Here's your order: "</span><span class="p">,</span>
-  <span class="nx">promisedNegroni</span>
-
-<span class="nx">print</span> <span class="s">"Any second now..."</span>
+<span class="nx">print</span> <span class="s">"Your Negroni is on its way. Any second now..."</span>
 
 <span class="nx">promisedNegroni</span><span class="p">.</span><span class="nx">then</span> <span class="nf">(negroni) -&gt;</span>
   <span class="nx">print</span> <span class="s">"Ah! It's here:"</span><span class="p">,</span> <span class="nx">negroni</span>
-  <span class="c1"># =&gt; Negroni(Gin, Vermouth, Amaro)</span></code></pre><hr />
+  <span class="c1"># =&gt; Negroni(Gin, Vermouth, Amaro)</span></code></pre>
+<hr><p>I&#8217;m not the first one to point out that <a href="http://blog.jcoglan.com/2011/03/11/promises-are-the-monad-of-asynchronous-programming/">promises are the monad of asynchronous programming</a>, but the topic has become pertinent, because <a href="https://github.com/promises-aplus">the Promises/A+ spec</a> is still in formation. If programmers can rely on a monadic interface for promises, this opens up the possibility of writing code which will work with <em>any</em> monad, not just promises&#8212;as I&#8217;ve tried to demonstrate with <code>assemble()</code> above.</p>
+
+<p>The spec as it stands is not enough: for one thing, a monad must provide a means of wrapping a plain value, e.g. <code>Array.of(1)</code> or <code>Promise.of(1)</code>. I avoided implementing such a method in the examples above for simplicity&#8217;s sake, and used <code>map</code> instead, but the following are equivalent:</p>
+
+<pre><code><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">].</span><span class="nx">map</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span>
+
+<span class="nb">Array</span><span class="p">.</span><span class="nv">prototype.of = </span><span class="nf">(x) -&gt;</span> <span class="p">[</span><span class="nx">x</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">].</span><span class="nx">flatMap</span> <span class="nf">(x) -&gt;</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">of</span><span class="p">(</span><span class="nx">fn</span><span class="p">(</span><span class="nx">x</span><span class="p">))</span></code></pre>
+
+<p>A thornier issue is that a promise&#8217;s <code>then</code> method, as specified, treats the return value of the passed-in function differently depending on whether it&#8217;s a promise&#8212;essentially, it must try to intelligently determine whether to be <code>map</code> or <code>flatMap</code>&#8212;which is why the two methods we implemented on <code>Promise.prototype</code> are identical.</p>
+
+<p>Besides the inherent unreliability of trying to determine an object&#8217;s type in a dynamically-typed language, such overloading is likely to lead to difficult-to-predict bugs and difficult-to-reason-about code when promises are <em>treated</em> like well-behaved monads, but <em>aren&#8217;t</em>. We got away with it this time, but I wouldn&#8217;t feel confident writing more complex code, knowing that &#8220;smart&#8221; logic was there.</p>
+
+<p>There <a href="http://brianmckenna.org/blog/category_theory_promisesaplus">has</a> <a href="https://github.com/promises-aplus/resolvers-spec/issues/24">been</a> <a href="https://github.com/promises-aplus/promises-spec/issues/94">some</a> <a href="https://github.com/promises-aplus/promises-spec/issues/97">discussion</a> on this topic in the last few days. Sadly, the authors have so far been difficult to convince. This is understandable&#8212;the theory is difficult to explain, and examples of the potential problems non-obvious (I am personally unable to produce a simple example).</p>
+
+<p>A more directly appealing argument was made by <a href="https://github.com/promises-aplus/promises-spec/issues/94#issuecomment-16294840">Reg</a>:</p>
+
+<blockquote>
+<p>A long time ago in a company far, far away, there was a young engineer given a herculean task within an impossible deadline. He created LiveScript. One of the decisions he made was to make functions first-class values rather than have them be &#8220;something else&#8221; like the other popular languages of the day. Another was to use prototypical inheritance rather than classical inheritance, like the other popular languages of the day.</p>
+</blockquote>
+
+<blockquote>
+<p>It would take years for the programming community to embrace the power of functions as first-class values in his language. Most people agree that Crockford got the ball rolling, followed by Oliver Steele and you can trace a direct line down to Jeremy Ashkenas and Underscore from there. Today, it is unthinkable to imagine a JavaScript without functions that can return functions or apply functions.</p>
+</blockquote>
+
+<blockquote>
+<p>Conversely, prototypical inheritance hasn&#8217;t reached a tipping point. The vast majority of programmers simply emulate classical inheritance and do not exploit its power in any way.</p>
+</blockquote>
+
+<blockquote>
+<p>What does this history tell me about promises?</p>
+</blockquote>
+
+<blockquote>
+<p>I think that promises-that-are-monads are in the same category as these two ideas I cited. If we embrace the idea of promises being first-class monads, we will likely have a lot of &#8220;meh&#8221; for a year or maybe three. Then someone will write a library or give a talk and the light will go on. It is had to imagine what wonderful thing will be created when that happens.</p>
+</blockquote>
+
+<p>This speaks to me. The power of first-class functions had already been amply demonstrated when LiveScript was designed&#8212;just not in the mainstream. Similarly, the power of the monad abstraction has been amply demonstrated in functional languages, but not yet in the mainstream.</p>
+
+<p>It may be too late for <code>then</code>&#8212;too much code already relies on its current behaviour, and besides, it&#8217;s useful. A <a href="https://github.com/pufuwozu/fantasy-land">concurrent spec for monads</a> (they call it <code>chain</code>, not <code>flatMap</code>) has been started, and we could just hope that most promise implementors choose to support that too&#8230; but I strongly suspect the majority won&#8217;t bother, even though it&#8217;d be trivial.</p>
+
+<p>To have the <code>chain</code> and <code>of</code> methods required in Promises/A+ would be a <em>much</em> bigger win.</p><hr />
     <div class="metadata">
       <div class="created"><time datetime='2013-04-15'>15 April 2013</time></div>
       <a class="permalink" href="&#47;articles&#47;negronis&#47;">Permalink</a>
