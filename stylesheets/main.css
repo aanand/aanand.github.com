@@ -600,8 +600,8 @@ a:hover {
 }
 
 pre, code, tt {
-  font-family: "Ubuntu Mono", monospace;
-  font-size: 0.9em;
+  font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+  font-size: 0.84em;
   overflow: auto;
 }
 
