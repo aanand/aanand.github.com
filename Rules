@@ -15,9 +15,10 @@ compile '/articles/feed/' do
 end
 
 compile '/articles/*/' do
-  filter :literate_coffee if item[:litcoffee]
+  filter :literate if item[:literate]
   filter :maruku
-  filter :syntax, language: (item[:litcoffee] && 'coffeescript')
+  filter :syntax, language: item[:language]
+  filter :prepend_literate_intro if item[:literate]
   filter :prepend_summary
   layout 'article'
   layout 'default'
@@ -28,8 +29,10 @@ compile '/articles/feed/', rep: "feed" do
 end
 
 compile '/articles/*/', rep: "feed" do
+  filter :literate if item[:literate]
   filter :maruku
   filter :syntax, colour: false
+  filter :prepend_literate_intro if item[:literate]
   filter :prepend_summary
 end
 

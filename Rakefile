@@ -11,3 +11,7 @@ Deadweight::RakeTask.new do |dw|
     /404.html
   ]
 end
+
+task :clean do
+  FileUtils.rm_rf(['articles', 'articles.xml', 'index.html'])
+end

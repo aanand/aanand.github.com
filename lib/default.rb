@@ -75,7 +75,7 @@ class PrependSummaryFilter < Nanoc3::Filter
 
   def run(content, params={})
     "".tap do |output|
-      if item[:summary]
+      if item[:summary] and !item[:hide_summary]
         summary_html = maruku(item[:summary])
         output << "<div class='summary'>#{summary_html}</div><hr class='summary-break'/>"
       end
@@ -85,12 +85,33 @@ class PrependSummaryFilter < Nanoc3::Filter
   end
 end
 
-class LiterateCoffeeFilter < Nanoc3::Filter
-  identifier :literate_coffee
+class LiterateFilter < Nanoc3::Filter
+  identifier :literate
 
   def run(content, params={})
-    raise "no :litcoffee key found" unless item[:litcoffee]
-    File.read("litcoffee/" + item[:litcoffee])
+    raise "no :literate key found" unless item[:literate]
+    File.read("literate/" + item[:literate])
   end
 end
 
+class PrependLiterateIntroFilter < Nanoc3::Filter
+  include Nanoc3::Helpers::HTMLEscape
+
+  identifier :prepend_literate_intro
+
+  def run(content, params={})
+    filename = item[:literate]
+    basename = File.basename(filename)
+    language = item[:language]
+
+    intro = %{
+      <p class='literate-intro'>
+        This post is written in literate #{h(language)}.
+        You can <a href='http://aanandprasad.com/literate/#{h(filename)}'>download it here</a> and run it at the command line thus:
+        <code>cat #{h(basename)} | egrep '^ {4}' | node</code>
+      </p>
+    }
+
+    intro + content
+  end
+end

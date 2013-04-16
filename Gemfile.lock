@@ -1,12 +1,14 @@
 PATH
   remote: /Users/aanand/src/deadweight
   specs:
-    deadweight (0.2.1)
+    deadweight (0.2.2)
+      css_parser (~> 1.2.6)
       nokogiri
 
 GEM
   remote: http://rubygems.org/
   specs:
+    addressable (2.3.4)
     adsf (1.0.1)
       rack (>= 1.0.0)
     builder (3.0.0)
@@ -17,10 +19,14 @@ GEM
       fssm (>= 0.2.7)
       sass (~> 3.1)
     cri (2.2.1)
+    css_parser (1.2.6)
+      addressable
+      rdoc
     foreman (0.16.0)
       term-ansicolor (~> 1.0.5)
       thor (>= 0.13.6)
     fssm (0.2.7)
+    json (1.7.7)
     maruku (0.6.0)
       syntax (>= 1.0.0)
     mime-types (1.16)
@@ -33,6 +39,8 @@ GEM
       yajl-ruby (~> 1.1.0)
     rack (1.2.2)
     rake (0.9.2.2)
+    rdoc (4.0.1)
+      json (~> 1.4)
     sass (3.1.1)
     slim (1.2.0)
       temple (~> 0.4.0)
