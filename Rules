@@ -18,6 +18,7 @@ compile '/articles/*/' do
   filter :literate if item[:literate]
   filter :maruku
   filter :syntax, language: item[:language]
+  filter :prepend_literate_intro if item[:literate]
   filter :prepend_summary
   layout 'article'
   layout 'default'
@@ -31,6 +32,7 @@ compile '/articles/*/', rep: "feed" do
   filter :literate if item[:literate]
   filter :maruku
   filter :syntax, colour: false
+  filter :prepend_literate_intro if item[:literate]
   filter :prepend_summary
 end
 

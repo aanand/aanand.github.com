@@ -792,6 +792,12 @@ h2 {
 .project .summary, .article .summary {
   font-style: italic;
 }
+.project .literate-intro, .article .literate-intro {
+  font-size: 0.9em;
+}
+.project .literate-intro, .project .literate-intro a, .project .literate-intro code, .article .literate-intro, .article .literate-intro a, .article .literate-intro code {
+  color: #aaaaaa;
+}
 .project p, .article p {
   text-align: justify;
 }
