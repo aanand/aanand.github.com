@@ -14,9 +14,8 @@ I was out last Friday at a bar where they had a "Negroni Tic-Tac-Toe" offer---yo
 
 The Negroni is often described as a "manly" drink, but fuck your gender-essentialism---let's just call it _badass_. Everything I ever needed to know about it, by the way, I learned from [Felix](http://manhattansproject.com/on-the-negroni/). I personally find Punt e Mes a shade too bitter when combined with Campari, but that's just me.
 
-    // some shorthands for the Node console
+    // just a shorthand
     function print() { console.log.apply(console, arguments); }
-    function inspect(thing) { return thing.inspect ? thing.inspect() : thing.toString(); }
 
     print("Here's how I make it at home:",
       new Negroni("Botanist", "Martini Rosso", "Campari"));
@@ -83,6 +82,10 @@ Much better.
 Of course, it's almost never a good idea to make 27 cocktails. Let's row back a bit and consider a much more common scenario: you've got a guest round and they'd fancy just one Negroni. They don't much mind _what_ gin, vermouth or amaro it's made with---you're more worried about whether you have them at all. Can you satisfy them?
 
 We need to represent the _potential presence or absence_ of a thing.
+
+    function inspect(thing) {
+      return thing.inspect ? thing.inspect() : thing.toString();
+    }
 
     var yep = function(thing) {
       return {

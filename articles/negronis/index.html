@@ -53,9 +53,8 @@
 
 <p>The Negroni is often described as a &#8220;manly&#8221; drink, but fuck your gender-essentialism&#8212;let&#8217;s just call it <em>badass</em>. Everything I ever needed to know about it, by the way, I learned from <a href="http://manhattansproject.com/on-the-negroni/">Felix</a>. I personally find Punt e Mes a shade too bitter when combined with Campari, but that&#8217;s just me.</p>
 
-<pre><code><span class="c1">// some shorthands for the Node console</span>
+<pre><code><span class="c1">// just a shorthand</span>
 <span class="kd">function</span> <span class="nx">print</span><span class="p">()</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">console</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span> <span class="p">}</span>
-<span class="kd">function</span> <span class="nx">inspect</span><span class="p">(</span><span class="nx">thing</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">thing</span><span class="p">.</span><span class="nx">inspect</span> <span class="o">?</span> <span class="nx">thing</span><span class="p">.</span><span class="nx">inspect</span><span class="p">()</span> <span class="o">:</span> <span class="nx">thing</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span> <span class="p">}</span>
 
 <span class="nx">print</span><span class="p">(</span><span class="s2">"Here's how I make it at home:"</span><span class="p">,</span>
   <span class="k">new</span> <span class="nx">Negroni</span><span class="p">(</span><span class="s2">"Botanist"</span><span class="p">,</span> <span class="s2">"Martini Rosso"</span><span class="p">,</span> <span class="s2">"Campari"</span><span class="p">));</span>
@@ -123,7 +122,11 @@
 
 <p>We need to represent the <em>potential presence or absence</em> of a thing.</p>
 
-<pre><code><span class="kd">var</span> <span class="nx">yep</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">thing</span><span class="p">)</span> <span class="p">{</span>
+<pre><code><span class="kd">function</span> <span class="nx">inspect</span><span class="p">(</span><span class="nx">thing</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">thing</span><span class="p">.</span><span class="nx">inspect</span> <span class="o">?</span> <span class="nx">thing</span><span class="p">.</span><span class="nx">inspect</span><span class="p">()</span> <span class="o">:</span> <span class="nx">thing</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">yep</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">thing</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">return</span> <span class="p">{</span>
     <span class="nx">inspect</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="s2">"yep("</span> <span class="o">+</span> <span class="nx">inspect</span><span class="p">(</span><span class="nx">thing</span><span class="p">)</span> <span class="o">+</span> <span class="s2">")"</span> <span class="p">}</span>
   <span class="p">}</span>
