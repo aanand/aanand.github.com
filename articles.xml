@@ -31,9 +31,8 @@ Negroni.prototype.inspect = function() {
 
 &lt;p&gt;The Negroni is often described as a &amp;#8220;manly&amp;#8221; drink, but fuck your gender-essentialism&amp;#8212;let&amp;#8217;s just call it &lt;em&gt;badass&lt;/em&gt;. Everything I ever needed to know about it, by the way, I learned from &lt;a href="http://manhattansproject.com/on-the-negroni/"&gt;Felix&lt;/a&gt;. I personally find Punt e Mes a shade too bitter when combined with Campari, but that&amp;#8217;s just me.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;// some shorthands for the Node console
+&lt;pre&gt;&lt;code&gt;// just a shorthand
 function print() { console.log.apply(console, arguments); }
-function inspect(thing) { return thing.inspect ? thing.inspect() : thing.toString(); }
 
 print("Here's how I make it at home:",
   new Negroni("Botanist", "Martini Rosso", "Campari"));
@@ -101,7 +100,11 @@ assemble = function(g, v, a) {
 
 &lt;p&gt;We need to represent the &lt;em&gt;potential presence or absence&lt;/em&gt; of a thing.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;var yep = function(thing) {
+&lt;pre&gt;&lt;code&gt;function inspect(thing) {
+  return thing.inspect ? thing.inspect() : thing.toString();
+}
+
+var yep = function(thing) {
   return {
     inspect: function() { return "yep(" + inspect(thing) + ")" }
   }
@@ -164,11 +167,15 @@ var order = function(name) {
   });
 };
 
-var g = order("Gin");      // a Promise of "Gin"
-var v = order("Vermouth"); // a Promise of "Vermouth"
-var a = order("Amaro");    // a Promise of "Amaro"
+var promisedGin      = order("Gin");
+var promisedVermouth = order("Vermouth");
+var promisedAmaro    = order("Amaro");
 
-var promisedNegroni = assemble(g, v, a) // a Promise of a Negroni
+var promisedNegroni = assemble(
+  promisedGin,
+  promisedVermouth,
+  promisedAmaro
+);
 
 print("Your Negroni is on its way. Any second now...");
 
@@ -179,16 +186,18 @@ promisedNegroni.then(function(negroni) {
 
 &lt;p&gt;Once again, we didn&amp;#8217;t have to change &lt;code&gt;assemble&lt;/code&gt;&amp;#8212;just implement &lt;code&gt;map&lt;/code&gt; and &lt;code&gt;unwrap&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;I think it&amp;#8217;s kind of fucking incredible that we can write code like &lt;code&gt;assemble&lt;/code&gt;, which doesn&amp;#8217;t care how its pieces work&amp;#8212;just that they fit together right&amp;#8212;and plug any kind of delivery mechanism we want into it: arrays-of-things, maybe-things-maybe-nots, promises-of-things. This is a huge step up from just writing HTML templates that don&amp;#8217;t care what database table your objects came from. This is writing operations and not caring how they&amp;#8217;re put together. If you think this is cool too, we&amp;#8217;re probably going to get along.&lt;/p&gt;
-&lt;hr&gt;&lt;p&gt;I&amp;#8217;m not the first one to point out that &lt;a href="http://blog.jcoglan.com/2011/03/11/promises-are-the-monad-of-asynchronous-programming/"&gt;promises are the monad of asynchronous programming&lt;/a&gt;, but the topic has become pertinent, because &lt;a href="https://github.com/promises-aplus"&gt;the Promises/A+ spec&lt;/a&gt; is still in formation. If programmers can rely on a monadic interface for promises, this opens up the possibility of writing code which will work with &lt;em&gt;any&lt;/em&gt; monad, not just promises&amp;#8212;as I&amp;#8217;ve tried to demonstrate with &lt;code&gt;assemble&lt;/code&gt; above.&lt;/p&gt;
+&lt;p&gt;I think it&amp;#8217;s kind of incredible that we can write code like &lt;code&gt;assemble&lt;/code&gt;, which doesn&amp;#8217;t care how its pieces work&amp;#8212;just that they fit together right&amp;#8212;and plug any kind of delivery mechanism we want into it: arrays-of-things, maybe-things-maybe-nots, promises-of-things. This is a huge step up from just writing views and not caring where the models came from. This is writing operations and not caring how they&amp;#8217;re sequenced or executed.&lt;/p&gt;
 
-&lt;p&gt;The spec as it stands is not enough: for one thing, a monad must provide a means of wrapping a plain value, e.g. &lt;code&gt;Array.of("Gin")&lt;/code&gt; or &lt;code&gt;Promise.of("Gin")&lt;/code&gt;. (I avoided implementing such a method in the examples above for simplicity&amp;#8217;s sake, and used &lt;code&gt;map&lt;/code&gt; instead.)&lt;/p&gt;
+&lt;p&gt;If you think that&amp;#8217;s cool too, we&amp;#8217;re probably going to get along.&lt;/p&gt;
+&lt;hr&gt;&lt;p&gt;I&amp;#8217;m not the first to point out that &lt;a href="http://blog.jcoglan.com/2011/03/11/promises-are-the-monad-of-asynchronous-programming/"&gt;promises are the monad of asynchronous programming&lt;/a&gt;, but the topic has become pertinent, because &lt;a href="https://github.com/promises-aplus"&gt;the Promises/A+ spec&lt;/a&gt; is still in formation. If programmers can rely on a monadic interface for promises, this opens up the possibility of writing code which will work with &lt;em&gt;any&lt;/em&gt; monad, not just promises&amp;#8212;as I&amp;#8217;ve tried to demonstrate with &lt;code&gt;assemble&lt;/code&gt; above.&lt;/p&gt;
 
-&lt;p&gt;A thornier issue is that a promise&amp;#8217;s &lt;code&gt;then&lt;/code&gt; method, as specified, treats the return value of the passed-in function differently depending on whether it&amp;#8217;s a promise&amp;#8212;essentially, it must try to intelligently determine whether to be &lt;code&gt;map&lt;/code&gt; or &lt;code&gt;flatMap&lt;/code&gt;&amp;#8212;which is why the two methods we implemented on &lt;code&gt;Promise.prototype&lt;/code&gt; are identical.&lt;/p&gt;
+&lt;p&gt;There are two equivalent ways to define a monad. You can define &lt;code&gt;map&lt;/code&gt; and &lt;code&gt;unwrap&lt;/code&gt;, as I have, or you can define &lt;code&gt;chain&lt;/code&gt; (which is equivalent to &lt;code&gt;map&lt;/code&gt; followed by &lt;code&gt;unwrap&lt;/code&gt;), and &lt;code&gt;of&lt;/code&gt; (which takes a plain value and wraps it&amp;#8212;so &lt;code&gt;Array.of(1)&lt;/code&gt; would return &lt;code&gt;[1]&lt;/code&gt;).&lt;/p&gt;
 
-&lt;p&gt;Besides the inherent unreliability of trying to determine an object&amp;#8217;s type in a dynamically-typed language, such overloading is likely to lead to difficult-to-predict bugs and difficult-to-reason-about code when promises are &lt;em&gt;treated&lt;/em&gt; like well-behaved monads, but &lt;em&gt;aren&amp;#8217;t&lt;/em&gt;. We got away with it this time, but I wouldn&amp;#8217;t feel confident writing more complex code, knowing that &amp;#8220;smart&amp;#8221; logic was there.&lt;/p&gt;
+&lt;p&gt;The problem is that a promise&amp;#8217;s &lt;code&gt;then&lt;/code&gt; method, as specified, treats the return value of the passed-in function differently depending on whether it&amp;#8217;s a promise&amp;#8212;essentially, it tries to intelligently determine whether to be &lt;code&gt;map&lt;/code&gt; or &lt;code&gt;chain&lt;/code&gt;. This means that the result of calling &lt;code&gt;then&lt;/code&gt; is always a flattened promise, which is why the &lt;code&gt;Promise.prototype.unwrap&lt;/code&gt; defined above just returns &lt;code&gt;this&lt;/code&gt;. It&amp;#8217;s impossible to call &lt;code&gt;then&lt;/code&gt; and get back a promise of a promise.&lt;/p&gt;
 
-&lt;p&gt;There &lt;a href="http://brianmckenna.org/blog/category_theory_promisesaplus"&gt;has&lt;/a&gt; &lt;a href="https://github.com/promises-aplus/resolvers-spec/issues/24"&gt;been&lt;/a&gt; &lt;a href="https://github.com/promises-aplus/promises-spec/issues/94"&gt;some&lt;/a&gt; &lt;a href="https://github.com/promises-aplus/promises-spec/issues/97"&gt;discussion&lt;/a&gt; on this topic in the last few days. Sadly, the authors have so far been difficult to convince. This is understandable&amp;#8212;the theory is difficult to explain, and examples of the potential problems non-obvious (I am personally unable to produce a simple example).&lt;/p&gt;
+&lt;p&gt;Besides the inherent unreliability of trying to determine whether or not something is a promise, such overloading is likely to lead to difficult-to-predict bugs and difficult-to-reason-about code when promises are &lt;em&gt;treated&lt;/em&gt; like well-behaved monads, but &lt;em&gt;aren&amp;#8217;t&lt;/em&gt;. We got away with it this time, but I wouldn&amp;#8217;t feel confident writing more complex code, knowing that &amp;#8220;smart&amp;#8221; logic was there.&lt;/p&gt;
+
+&lt;p&gt;There &lt;a href="http://brianmckenna.org/blog/category_theory_promisesaplus"&gt;has&lt;/a&gt; &lt;a href="https://github.com/promises-aplus/resolvers-spec/issues/24"&gt;been&lt;/a&gt; &lt;a href="https://github.com/promises-aplus/promises-spec/issues/94"&gt;some&lt;/a&gt; &lt;a href="https://github.com/promises-aplus/promises-spec/issues/97"&gt;discussion&lt;/a&gt; on this topic in the last few days. Sadly, the authors have so far been difficult to convince. This is understandable&amp;#8212;the theory is difficult to explain, examples of the potential problems are non-obvious, and it&amp;#8217;s easy to get led astray by the question of why you would ever &lt;em&gt;want&lt;/em&gt; to have a promise of a promise.&lt;/p&gt;
 
 &lt;p&gt;A more directly appealing argument was made by &lt;a href="https://github.com/promises-aplus/promises-spec/issues/94#issuecomment-16294840"&gt;Reg&lt;/a&gt;:&lt;/p&gt;
 
@@ -214,9 +223,9 @@ promisedNegroni.then(function(negroni) {
 
 &lt;p&gt;This speaks to me. The power of first-class functions had already been amply demonstrated when LiveScript was designed&amp;#8212;just not in the mainstream. Similarly, the power of the monad abstraction has been amply demonstrated in functional languages, but not yet in the mainstream.&lt;/p&gt;
 
-&lt;p&gt;It may be too late for &lt;code&gt;then&lt;/code&gt;&amp;#8212;too much code already relies on its current behaviour, and besides, it&amp;#8217;s useful. A &lt;a href="https://github.com/pufuwozu/fantasy-land"&gt;concurrent spec for monads&lt;/a&gt; (they call it &lt;code&gt;chain&lt;/code&gt;, not &lt;code&gt;flatMap&lt;/code&gt;) has been started, and we could just hope that most promise implementors choose to support that too&amp;#8230; but I strongly suspect the majority won&amp;#8217;t bother, even though it&amp;#8217;d be trivial.&lt;/p&gt;
+&lt;p&gt;It may be too late for &lt;code&gt;then&lt;/code&gt;&amp;#8212;too much code already relies on its current behaviour, and besides, it&amp;#8217;s useful. A &lt;a href="https://github.com/pufuwozu/fantasy-land"&gt;concurrent spec for monads&lt;/a&gt;, specifying &lt;code&gt;chain&lt;/code&gt; and &lt;code&gt;of&lt;/code&gt;, has been started, and we could just hope that most promise implementors choose to support that too&amp;#8230; but I strongly suspect the majority won&amp;#8217;t bother, even though it&amp;#8217;d be trivial.&lt;/p&gt;
 
-&lt;p&gt;To have the &lt;code&gt;chain&lt;/code&gt; and &lt;code&gt;of&lt;/code&gt; methods required in Promises/A+ would be a &lt;em&gt;much&lt;/em&gt; bigger win.&lt;/p&gt;</content>
+&lt;p&gt;To have &lt;code&gt;chain&lt;/code&gt; and &lt;code&gt;of&lt;/code&gt; specified and required in Promises/A+ would be a &lt;em&gt;much&lt;/em&gt; bigger win.&lt;/p&gt;</content>
   </entry>
   <entry>
     <id>tag:aanandprasad.com,2011-08-13:/articles/offline/</id>
