@@ -384,7 +384,7 @@ a img {
 body {
   line-height: 1.5;
   font-family: "Lato", sans-serif;
-  color: #777777;
+  color: #444444;
   font-size: 87.5%;
   font-weight: 300;
   letter-spacing: 0;
@@ -394,19 +394,19 @@ body {
   body {
     line-height: 1.5;
     font-family: "Lato", sans-serif;
-    color: #777777;
+    color: #444444;
     font-size: 112.5%;
   }
 }
 @media screen and (-webkit-min-device-pixel-ratio: 2) {
   body {
-    color: #777777;
+    color: #444444;
     font-weight: 400;
   }
 }
 h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
-  color: #666666;
+  color: #333333;
 }
 h1 img, h2 img, h3 img, h4 img, h5 img, h6 img {
   margin: 0;
@@ -579,11 +579,11 @@ caption {
 }
 
 .quiet {
-  color: #aaaaaa;
+  color: #777777;
 }
 
 .loud {
-  color: #555555;
+  color: #222222;
 }
 
 h2 {
@@ -669,7 +669,7 @@ pre, code, tt {
   }
 }
 hr {
-  border: 1px solid #dddddd;
+  border: 1px solid #aaaaaa;
   border-width: 1px 0;
   margin-bottom: 1.5em;
 }
@@ -753,7 +753,7 @@ header .logo a:hover {
 }
 .links li:before {
   content: "\00b7";
-  color: #aaaaaa;
+  color: #777777;
 }
 .links li:first-child:before {
   display: none;
@@ -777,14 +777,14 @@ h2 {
   font-weight: 700;
 }
 .project .metadata, .article .metadata {
-  color: #aaaaaa;
+  color: #777777;
 }
 .project .metadata > *, .article .metadata > * {
   display: inline;
 }
 .project .metadata > *:before, .article .metadata > *:before {
   content: "· ";
-  color: #aaaaaa !important;
+  color: #777777 !important;
 }
 .project .metadata > *:first-child:before, .article .metadata > *:first-child:before {
   display: none;
@@ -796,7 +796,7 @@ h2 {
   font-size: 0.9em;
 }
 .project .literate-intro, .project .literate-intro a, .project .literate-intro code, .article .literate-intro, .article .literate-intro a, .article .literate-intro code {
-  color: #aaaaaa;
+  color: #777777;
 }
 .project p, .article p {
   text-align: justify;
@@ -805,7 +805,7 @@ h2 {
   text-decoration: underline;
 }
 .project p code, .article p code {
-  color: #444444;
+  color: #222222;
 }
 
 .content .article .title, .content .article .metadata {
@@ -824,7 +824,7 @@ h2 {
 }
 
 pre {
-  padding: 0 15px;
+  padding: 0 30px;
   margin: 30px 0;
 }
 
