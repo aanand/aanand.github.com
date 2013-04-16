@@ -1,70 +1,82 @@
 I was out last Friday at a bar where they had a "Negroni Tic-Tac-Toe" offer---you could custom-build your drink from a selection of 3 gins, 3 vermouths and 3 amari, and if you got "3 in a row" you'd get &pound;5 off your bill. It's a laughably stingy deal, but it got me thinking. About functional programming, I mean.
 
-    class Negroni
-      constructor: (@gin, @vermouth, @amaro) ->
-        # Build over ice, stir well
+    function Negroni(gin, vermouth, amaro) {
+      this.gin      = gin;
+      this.vermouth = vermouth;
+      this.amaro    = amaro;
 
-      inspect: -> "Negroni(#{@gin}, #{@vermouth}, #{@amaro})"
+      // Build over ice, stir well
+    }
+
+    Negroni.prototype.inspect = function() {
+      return "Negroni("+this.gin+", "+this.vermouth+", "+this.amaro+")";
+    }
 
 The Negroni is often described as a "manly" drink, but fuck your gender-essentialism---let's just call it _badass_. Everything I ever needed to know about it, by the way, I learned from [Felix](http://manhattansproject.com/on-the-negroni/). I personally find Punt e Mes a shade too bitter when combined with Campari, but that's just me.
 
-    # some shorthands for the Node console
-    print = (args...) -> console.log(args...)
-    inspect = (thing) -> if thing.inspect then thing.inspect() else thing.toString()
+    // some shorthands for the Node console
+    function print() { console.log.apply(console, arguments); }
+    function inspect(thing) { return thing.inspect ? thing.inspect() : thing.toString(); }
 
-    print "Here's how I make it at home:",
-      new Negroni("Botanist", "Martini Rosso", "Campari")
-      # => Negroni(Botanist, Martini Rosso, Campari)
+    print("Here's how I make it at home:",
+      new Negroni("Botanist", "Martini Rosso", "Campari"));
+      // => Negroni(Botanist, Martini Rosso, Campari)
 
 Point is, there are 3&times;3&times;3&nbsp;=&nbsp;27 possible combinations at that bar, a delicious Rubik's Cube of liver damage. How would you enumerate them all?
 
-    assemble = (g, v, a) ->
-      g.map (gin) ->
-        v.map (vermouth) ->
-          a.map (amaro) ->
-            new Negroni(gin, vermouth, amaro)
+    var assemble = function(g, v, a) {
+      return g.map(function(gin) {
+        return v.map(function(vermouth) {
+          return a.map(function(amaro) {
+            return new Negroni(gin, vermouth, amaro);
+          });
+        });
+      });
+    };
 
-    allGins      = ["Botanist", "Bombay Sapphire", "Blackwoods 60%"]
-    allVermouths = ["Martini Rosso", "Cocchi", "Punt e Mes"]
-    allAmari     = ["Campari", "Aperol", "Cynar"]
+    var allGins      = ["Botanist", "Bombay Sapphire", "Blackwoods 60%"];
+    var allVermouths = ["Martini Rosso", "Cocchi", "Punt e Mes"];
+    var allAmari     = ["Campari", "Aperol", "Cynar"];
     
-    print assemble(allGins, allVermouths, allAmari)
+    print(assemble(allGins, allVermouths, allAmari));
 
-    # => [ [ [ Negroni(Botanist, Martini Rosso, Campari),
-    #          Negroni(Botanist, Martini Rosso, Aperol),
-    #          Negroni(Botanist, Martini Rosso, Cynar) ],
-    #        [ Negroni(Botanist, Cocchi, Campari),
-    #          Negroni(Botanist, Cocchi, Aperol),
-    #          Negroni(Botanist, Cocchi, Cynar) ],
-    #      ...]
-    #    ...]
+    // => [ [ [ Negroni(Botanist, Martini Rosso, Campari),
+    //          Negroni(Botanist, Martini Rosso, Aperol),
+    //          Negroni(Botanist, Martini Rosso, Cynar) ],
+    //        [ Negroni(Botanist, Cocchi, Campari),
+    //          Negroni(Botanist, Cocchi, Aperol),
+    //          Negroni(Botanist, Cocchi, Cynar) ],
+    //      ...]
+    //    ...]
 
 Hmmm. It's a start, but that's altogether too much nesting. We'll never get anything done if we're spending all our time unwrapping.
 
-    Array.prototype.unwrap = ->
-      append = (a, b) -> a.concat(b)
-      this.reduce(append, [])
+    Array.prototype.unwrap = function() {
+      return this.reduce(function(a, b) { return a.concat(b) }, []);
+    }
 
-    assemble = (g, v, a) ->
-      (g.map (gin) ->
-        (v.map (vermouth) ->
-          a.map (amaro) ->
-            new Negroni(gin, vermouth, amaro)
-        ).unwrap()
-      ).unwrap()
+    assemble = function(g, v, a) {
+      return g.map(function(gin) {
+        return v.map(function(vermouth) {
+          return a.map(function(amaro) {
+            return new Negroni(gin, vermouth, amaro);
+          });
+        }).unwrap();
+      }).unwrap();
+    };
 
 The outer two `map`s are followed by an `unwrap`, which turns an array-of-arrays into a single array. (The innermost `map` gives us an array of Negronis, which is what we want, so unwrapping is uncalled for---and would fail).
 
-    print assemble(allGins, allVermouths, allAmari)
+    print(assemble(allGins, allVermouths, allAmari));
 
-    # => [ Negroni(Botanist, Martini Rosso, Campari),
-    #      Negroni(Botanist, Martini Rosso, Aperol),
-    #      Negroni(Botanist, Martini Rosso, Cynar),
-    #      Negroni(Botanist, Cocchi, Campari),
-    #      Negroni(Botanist, Cocchi, Aperol),
-    #      Negroni(Botanist, Cocchi, Cynar),
-    #      Negroni(Botanist, Punt e Mes, Campari),
-    #    ...]
+    // => [ Negroni(Botanist, Martini Rosso, Campari),
+    //      Negroni(Botanist, Martini Rosso, Aperol),
+    //      Negroni(Botanist, Martini Rosso, Cynar),
+    //      Negroni(Botanist, Cocchi, Campari),
+    //      Negroni(Botanist, Cocchi, Aperol),
+    //      Negroni(Botanist, Cocchi, Cynar),
+    //      Negroni(Botanist, Punt e Mes, Campari),
+    //    ...]
 
 Much better.
 
@@ -72,78 +84,81 @@ Of course, it's almost never a good idea to make 27 cocktails. Let's row back a 
 
 We need to represent the _potential presence or absence_ of a thing.
 
-    yep = (thing) ->
-      {
-        inspect: -> "yep(#{inspect(thing)})"
+    var yep = function(thing) {
+      return {
+        inspect: function() { return "yep(" + inspect(thing) + ")" }
       }
+    };
 
-    nope =
-      {
-        inspect: -> "nope"
-      }
+    var nope = {
+      inspect: function() { return "nope" }
+    };
 
-    print "Here's something:", yep("Gin")
-    print "Here's nothing:", nope
+    print("Here's something:", yep("Gin"));
+    print("Here's nothing:", nope);
 
 So, time to write a new `assemble` method, right? To check individually for the presence or absence of each of our ingredients, and only return a `yep()` if we've got all 3?
 
 Nope. `assemble` can stay as it is. We just need to implement `map` and `unwrap`.
 
-    yep = (thing) ->
-      {
-        inspect: -> "yep(#{inspect(thing)})"
+    yep = function(thing) {
+      return {
+        inspect: function() { return "yep(" + inspect(thing) + ")" },
 
-        # Apply f to our thing
-        map: (f) -> yep(f(thing))
+        // Apply f to our thing
+        map: function(f) { return yep(f(thing)) },
         
-        # Turn a yep(yep(...)) into a yep(...)
-        unwrap: -> thing
+        // Turn a yep(yep(...)) into a yep(...)
+        unwrap: function() { return thing }
       }
+    };
 
-    nope =
-      {
-        inspect: -> "nope"
+    nope = {
+      inspect: function() { return "nope" },
 
-        map: (f) -> nope
-        unwrap:  -> nope
-      }
+      map:    function(f) { return nope },
+      unwrap: function()  { return nope }
+    };
 
-    print "If we have no ingredients:",
-      assemble(nope, nope, nope)
-      # => nope
+    print("If we have no ingredients:",
+      assemble(nope, nope, nope));
+      // => nope
     
-    print "If we have only gin and amaro:",
-      assemble(yep("Gin"), nope, yep("Amaro"))
-      # => nope
+    print("If we have only gin and amaro:",
+      assemble(yep("Gin"), nope, yep("Amaro")));
+      // => nope
 
-    print "If we have gin, vermouth and amaro:",
-      assemble(yep("Gin"), yep("Vermouth"), yep("Amaro"))
-      # => yep(Negroni(Gin, Vermouth, Amaro))
+    print("If we have gin, vermouth and amaro:",
+      assemble(yep("Gin"), yep("Vermouth"), yep("Amaro")));
+      // => yep(Negroni(Gin, Vermouth, Amaro))
 
 Magic. `assemble` will accept anything that supports those two methods. All it expresses is that you need all 3 ingredients to make a Negroni---not how to get them, or how many to make. That logic lives entirely in the definitions of `map` and `unwrap`: for arrays, all possible combinations of elements are enumerated; for `yep` and `nope`, we only ever have zero or one of something, and we short-circuit as soon as the first zero (a.k.a. `nope`) is encountered.
 
 Sadly, it turns out we don't have any of the ingredients to hand. You can order them online, though! Indeed, you have 3 fast-delivery specialist suppliers (one per ingredient---they're _highly_ specialised) bookmarked for this very purpose. Within a few moments, each one has promised that a bottle is on its way to you, and you can thus pass on the promise of a Negroni to your patient, thirsty guest.
 
-    Promise = require("promise")
+    var Promise = require("promise");
 
-    Promise.prototype.map = (fn) -> this.then(fn)
-    Promise.prototype.unwrap   = -> this
+    Promise.prototype.map    = function(fn) { return this.then(fn) };
+    Promise.prototype.unwrap = function()   { return this };
 
-    order = (name) ->
-      new Promise (resolve) ->
-        setTimeout((-> resolve(name)), 1000)
+    var order = function(name) {
+      return new Promise(function(resolve) {
+        setTimeout(function(){ resolve(name) }, 1000);
+      });
+    };
 
-    g = order("Gin")      # a Promise of "Gin"
-    v = order("Vermouth") # a Promise of "Vermouth"
-    a = order("Amaro")    # a Promise of "Amaro"
+    var g = order("Gin");      // a Promise of "Gin"
+    var v = order("Vermouth"); // a Promise of "Vermouth"
+    var a = order("Amaro");    // a Promise of "Amaro"
 
-    promisedNegroni = assemble(g, v, a) # a Promise of a Negroni
+    var promisedNegroni = assemble(g, v, a) // a Promise of a Negroni
 
-    print "Your Negroni is on its way. Any second now..."
+    print("Your Negroni is on its way. Any second now...");
 
-    promisedNegroni.then (negroni) ->
-      print "Ah! It's here:", negroni
-      # => Negroni(Gin, Vermouth, Amaro)
+    promisedNegroni.then(function(negroni) {
+      print("Ah! It's here:", negroni);
+      // => Negroni(Gin, Vermouth, Amaro)
+    });
 
 Once again, we didn't have to change `assemble`---just implement `map` and `unwrap`.
 

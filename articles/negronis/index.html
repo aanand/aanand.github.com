@@ -39,68 +39,83 @@
   </header><article class="article">
     <h2 class="title">The Abstracted Negroni</h2><p>I was out last Friday at a bar where they had a &#8220;Negroni Tic-Tac-Toe&#8221; offer&#8212;you could custom-build your drink from a selection of 3 gins, 3 vermouths and 3 amari, and if you got &#8220;3 in a row&#8221; you&#8217;d get &#163;5 off your bill. It&#8217;s a laughably stingy deal, but it got me thinking. About functional programming, I mean.</p>
 
-<pre><code><span class="k">class</span> <span class="nx">Negroni</span>
-  <span class="nv">constructor: </span><span class="nf">(@gin, @vermouth, @amaro) -&gt;</span>
-    <span class="c1"># Build over ice, stir well</span>
+<pre><code><span class="kd">function</span> <span class="nx">Negroni</span><span class="p">(</span><span class="nx">gin</span><span class="p">,</span> <span class="nx">vermouth</span><span class="p">,</span> <span class="nx">amaro</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">gin</span>      <span class="o">=</span> <span class="nx">gin</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">vermouth</span> <span class="o">=</span> <span class="nx">vermouth</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">amaro</span>    <span class="o">=</span> <span class="nx">amaro</span><span class="p">;</span>
 
-  <span class="nv">inspect: </span><span class="nf">-&gt;</span> <span class="s">"Negroni(</span><span class="si">#{</span><span class="nx">@gin</span><span class="si">}</span><span class="s">, </span><span class="si">#{</span><span class="nx">@vermouth</span><span class="si">}</span><span class="s">, </span><span class="si">#{</span><span class="nx">@amaro</span><span class="si">}</span><span class="s">)"</span></code></pre>
+  <span class="c1">// Build over ice, stir well</span>
+<span class="p">}</span>
+
+<span class="nx">Negroni</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">inspect</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="s2">"Negroni("</span><span class="o">+</span><span class="k">this</span><span class="p">.</span><span class="nx">gin</span><span class="o">+</span><span class="s2">", "</span><span class="o">+</span><span class="k">this</span><span class="p">.</span><span class="nx">vermouth</span><span class="o">+</span><span class="s2">", "</span><span class="o">+</span><span class="k">this</span><span class="p">.</span><span class="nx">amaro</span><span class="o">+</span><span class="s2">")"</span><span class="p">;</span>
+<span class="p">}</span></code></pre>
 
 <p>The Negroni is often described as a &#8220;manly&#8221; drink, but fuck your gender-essentialism&#8212;let&#8217;s just call it <em>badass</em>. Everything I ever needed to know about it, by the way, I learned from <a href="http://manhattansproject.com/on-the-negroni/">Felix</a>. I personally find Punt e Mes a shade too bitter when combined with Campari, but that&#8217;s just me.</p>
 
-<pre><code><span class="c1"># some shorthands for the Node console</span>
-<span class="nv">print = </span><span class="nf">(args...) -&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">args</span><span class="p">...)</span>
-<span class="nv">inspect = </span><span class="nf">(thing) -&gt;</span> <span class="k">if</span> <span class="nx">thing</span><span class="p">.</span><span class="nx">inspect</span> <span class="k">then</span> <span class="nx">thing</span><span class="p">.</span><span class="nx">inspect</span><span class="p">()</span> <span class="k">else</span> <span class="nx">thing</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span>
+<pre><code><span class="c1">// some shorthands for the Node console</span>
+<span class="kd">function</span> <span class="nx">print</span><span class="p">()</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">console</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span> <span class="p">}</span>
+<span class="kd">function</span> <span class="nx">inspect</span><span class="p">(</span><span class="nx">thing</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">thing</span><span class="p">.</span><span class="nx">inspect</span> <span class="o">?</span> <span class="nx">thing</span><span class="p">.</span><span class="nx">inspect</span><span class="p">()</span> <span class="o">:</span> <span class="nx">thing</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span> <span class="p">}</span>
 
-<span class="nx">print</span> <span class="s">"Here's how I make it at home:"</span><span class="p">,</span>
-  <span class="k">new</span> <span class="nx">Negroni</span><span class="p">(</span><span class="s">"Botanist"</span><span class="p">,</span> <span class="s">"Martini Rosso"</span><span class="p">,</span> <span class="s">"Campari"</span><span class="p">)</span>
-  <span class="c1"># =&gt; Negroni(Botanist, Martini Rosso, Campari)</span></code></pre>
+<span class="nx">print</span><span class="p">(</span><span class="s2">"Here's how I make it at home:"</span><span class="p">,</span>
+  <span class="k">new</span> <span class="nx">Negroni</span><span class="p">(</span><span class="s2">"Botanist"</span><span class="p">,</span> <span class="s2">"Martini Rosso"</span><span class="p">,</span> <span class="s2">"Campari"</span><span class="p">));</span>
+  <span class="c1">// =&gt; Negroni(Botanist, Martini Rosso, Campari)</span></code></pre>
 
 <p>Point is, there are 3&#215;3&#215;3&#160;=&#160;27 possible combinations at that bar, a delicious Rubik&#8217;s Cube of liver damage. How would you enumerate them all?</p>
 
-<pre><code><span class="nv">assemble = </span><span class="nf">(g, v, a) -&gt;</span>
-  <span class="nx">g</span><span class="p">.</span><span class="nx">map</span> <span class="nf">(gin) -&gt;</span>
-    <span class="nx">v</span><span class="p">.</span><span class="nx">map</span> <span class="nf">(vermouth) -&gt;</span>
-      <span class="nx">a</span><span class="p">.</span><span class="nx">map</span> <span class="nf">(amaro) -&gt;</span>
-        <span class="k">new</span> <span class="nx">Negroni</span><span class="p">(</span><span class="nx">gin</span><span class="p">,</span> <span class="nx">vermouth</span><span class="p">,</span> <span class="nx">amaro</span><span class="p">)</span>
+<pre><code><span class="kd">var</span> <span class="nx">assemble</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">g</span><span class="p">,</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">a</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">g</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">gin</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">v</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">vermouth</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">a</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">amaro</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">Negroni</span><span class="p">(</span><span class="nx">gin</span><span class="p">,</span> <span class="nx">vermouth</span><span class="p">,</span> <span class="nx">amaro</span><span class="p">);</span>
+      <span class="p">});</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">};</span>
 
-<span class="nv">allGins      = </span><span class="p">[</span><span class="s">"Botanist"</span><span class="p">,</span> <span class="s">"Bombay Sapphire"</span><span class="p">,</span> <span class="s">"Blackwoods 60%"</span><span class="p">]</span>
-<span class="nv">allVermouths = </span><span class="p">[</span><span class="s">"Martini Rosso"</span><span class="p">,</span> <span class="s">"Cocchi"</span><span class="p">,</span> <span class="s">"Punt e Mes"</span><span class="p">]</span>
-<span class="nv">allAmari     = </span><span class="p">[</span><span class="s">"Campari"</span><span class="p">,</span> <span class="s">"Aperol"</span><span class="p">,</span> <span class="s">"Cynar"</span><span class="p">]</span>
+<span class="kd">var</span> <span class="nx">allGins</span>      <span class="o">=</span> <span class="p">[</span><span class="s2">"Botanist"</span><span class="p">,</span> <span class="s2">"Bombay Sapphire"</span><span class="p">,</span> <span class="s2">"Blackwoods 60%"</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">allVermouths</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"Martini Rosso"</span><span class="p">,</span> <span class="s2">"Cocchi"</span><span class="p">,</span> <span class="s2">"Punt e Mes"</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">allAmari</span>     <span class="o">=</span> <span class="p">[</span><span class="s2">"Campari"</span><span class="p">,</span> <span class="s2">"Aperol"</span><span class="p">,</span> <span class="s2">"Cynar"</span><span class="p">];</span>
 
-<span class="nx">print</span> <span class="nx">assemble</span><span class="p">(</span><span class="nx">allGins</span><span class="p">,</span> <span class="nx">allVermouths</span><span class="p">,</span> <span class="nx">allAmari</span><span class="p">)</span>
+<span class="nx">print</span><span class="p">(</span><span class="nx">assemble</span><span class="p">(</span><span class="nx">allGins</span><span class="p">,</span> <span class="nx">allVermouths</span><span class="p">,</span> <span class="nx">allAmari</span><span class="p">));</span>
 
-<span class="c1"># =&gt; [ [ [ Negroni(Botanist, Martini Rosso, Campari),</span>
-<span class="c1">#          Negroni(Botanist, Martini Rosso, Aperol),</span>
-<span class="c1">#          Negroni(Botanist, Martini Rosso, Cynar) ],</span>
-<span class="c1">#        [ Negroni(Botanist, Cocchi, Campari),</span>
-<span class="c1">#          Negroni(Botanist, Cocchi, Aperol),</span>
-<span class="c1">#          Negroni(Botanist, Cocchi, Cynar) ],</span>
-<span class="c1">#      ...]</span>
-<span class="c1">#    ...]</span></code></pre>
+<span class="c1">// =&gt; [ [ [ Negroni(Botanist, Martini Rosso, Campari),</span>
+<span class="c1">//          Negroni(Botanist, Martini Rosso, Aperol),</span>
+<span class="c1">//          Negroni(Botanist, Martini Rosso, Cynar) ],</span>
+<span class="c1">//        [ Negroni(Botanist, Cocchi, Campari),</span>
+<span class="c1">//          Negroni(Botanist, Cocchi, Aperol),</span>
+<span class="c1">//          Negroni(Botanist, Cocchi, Cynar) ],</span>
+<span class="c1">//      ...]</span>
+<span class="c1">//    ...]</span></code></pre>
 
-<p>Hmmm. It&#8217;s a start, but that&#8217;s altogether too much nesting. We&#8217;ll never get anything done if we&#8217;re spending all our time unboxing drinks.</p>
+<p>Hmmm. It&#8217;s a start, but that&#8217;s altogether too much nesting. We&#8217;ll never get anything done if we&#8217;re spending all our time unwrapping.</p>
 
-<pre><code><span class="nb">Array</span><span class="p">.</span><span class="nv">prototype.flatMap = </span><span class="nf">(fn) -&gt;</span>
-  <span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">fn</span><span class="p">).</span><span class="nx">reduce</span><span class="p">((</span><span class="nf">(a, b) -&gt;</span> <span class="nx">a</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">b</span><span class="p">)),</span> <span class="p">[])</span>
+<pre><code><span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">unwrap</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">reduce</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">a</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span> <span class="p">},</span> <span class="p">[]);</span>
+<span class="p">}</span>
 
-<span class="nv">assemble = </span><span class="nf">(g, v, a) -&gt;</span>
-  <span class="nx">g</span><span class="p">.</span><span class="nx">flatMap</span> <span class="nf">(gin) -&gt;</span>
-    <span class="nx">v</span><span class="p">.</span><span class="nx">flatMap</span> <span class="nf">(vermouth) -&gt;</span>
-      <span class="nx">a</span><span class="p">.</span><span class="nx">map</span> <span class="nf">(amaro) -&gt;</span>
-        <span class="k">new</span> <span class="nx">Negroni</span><span class="p">(</span><span class="nx">gin</span><span class="p">,</span> <span class="nx">vermouth</span><span class="p">,</span> <span class="nx">amaro</span><span class="p">)</span></code></pre>
+<span class="nx">assemble</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">g</span><span class="p">,</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">a</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">g</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">gin</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">v</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">vermouth</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">a</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">amaro</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">Negroni</span><span class="p">(</span><span class="nx">gin</span><span class="p">,</span> <span class="nx">vermouth</span><span class="p">,</span> <span class="nx">amaro</span><span class="p">);</span>
+      <span class="p">});</span>
+    <span class="p">}).</span><span class="nx">unwrap</span><span class="p">();</span>
+  <span class="p">}).</span><span class="nx">unwrap</span><span class="p">();</span>
+<span class="p">};</span></code></pre>
 
-<p>The outer two <code>map</code>s are replaced with <code>flatMap</code>, which maps and then flattens the resulting array.</p>
+<p>The outer two <code>map</code>s are followed by an <code>unwrap</code>, which turns an array-of-arrays into a single array. (The innermost <code>map</code> gives us an array of Negronis, which is what we want, so unwrapping is uncalled for&#8212;and would fail).</p>
 
-<pre><code><span class="nx">print</span> <span class="nx">assemble</span><span class="p">(</span><span class="nx">allGins</span><span class="p">,</span> <span class="nx">allVermouths</span><span class="p">,</span> <span class="nx">allAmari</span><span class="p">)</span>
+<pre><code><span class="nx">print</span><span class="p">(</span><span class="nx">assemble</span><span class="p">(</span><span class="nx">allGins</span><span class="p">,</span> <span class="nx">allVermouths</span><span class="p">,</span> <span class="nx">allAmari</span><span class="p">));</span>
 
-<span class="c1"># =&gt; [ Negroni(Botanist, Martini Rosso, Campari),</span>
-<span class="c1">#      Negroni(Botanist, Martini Rosso, Aperol),</span>
-<span class="c1">#      Negroni(Botanist, Martini Rosso, Cynar),</span>
-<span class="c1">#      Negroni(Botanist, Cocchi, Campari),</span>
-<span class="c1">#      Negroni(Botanist, Cocchi, Aperol),</span>
-<span class="c1">#      Negroni(Botanist, Cocchi, Cynar),</span>
-<span class="c1">#      Negroni(Botanist, Punt e Mes, Campari),</span>
-<span class="c1">#    ...]</span></code></pre>
+<span class="c1">// =&gt; [ Negroni(Botanist, Martini Rosso, Campari),</span>
+<span class="c1">//      Negroni(Botanist, Martini Rosso, Aperol),</span>
+<span class="c1">//      Negroni(Botanist, Martini Rosso, Cynar),</span>
+<span class="c1">//      Negroni(Botanist, Cocchi, Campari),</span>
+<span class="c1">//      Negroni(Botanist, Cocchi, Aperol),</span>
+<span class="c1">//      Negroni(Botanist, Cocchi, Cynar),</span>
+<span class="c1">//      Negroni(Botanist, Punt e Mes, Campari),</span>
+<span class="c1">//    ...]</span></code></pre>
 
 <p>Much better.</p>
 
@@ -108,77 +123,85 @@
 
 <p>We need to represent the <em>potential presence or absence</em> of a thing.</p>
 
-<pre><code><span class="nv">yep = </span><span class="nf">(thing) -&gt;</span>
-  <span class="p">{</span>
-    <span class="nv">inspect: </span><span class="nf">-&gt;</span> <span class="s">"yep(</span><span class="si">#{</span><span class="nx">inspect</span><span class="p">(</span><span class="nx">thing</span><span class="p">)</span><span class="si">}</span><span class="s">)"</span>
+<pre><code><span class="kd">var</span> <span class="nx">yep</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">thing</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="nx">inspect</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="s2">"yep("</span> <span class="o">+</span> <span class="nx">inspect</span><span class="p">(</span><span class="nx">thing</span><span class="p">)</span> <span class="o">+</span> <span class="s2">")"</span> <span class="p">}</span>
   <span class="p">}</span>
+<span class="p">};</span>
 
-<span class="nv">nope =</span>
-  <span class="p">{</span>
-    <span class="nv">inspect: </span><span class="nf">-&gt;</span> <span class="s">"nope"</span>
-  <span class="p">}</span>
+<span class="kd">var</span> <span class="nx">nope</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">inspect</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="s2">"nope"</span> <span class="p">}</span>
+<span class="p">};</span>
 
-<span class="nx">print</span> <span class="s">"Here's something:"</span><span class="p">,</span> <span class="nx">yep</span><span class="p">(</span><span class="s">"Gin"</span><span class="p">)</span>
-<span class="nx">print</span> <span class="s">"Here's nothing:"</span><span class="p">,</span> <span class="nx">nope</span></code></pre>
+<span class="nx">print</span><span class="p">(</span><span class="s2">"Here's something:"</span><span class="p">,</span> <span class="nx">yep</span><span class="p">(</span><span class="s2">"Gin"</span><span class="p">));</span>
+<span class="nx">print</span><span class="p">(</span><span class="s2">"Here's nothing:"</span><span class="p">,</span> <span class="nx">nope</span><span class="p">);</span></code></pre>
 
 <p>So, time to write a new <code>assemble</code> method, right? To check individually for the presence or absence of each of our ingredients, and only return a <code>yep()</code> if we&#8217;ve got all 3?</p>
 
-<p>Nope. <code>assemble</code> can stay as it is. We just need to implement <code>map</code> and <code>flatMap</code>.</p>
+<p>Nope. <code>assemble</code> can stay as it is. We just need to implement <code>map</code> and <code>unwrap</code>.</p>
 
-<pre><code><span class="nv">yep = </span><span class="nf">(thing) -&gt;</span>
-  <span class="p">{</span>
-    <span class="nv">inspect: </span><span class="nf">-&gt;</span> <span class="s">"yep(</span><span class="si">#{</span><span class="nx">inspect</span><span class="p">(</span><span class="nx">thing</span><span class="p">)</span><span class="si">}</span><span class="s">)"</span>
+<pre><code><span class="nx">yep</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">thing</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="nx">inspect</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="s2">"yep("</span> <span class="o">+</span> <span class="nx">inspect</span><span class="p">(</span><span class="nx">thing</span><span class="p">)</span> <span class="o">+</span> <span class="s2">")"</span> <span class="p">},</span>
 
-    <span class="nv">map: </span>    <span class="nf">(f) -&gt;</span> <span class="nx">yep</span><span class="p">(</span><span class="nx">f</span><span class="p">(</span><span class="nx">thing</span><span class="p">))</span>
-    <span class="nv">flatMap: </span><span class="nf">(f) -&gt;</span> <span class="nx">f</span><span class="p">(</span><span class="nx">thing</span><span class="p">)</span>
+    <span class="c1">// Apply f to our thing</span>
+    <span class="nx">map</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">yep</span><span class="p">(</span><span class="nx">f</span><span class="p">(</span><span class="nx">thing</span><span class="p">))</span> <span class="p">},</span>
+    
+    <span class="c1">// Turn a yep(yep(...)) into a yep(...)</span>
+    <span class="nx">unwrap</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">thing</span> <span class="p">}</span>
   <span class="p">}</span>
+<span class="p">};</span>
 
-<span class="nv">nope =</span>
-  <span class="p">{</span>
-    <span class="nv">inspect: </span><span class="nf">-&gt;</span> <span class="s">"nope"</span>
+<span class="nx">nope</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">inspect</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="s2">"nope"</span> <span class="p">},</span>
 
-    <span class="nv">map: </span>    <span class="nf">(f) -&gt;</span> <span class="nx">nope</span>
-    <span class="nv">flatMap: </span><span class="nf">(f) -&gt;</span> <span class="nx">nope</span>
-  <span class="p">}</span>
+  <span class="nx">map</span><span class="o">:</span>    <span class="kd">function</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">nope</span> <span class="p">},</span>
+  <span class="nx">unwrap</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span>  <span class="p">{</span> <span class="k">return</span> <span class="nx">nope</span> <span class="p">}</span>
+<span class="p">};</span>
 
-<span class="nx">print</span> <span class="s">"If we have no ingredients:"</span><span class="p">,</span>
-  <span class="nx">assemble</span><span class="p">(</span><span class="nx">nope</span><span class="p">,</span> <span class="nx">nope</span><span class="p">,</span> <span class="nx">nope</span><span class="p">)</span>
-  <span class="c1"># =&gt; nope</span>
+<span class="nx">print</span><span class="p">(</span><span class="s2">"If we have no ingredients:"</span><span class="p">,</span>
+  <span class="nx">assemble</span><span class="p">(</span><span class="nx">nope</span><span class="p">,</span> <span class="nx">nope</span><span class="p">,</span> <span class="nx">nope</span><span class="p">));</span>
+  <span class="c1">// =&gt; nope</span>
 
-<span class="nx">print</span> <span class="s">"If we have only gin and amaro:"</span><span class="p">,</span>
-  <span class="nx">assemble</span><span class="p">(</span><span class="nx">yep</span><span class="p">(</span><span class="s">"Gin"</span><span class="p">),</span> <span class="nx">nope</span><span class="p">,</span> <span class="nx">yep</span><span class="p">(</span><span class="s">"Amaro"</span><span class="p">))</span>
-  <span class="c1"># =&gt; nope</span>
+<span class="nx">print</span><span class="p">(</span><span class="s2">"If we have only gin and amaro:"</span><span class="p">,</span>
+  <span class="nx">assemble</span><span class="p">(</span><span class="nx">yep</span><span class="p">(</span><span class="s2">"Gin"</span><span class="p">),</span> <span class="nx">nope</span><span class="p">,</span> <span class="nx">yep</span><span class="p">(</span><span class="s2">"Amaro"</span><span class="p">)));</span>
+  <span class="c1">// =&gt; nope</span>
 
-<span class="nx">print</span> <span class="s">"If we have gin, vermouth and amaro:"</span><span class="p">,</span>
-  <span class="nx">assemble</span><span class="p">(</span><span class="nx">yep</span><span class="p">(</span><span class="s">"Gin"</span><span class="p">),</span> <span class="nx">yep</span><span class="p">(</span><span class="s">"Vermouth"</span><span class="p">),</span> <span class="nx">yep</span><span class="p">(</span><span class="s">"Amaro"</span><span class="p">))</span>
-  <span class="c1"># =&gt; yep(Negroni(Gin, Vermouth, Amaro))</span></code></pre>
+<span class="nx">print</span><span class="p">(</span><span class="s2">"If we have gin, vermouth and amaro:"</span><span class="p">,</span>
+  <span class="nx">assemble</span><span class="p">(</span><span class="nx">yep</span><span class="p">(</span><span class="s2">"Gin"</span><span class="p">),</span> <span class="nx">yep</span><span class="p">(</span><span class="s2">"Vermouth"</span><span class="p">),</span> <span class="nx">yep</span><span class="p">(</span><span class="s2">"Amaro"</span><span class="p">)));</span>
+  <span class="c1">// =&gt; yep(Negroni(Gin, Vermouth, Amaro))</span></code></pre>
 
-<p>Magic. <code>assemble</code> will accept anything that supports those two methods. All it expresses is that you need all 3 ingredients to make a Negroni&#8212;not how to get them, or how many to make. That logic lives entirely in the definitions of <code>map</code> and <code>flatMap</code>: for arrays, all possible combinations of elements are enumerated; for <code>yep</code> and <code>nope</code>, we only ever have zero or one of something, and we short-circuit as soon as the first zero (a.k.a. <code>nope</code>) is encountered.</p>
+<p>Magic. <code>assemble</code> will accept anything that supports those two methods. All it expresses is that you need all 3 ingredients to make a Negroni&#8212;not how to get them, or how many to make. That logic lives entirely in the definitions of <code>map</code> and <code>unwrap</code>: for arrays, all possible combinations of elements are enumerated; for <code>yep</code> and <code>nope</code>, we only ever have zero or one of something, and we short-circuit as soon as the first zero (a.k.a. <code>nope</code>) is encountered.</p>
 
 <p>Sadly, it turns out we don&#8217;t have any of the ingredients to hand. You can order them online, though! Indeed, you have 3 fast-delivery specialist suppliers (one per ingredient&#8212;they&#8217;re <em>highly</em> specialised) bookmarked for this very purpose. Within a few moments, each one has promised that a bottle is on its way to you, and you can thus pass on the promise of a Negroni to your patient, thirsty guest.</p>
 
-<pre><code><span class="nv">Promise = </span><span class="nx">require</span><span class="p">(</span><span class="s">"promise"</span><span class="p">)</span>
+<pre><code><span class="kd">var</span> <span class="nx">Promise</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"promise"</span><span class="p">);</span>
 
-<span class="nv">Promise.prototype.map     = </span><span class="nf">(fn) -&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span>
-<span class="nv">Promise.prototype.flatMap = </span><span class="nf">(fn) -&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span>
+<span class="nx">Promise</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">map</span>    <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">};</span>
+<span class="nx">Promise</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">unwrap</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>   <span class="p">{</span> <span class="k">return</span> <span class="k">this</span> <span class="p">};</span>
 
-<span class="nv">order = </span><span class="nf">(name) -&gt;</span>
-  <span class="k">new</span> <span class="nx">Promise</span> <span class="nf">(resolve) -&gt;</span>
-    <span class="nx">setTimeout</span><span class="p">((</span><span class="nf">-&gt;</span> <span class="nx">resolve</span><span class="p">(</span><span class="nx">name</span><span class="p">)),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nx">order</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nx">Promise</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">resolve</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span> <span class="nx">resolve</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">};</span>
 
-<span class="nv">g = </span><span class="nx">order</span><span class="p">(</span><span class="s">"Gin"</span><span class="p">)</span>      <span class="c1"># a Promise of "Gin"</span>
-<span class="nv">v = </span><span class="nx">order</span><span class="p">(</span><span class="s">"Vermouth"</span><span class="p">)</span> <span class="c1"># a Promise of "Vermouth"</span>
-<span class="nv">a = </span><span class="nx">order</span><span class="p">(</span><span class="s">"Amaro"</span><span class="p">)</span>    <span class="c1"># a Promise of "Amaro"</span>
+<span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="nx">order</span><span class="p">(</span><span class="s2">"Gin"</span><span class="p">);</span>      <span class="c1">// a Promise of "Gin"</span>
+<span class="kd">var</span> <span class="nx">v</span> <span class="o">=</span> <span class="nx">order</span><span class="p">(</span><span class="s2">"Vermouth"</span><span class="p">);</span> <span class="c1">// a Promise of "Vermouth"</span>
+<span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">order</span><span class="p">(</span><span class="s2">"Amaro"</span><span class="p">);</span>    <span class="c1">// a Promise of "Amaro"</span>
 
-<span class="nv">promisedNegroni = </span><span class="nx">assemble</span><span class="p">(</span><span class="nx">g</span><span class="p">,</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">a</span><span class="p">)</span> <span class="c1"># a Promise of a Negroni</span>
+<span class="kd">var</span> <span class="nx">promisedNegroni</span> <span class="o">=</span> <span class="nx">assemble</span><span class="p">(</span><span class="nx">g</span><span class="p">,</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">a</span><span class="p">)</span> <span class="c1">// a Promise of a Negroni</span>
 
-<span class="nx">print</span> <span class="s">"Your Negroni is on its way. Any second now..."</span>
+<span class="nx">print</span><span class="p">(</span><span class="s2">"Your Negroni is on its way. Any second now..."</span><span class="p">);</span>
 
-<span class="nx">promisedNegroni</span><span class="p">.</span><span class="nx">then</span> <span class="nf">(negroni) -&gt;</span>
-  <span class="nx">print</span> <span class="s">"Ah! It's here:"</span><span class="p">,</span> <span class="nx">negroni</span>
-  <span class="c1"># =&gt; Negroni(Gin, Vermouth, Amaro)</span></code></pre>
+<span class="nx">promisedNegroni</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">negroni</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">print</span><span class="p">(</span><span class="s2">"Ah! It's here:"</span><span class="p">,</span> <span class="nx">negroni</span><span class="p">);</span>
+  <span class="c1">// =&gt; Negroni(Gin, Vermouth, Amaro)</span>
+<span class="p">});</span></code></pre>
 
-<p>Once again, we didn&#8217;t have to change <code>assemble</code>&#8212;just implement <code>map</code> and <code>flatMap</code>.</p>
+<p>Once again, we didn&#8217;t have to change <code>assemble</code>&#8212;just implement <code>map</code> and <code>unwrap</code>.</p>
+
+<p>I think it&#8217;s kind of fucking incredible that we can write code like <code>assemble</code>, which doesn&#8217;t care how its pieces work&#8212;just that they fit together right&#8212;and plug any kind of delivery mechanism we want into it: arrays-of-things, maybe-things-maybe-nots, promises-of-things. This is a huge step up from just writing HTML templates that don&#8217;t care what database table your objects came from. This is writing operations and not caring how they&#8217;re put together. If you think this is cool too, we&#8217;re probably going to get along.</p>
 <hr><p>I&#8217;m not the first one to point out that <a href="http://blog.jcoglan.com/2011/03/11/promises-are-the-monad-of-asynchronous-programming/">promises are the monad of asynchronous programming</a>, but the topic has become pertinent, because <a href="https://github.com/promises-aplus">the Promises/A+ spec</a> is still in formation. If programmers can rely on a monadic interface for promises, this opens up the possibility of writing code which will work with <em>any</em> monad, not just promises&#8212;as I&#8217;ve tried to demonstrate with <code>assemble</code> above.</p>
 
 <p>The spec as it stands is not enough: for one thing, a monad must provide a means of wrapping a plain value, e.g. <code>Array.of("Gin")</code> or <code>Promise.of("Gin")</code>. (I avoided implementing such a method in the examples above for simplicity&#8217;s sake, and used <code>map</code> instead.)</p>

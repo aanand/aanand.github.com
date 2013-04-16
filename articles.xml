@@ -17,68 +17,83 @@
     <link rel="alternate" href="http://aanandprasad.com/articles/negronis/"/>
     <content type="html">&lt;p&gt;I was out last Friday at a bar where they had a &amp;#8220;Negroni Tic-Tac-Toe&amp;#8221; offer&amp;#8212;you could custom-build your drink from a selection of 3 gins, 3 vermouths and 3 amari, and if you got &amp;#8220;3 in a row&amp;#8221; you&amp;#8217;d get &amp;#163;5 off your bill. It&amp;#8217;s a laughably stingy deal, but it got me thinking. About functional programming, I mean.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;class Negroni
-  constructor: (@gin, @vermouth, @amaro) -&amp;gt;
-    # Build over ice, stir well
+&lt;pre&gt;&lt;code&gt;function Negroni(gin, vermouth, amaro) {
+  this.gin      = gin;
+  this.vermouth = vermouth;
+  this.amaro    = amaro;
 
-  inspect: -&amp;gt; "Negroni(#{@gin}, #{@vermouth}, #{@amaro})"&lt;/code&gt;&lt;/pre&gt;
+  // Build over ice, stir well
+}
+
+Negroni.prototype.inspect = function() {
+  return "Negroni("+this.gin+", "+this.vermouth+", "+this.amaro+")";
+}&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;The Negroni is often described as a &amp;#8220;manly&amp;#8221; drink, but fuck your gender-essentialism&amp;#8212;let&amp;#8217;s just call it &lt;em&gt;badass&lt;/em&gt;. Everything I ever needed to know about it, by the way, I learned from &lt;a href="http://manhattansproject.com/on-the-negroni/"&gt;Felix&lt;/a&gt;. I personally find Punt e Mes a shade too bitter when combined with Campari, but that&amp;#8217;s just me.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;# some shorthands for the Node console
-print = (args...) -&amp;gt; console.log(args...)
-inspect = (thing) -&amp;gt; if thing.inspect then thing.inspect() else thing.toString()
+&lt;pre&gt;&lt;code&gt;// some shorthands for the Node console
+function print() { console.log.apply(console, arguments); }
+function inspect(thing) { return thing.inspect ? thing.inspect() : thing.toString(); }
 
-print "Here's how I make it at home:",
-  new Negroni("Botanist", "Martini Rosso", "Campari")
-  # =&amp;gt; Negroni(Botanist, Martini Rosso, Campari)&lt;/code&gt;&lt;/pre&gt;
+print("Here's how I make it at home:",
+  new Negroni("Botanist", "Martini Rosso", "Campari"));
+  // =&amp;gt; Negroni(Botanist, Martini Rosso, Campari)&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Point is, there are 3&amp;#215;3&amp;#215;3&amp;#160;=&amp;#160;27 possible combinations at that bar, a delicious Rubik&amp;#8217;s Cube of liver damage. How would you enumerate them all?&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;assemble = (g, v, a) -&amp;gt;
-  g.map (gin) -&amp;gt;
-    v.map (vermouth) -&amp;gt;
-      a.map (amaro) -&amp;gt;
-        new Negroni(gin, vermouth, amaro)
+&lt;pre&gt;&lt;code&gt;var assemble = function(g, v, a) {
+  return g.map(function(gin) {
+    return v.map(function(vermouth) {
+      return a.map(function(amaro) {
+        return new Negroni(gin, vermouth, amaro);
+      });
+    });
+  });
+};
 
-allGins      = ["Botanist", "Bombay Sapphire", "Blackwoods 60%"]
-allVermouths = ["Martini Rosso", "Cocchi", "Punt e Mes"]
-allAmari     = ["Campari", "Aperol", "Cynar"]
+var allGins      = ["Botanist", "Bombay Sapphire", "Blackwoods 60%"];
+var allVermouths = ["Martini Rosso", "Cocchi", "Punt e Mes"];
+var allAmari     = ["Campari", "Aperol", "Cynar"];
 
-print assemble(allGins, allVermouths, allAmari)
+print(assemble(allGins, allVermouths, allAmari));
 
-# =&amp;gt; [ [ [ Negroni(Botanist, Martini Rosso, Campari),
-#          Negroni(Botanist, Martini Rosso, Aperol),
-#          Negroni(Botanist, Martini Rosso, Cynar) ],
-#        [ Negroni(Botanist, Cocchi, Campari),
-#          Negroni(Botanist, Cocchi, Aperol),
-#          Negroni(Botanist, Cocchi, Cynar) ],
-#      ...]
-#    ...]&lt;/code&gt;&lt;/pre&gt;
+// =&amp;gt; [ [ [ Negroni(Botanist, Martini Rosso, Campari),
+//          Negroni(Botanist, Martini Rosso, Aperol),
+//          Negroni(Botanist, Martini Rosso, Cynar) ],
+//        [ Negroni(Botanist, Cocchi, Campari),
+//          Negroni(Botanist, Cocchi, Aperol),
+//          Negroni(Botanist, Cocchi, Cynar) ],
+//      ...]
+//    ...]&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Hmmm. It&amp;#8217;s a start, but that&amp;#8217;s altogether too much nesting. We&amp;#8217;ll never get anything done if we&amp;#8217;re spending all our time unboxing drinks.&lt;/p&gt;
+&lt;p&gt;Hmmm. It&amp;#8217;s a start, but that&amp;#8217;s altogether too much nesting. We&amp;#8217;ll never get anything done if we&amp;#8217;re spending all our time unwrapping.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;Array.prototype.flatMap = (fn) -&amp;gt;
-  this.map(fn).reduce(((a, b) -&amp;gt; a.concat(b)), [])
+&lt;pre&gt;&lt;code&gt;Array.prototype.unwrap = function() {
+  return this.reduce(function(a, b) { return a.concat(b) }, []);
+}
 
-assemble = (g, v, a) -&amp;gt;
-  g.flatMap (gin) -&amp;gt;
-    v.flatMap (vermouth) -&amp;gt;
-      a.map (amaro) -&amp;gt;
-        new Negroni(gin, vermouth, amaro)&lt;/code&gt;&lt;/pre&gt;
+assemble = function(g, v, a) {
+  return g.map(function(gin) {
+    return v.map(function(vermouth) {
+      return a.map(function(amaro) {
+        return new Negroni(gin, vermouth, amaro);
+      });
+    }).unwrap();
+  }).unwrap();
+};&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;The outer two &lt;code&gt;map&lt;/code&gt;s are replaced with &lt;code&gt;flatMap&lt;/code&gt;, which maps and then flattens the resulting array.&lt;/p&gt;
+&lt;p&gt;The outer two &lt;code&gt;map&lt;/code&gt;s are followed by an &lt;code&gt;unwrap&lt;/code&gt;, which turns an array-of-arrays into a single array. (The innermost &lt;code&gt;map&lt;/code&gt; gives us an array of Negronis, which is what we want, so unwrapping is uncalled for&amp;#8212;and would fail).&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;print assemble(allGins, allVermouths, allAmari)
+&lt;pre&gt;&lt;code&gt;print(assemble(allGins, allVermouths, allAmari));
 
-# =&amp;gt; [ Negroni(Botanist, Martini Rosso, Campari),
-#      Negroni(Botanist, Martini Rosso, Aperol),
-#      Negroni(Botanist, Martini Rosso, Cynar),
-#      Negroni(Botanist, Cocchi, Campari),
-#      Negroni(Botanist, Cocchi, Aperol),
-#      Negroni(Botanist, Cocchi, Cynar),
-#      Negroni(Botanist, Punt e Mes, Campari),
-#    ...]&lt;/code&gt;&lt;/pre&gt;
+// =&amp;gt; [ Negroni(Botanist, Martini Rosso, Campari),
+//      Negroni(Botanist, Martini Rosso, Aperol),
+//      Negroni(Botanist, Martini Rosso, Cynar),
+//      Negroni(Botanist, Cocchi, Campari),
+//      Negroni(Botanist, Cocchi, Aperol),
+//      Negroni(Botanist, Cocchi, Cynar),
+//      Negroni(Botanist, Punt e Mes, Campari),
+//    ...]&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Much better.&lt;/p&gt;
 
@@ -86,77 +101,85 @@ assemble = (g, v, a) -&amp;gt;
 
 &lt;p&gt;We need to represent the &lt;em&gt;potential presence or absence&lt;/em&gt; of a thing.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;yep = (thing) -&amp;gt;
-  {
-    inspect: -&amp;gt; "yep(#{inspect(thing)})"
+&lt;pre&gt;&lt;code&gt;var yep = function(thing) {
+  return {
+    inspect: function() { return "yep(" + inspect(thing) + ")" }
   }
+};
 
-nope =
-  {
-    inspect: -&amp;gt; "nope"
-  }
+var nope = {
+  inspect: function() { return "nope" }
+};
 
-print "Here's something:", yep("Gin")
-print "Here's nothing:", nope&lt;/code&gt;&lt;/pre&gt;
+print("Here's something:", yep("Gin"));
+print("Here's nothing:", nope);&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;So, time to write a new &lt;code&gt;assemble&lt;/code&gt; method, right? To check individually for the presence or absence of each of our ingredients, and only return a &lt;code&gt;yep()&lt;/code&gt; if we&amp;#8217;ve got all 3?&lt;/p&gt;
 
-&lt;p&gt;Nope. &lt;code&gt;assemble&lt;/code&gt; can stay as it is. We just need to implement &lt;code&gt;map&lt;/code&gt; and &lt;code&gt;flatMap&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Nope. &lt;code&gt;assemble&lt;/code&gt; can stay as it is. We just need to implement &lt;code&gt;map&lt;/code&gt; and &lt;code&gt;unwrap&lt;/code&gt;.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;yep = (thing) -&amp;gt;
-  {
-    inspect: -&amp;gt; "yep(#{inspect(thing)})"
+&lt;pre&gt;&lt;code&gt;yep = function(thing) {
+  return {
+    inspect: function() { return "yep(" + inspect(thing) + ")" },
 
-    map:     (f) -&amp;gt; yep(f(thing))
-    flatMap: (f) -&amp;gt; f(thing)
+    // Apply f to our thing
+    map: function(f) { return yep(f(thing)) },
+    
+    // Turn a yep(yep(...)) into a yep(...)
+    unwrap: function() { return thing }
   }
+};
 
-nope =
-  {
-    inspect: -&amp;gt; "nope"
+nope = {
+  inspect: function() { return "nope" },
 
-    map:     (f) -&amp;gt; nope
-    flatMap: (f) -&amp;gt; nope
-  }
+  map:    function(f) { return nope },
+  unwrap: function()  { return nope }
+};
 
-print "If we have no ingredients:",
-  assemble(nope, nope, nope)
-  # =&amp;gt; nope
+print("If we have no ingredients:",
+  assemble(nope, nope, nope));
+  // =&amp;gt; nope
 
-print "If we have only gin and amaro:",
-  assemble(yep("Gin"), nope, yep("Amaro"))
-  # =&amp;gt; nope
+print("If we have only gin and amaro:",
+  assemble(yep("Gin"), nope, yep("Amaro")));
+  // =&amp;gt; nope
 
-print "If we have gin, vermouth and amaro:",
-  assemble(yep("Gin"), yep("Vermouth"), yep("Amaro"))
-  # =&amp;gt; yep(Negroni(Gin, Vermouth, Amaro))&lt;/code&gt;&lt;/pre&gt;
+print("If we have gin, vermouth and amaro:",
+  assemble(yep("Gin"), yep("Vermouth"), yep("Amaro")));
+  // =&amp;gt; yep(Negroni(Gin, Vermouth, Amaro))&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Magic. &lt;code&gt;assemble&lt;/code&gt; will accept anything that supports those two methods. All it expresses is that you need all 3 ingredients to make a Negroni&amp;#8212;not how to get them, or how many to make. That logic lives entirely in the definitions of &lt;code&gt;map&lt;/code&gt; and &lt;code&gt;flatMap&lt;/code&gt;: for arrays, all possible combinations of elements are enumerated; for &lt;code&gt;yep&lt;/code&gt; and &lt;code&gt;nope&lt;/code&gt;, we only ever have zero or one of something, and we short-circuit as soon as the first zero (a.k.a. &lt;code&gt;nope&lt;/code&gt;) is encountered.&lt;/p&gt;
+&lt;p&gt;Magic. &lt;code&gt;assemble&lt;/code&gt; will accept anything that supports those two methods. All it expresses is that you need all 3 ingredients to make a Negroni&amp;#8212;not how to get them, or how many to make. That logic lives entirely in the definitions of &lt;code&gt;map&lt;/code&gt; and &lt;code&gt;unwrap&lt;/code&gt;: for arrays, all possible combinations of elements are enumerated; for &lt;code&gt;yep&lt;/code&gt; and &lt;code&gt;nope&lt;/code&gt;, we only ever have zero or one of something, and we short-circuit as soon as the first zero (a.k.a. &lt;code&gt;nope&lt;/code&gt;) is encountered.&lt;/p&gt;
 
 &lt;p&gt;Sadly, it turns out we don&amp;#8217;t have any of the ingredients to hand. You can order them online, though! Indeed, you have 3 fast-delivery specialist suppliers (one per ingredient&amp;#8212;they&amp;#8217;re &lt;em&gt;highly&lt;/em&gt; specialised) bookmarked for this very purpose. Within a few moments, each one has promised that a bottle is on its way to you, and you can thus pass on the promise of a Negroni to your patient, thirsty guest.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;Promise = require("promise")
+&lt;pre&gt;&lt;code&gt;var Promise = require("promise");
 
-Promise.prototype.map     = (fn) -&amp;gt; this.then(fn)
-Promise.prototype.flatMap = (fn) -&amp;gt; this.then(fn)
+Promise.prototype.map    = function(fn) { return this.then(fn) };
+Promise.prototype.unwrap = function()   { return this };
 
-order = (name) -&amp;gt;
-  new Promise (resolve) -&amp;gt;
-    setTimeout((-&amp;gt; resolve(name)), 1000)
+var order = function(name) {
+  return new Promise(function(resolve) {
+    setTimeout(function(){ resolve(name) }, 1000);
+  });
+};
 
-g = order("Gin")      # a Promise of "Gin"
-v = order("Vermouth") # a Promise of "Vermouth"
-a = order("Amaro")    # a Promise of "Amaro"
+var g = order("Gin");      // a Promise of "Gin"
+var v = order("Vermouth"); // a Promise of "Vermouth"
+var a = order("Amaro");    // a Promise of "Amaro"
 
-promisedNegroni = assemble(g, v, a) # a Promise of a Negroni
+var promisedNegroni = assemble(g, v, a) // a Promise of a Negroni
 
-print "Your Negroni is on its way. Any second now..."
+print("Your Negroni is on its way. Any second now...");
 
-promisedNegroni.then (negroni) -&amp;gt;
-  print "Ah! It's here:", negroni
-  # =&amp;gt; Negroni(Gin, Vermouth, Amaro)&lt;/code&gt;&lt;/pre&gt;
+promisedNegroni.then(function(negroni) {
+  print("Ah! It's here:", negroni);
+  // =&amp;gt; Negroni(Gin, Vermouth, Amaro)
+});&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Once again, we didn&amp;#8217;t have to change &lt;code&gt;assemble&lt;/code&gt;&amp;#8212;just implement &lt;code&gt;map&lt;/code&gt; and &lt;code&gt;flatMap&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Once again, we didn&amp;#8217;t have to change &lt;code&gt;assemble&lt;/code&gt;&amp;#8212;just implement &lt;code&gt;map&lt;/code&gt; and &lt;code&gt;unwrap&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;I think it&amp;#8217;s kind of fucking incredible that we can write code like &lt;code&gt;assemble&lt;/code&gt;, which doesn&amp;#8217;t care how its pieces work&amp;#8212;just that they fit together right&amp;#8212;and plug any kind of delivery mechanism we want into it: arrays-of-things, maybe-things-maybe-nots, promises-of-things. This is a huge step up from just writing HTML templates that don&amp;#8217;t care what database table your objects came from. This is writing operations and not caring how they&amp;#8217;re put together. If you think this is cool too, we&amp;#8217;re probably going to get along.&lt;/p&gt;
 &lt;hr&gt;&lt;p&gt;I&amp;#8217;m not the first one to point out that &lt;a href="http://blog.jcoglan.com/2011/03/11/promises-are-the-monad-of-asynchronous-programming/"&gt;promises are the monad of asynchronous programming&lt;/a&gt;, but the topic has become pertinent, because &lt;a href="https://github.com/promises-aplus"&gt;the Promises/A+ spec&lt;/a&gt; is still in formation. If programmers can rely on a monadic interface for promises, this opens up the possibility of writing code which will work with &lt;em&gt;any&lt;/em&gt; monad, not just promises&amp;#8212;as I&amp;#8217;ve tried to demonstrate with &lt;code&gt;assemble&lt;/code&gt; above.&lt;/p&gt;
 
 &lt;p&gt;The spec as it stands is not enough: for one thing, a monad must provide a means of wrapping a plain value, e.g. &lt;code&gt;Array.of("Gin")&lt;/code&gt; or &lt;code&gt;Promise.of("Gin")&lt;/code&gt;. (I avoided implementing such a method in the examples above for simplicity&amp;#8217;s sake, and used &lt;code&gt;map&lt;/code&gt; instead.)&lt;/p&gt;
