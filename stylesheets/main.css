@@ -601,7 +601,7 @@ a:hover {
 
 pre, code, tt {
   font-family: "Ubuntu Mono", monospace;
-  font-size: 1em;
+  font-size: 0.9em;
   overflow: auto;
 }
 
