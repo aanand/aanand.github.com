@@ -173,15 +173,15 @@ I think it's kind of incredible that we can write code like `assemble`, which do
 
 ---
 
-I'm not the first one to point out that [promises are the monad of asynchronous programming](http://blog.jcoglan.com/2011/03/11/promises-are-the-monad-of-asynchronous-programming/), but the topic has become pertinent, because [the Promises/A+ spec](https://github.com/promises-aplus) is still in formation. If programmers can rely on a monadic interface for promises, this opens up the possibility of writing code which will work with _any_ monad, not just promises---as I've tried to demonstrate with `assemble` above.
+I'm not the first to point out that [promises are the monad of asynchronous programming](http://blog.jcoglan.com/2011/03/11/promises-are-the-monad-of-asynchronous-programming/), but the topic has become pertinent, because [the Promises/A+ spec](https://github.com/promises-aplus) is still in formation. If programmers can rely on a monadic interface for promises, this opens up the possibility of writing code which will work with _any_ monad, not just promises---as I've tried to demonstrate with `assemble` above.
 
-The spec as it stands is not enough: for one thing, a monad must provide a means of wrapping a plain value, e.g. `Array.of("Gin")` or `Promise.of("Gin")`. (I avoided implementing such a method in the examples above for simplicity's sake, and used `map` instead.)
+There are two equivalent ways to define a monad. You can define `map` and `unwrap`, as I have, or you can define `chain` (which is equivalent to `map` followed by `unwrap`), and `of` (which takes a plain value and wraps it---so `Array.of(1)` would return `[1]`).
 
-A thornier issue is that a promise's `then` method, as specified, treats the return value of the passed-in function differently depending on whether it's a promise---essentially, it must try to intelligently determine whether to be `map` or `flatMap`---which is why the two methods we implemented on `Promise.prototype` are identical.
+The problem is that a promise's `then` method, as specified, treats the return value of the passed-in function differently depending on whether it's a promise---essentially, it tries to intelligently determine whether to be `map` or `chain`. This means that the result of calling `then` is always a flattened promise, which is why the `Promise.prototype.unwrap` defined above just returns `this`. It's impossible to call `then` and get back a promise of a promise.
 
-Besides the inherent unreliability of trying to determine an object's type in a dynamically-typed language, such overloading is likely to lead to difficult-to-predict bugs and difficult-to-reason-about code when promises are _treated_ like well-behaved monads, but _aren't_. We got away with it this time, but I wouldn't feel confident writing more complex code, knowing that "smart" logic was there.
+Besides the inherent unreliability of trying to determine whether or not something is a promise, such overloading is likely to lead to difficult-to-predict bugs and difficult-to-reason-about code when promises are _treated_ like well-behaved monads, but _aren't_. We got away with it this time, but I wouldn't feel confident writing more complex code, knowing that "smart" logic was there.
 
-There [has](http://brianmckenna.org/blog/category_theory_promisesaplus) [been](https://github.com/promises-aplus/resolvers-spec/issues/24) [some](https://github.com/promises-aplus/promises-spec/issues/94) [discussion](https://github.com/promises-aplus/promises-spec/issues/97) on this topic in the last few days. Sadly, the authors have so far been difficult to convince. This is understandable---the theory is difficult to explain, and examples of the potential problems non-obvious (I am personally unable to produce a simple example).
+There [has](http://brianmckenna.org/blog/category_theory_promisesaplus) [been](https://github.com/promises-aplus/resolvers-spec/issues/24) [some](https://github.com/promises-aplus/promises-spec/issues/94) [discussion](https://github.com/promises-aplus/promises-spec/issues/97) on this topic in the last few days. Sadly, the authors have so far been difficult to convince. This is understandable---the theory is difficult to explain, examples of the potential problems are non-obvious, and it's easy to get led astray by the question of why you would ever _want_ to have a promise of a promise.
 
 A more directly appealing argument was made by [Reg](https://github.com/promises-aplus/promises-spec/issues/94#issuecomment-16294840):
 
@@ -197,7 +197,7 @@ A more directly appealing argument was made by [Reg](https://github.com/promises
 
 This speaks to me. The power of first-class functions had already been amply demonstrated when LiveScript was designed---just not in the mainstream. Similarly, the power of the monad abstraction has been amply demonstrated in functional languages, but not yet in the mainstream.
 
-It may be too late for `then`---too much code already relies on its current behaviour, and besides, it's useful. A [concurrent spec for monads](https://github.com/pufuwozu/fantasy-land) (they call it `chain`, not `flatMap`) has been started, and we could just hope that most promise implementors choose to support that too... but I strongly suspect the majority won't bother, even though it'd be trivial.
+It may be too late for `then`---too much code already relies on its current behaviour, and besides, it's useful. A [concurrent spec for monads](https://github.com/pufuwozu/fantasy-land), specifying `chain` and `of`, has been started, and we could just hope that most promise implementors choose to support that too... but I strongly suspect the majority won't bother, even though it'd be trivial.
 
-To have the `chain` and `of` methods required in Promises/A+ would be a _much_ bigger win.
+To have `chain` and `of` specified and required in Promises/A+ would be a _much_ bigger win.
 
