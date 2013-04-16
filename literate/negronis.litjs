@@ -150,11 +150,15 @@ Sadly, it turns out we don't have any of the ingredients to hand. You can order 
       });
     };
 
-    var g = order("Gin");      // a Promise of "Gin"
-    var v = order("Vermouth"); // a Promise of "Vermouth"
-    var a = order("Amaro");    // a Promise of "Amaro"
+    var promisedGin      = order("Gin");
+    var promisedVermouth = order("Vermouth");
+    var promisedAmaro    = order("Amaro");
 
-    var promisedNegroni = assemble(g, v, a) // a Promise of a Negroni
+    var promisedNegroni = assemble(
+      promisedGin,
+      promisedVermouth,
+      promisedAmaro
+    );
 
     print("Your Negroni is on its way. Any second now...");
 

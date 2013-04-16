@@ -189,11 +189,15 @@
   <span class="p">});</span>
 <span class="p">};</span>
 
-<span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="nx">order</span><span class="p">(</span><span class="s2">"Gin"</span><span class="p">);</span>      <span class="c1">// a Promise of "Gin"</span>
-<span class="kd">var</span> <span class="nx">v</span> <span class="o">=</span> <span class="nx">order</span><span class="p">(</span><span class="s2">"Vermouth"</span><span class="p">);</span> <span class="c1">// a Promise of "Vermouth"</span>
-<span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">order</span><span class="p">(</span><span class="s2">"Amaro"</span><span class="p">);</span>    <span class="c1">// a Promise of "Amaro"</span>
+<span class="kd">var</span> <span class="nx">promisedGin</span>      <span class="o">=</span> <span class="nx">order</span><span class="p">(</span><span class="s2">"Gin"</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">promisedVermouth</span> <span class="o">=</span> <span class="nx">order</span><span class="p">(</span><span class="s2">"Vermouth"</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">promisedAmaro</span>    <span class="o">=</span> <span class="nx">order</span><span class="p">(</span><span class="s2">"Amaro"</span><span class="p">);</span>
 
-<span class="kd">var</span> <span class="nx">promisedNegroni</span> <span class="o">=</span> <span class="nx">assemble</span><span class="p">(</span><span class="nx">g</span><span class="p">,</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">a</span><span class="p">)</span> <span class="c1">// a Promise of a Negroni</span>
+<span class="kd">var</span> <span class="nx">promisedNegroni</span> <span class="o">=</span> <span class="nx">assemble</span><span class="p">(</span>
+  <span class="nx">promisedGin</span><span class="p">,</span>
+  <span class="nx">promisedVermouth</span><span class="p">,</span>
+  <span class="nx">promisedAmaro</span>
+<span class="p">);</span>
 
 <span class="nx">print</span><span class="p">(</span><span class="s2">"Your Negroni is on its way. Any second now..."</span><span class="p">);</span>
 
