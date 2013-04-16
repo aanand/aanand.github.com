@@ -169,7 +169,9 @@ Sadly, it turns out we don't have any of the ingredients to hand. You can order 
 
 Once again, we didn't have to change `assemble`---just implement `map` and `unwrap`.
 
-I think it's kind of incredible that we can write code like `assemble`, which doesn't care how its pieces work---just that they fit together right---and plug any kind of delivery mechanism we want into it: arrays-of-things, maybe-things-maybe-nots, promises-of-things. This is a huge step up from just writing HTML templates that don't care what database table your objects came from. This is writing operations and not caring how they're sequenced or executed. If you think that's cool too, we're probably going to get along.
+I think it's kind of incredible that we can write code like `assemble`, which doesn't care how its pieces work---just that they fit together right---and plug any kind of delivery mechanism we want into it: arrays-of-things, maybe-things-maybe-nots, promises-of-things. This is a huge step up from just writing views and not caring where the models came from. This is writing operations and not caring how they're sequenced or executed.
+
+If you think that's cool too, we're probably going to get along.
 
 ---
 
