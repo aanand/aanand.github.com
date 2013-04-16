@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>The Abstracted Negroni - Aanand Prasad</title>
-    <meta content="I was out last Friday at a bar where they had a “Negroni Tic-Tac-Toe” offer—you could custom-build your drink from a selection of 3 gins, 3 vermouths and 3 amari, and if you got “3 in a row” you’d get £5 off your bill. It’s a laughably stingy deal, but it got me thinking. About functional programming, I mean." name="description" />
+    <meta content="I was out last Friday at a bar where they had a “Negroni Tic-Tac-Toe” offer—you could custom-build your drink from a selection of 3 gins, 3 vermouths and 3 amari, and if you got “3 in a row” you’d get £5 off your bill. It’s a laughably stingy deal, but it got me thinking. About programming, I mean." name="description" />
     <meta content="Aanand Prasad" name="author" />
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -37,7 +37,13 @@
       </li>
     </ul>
   </header><article class="article">
-    <h2 class="title">The Abstracted Negroni</h2><p>I was out last Friday at a bar where they had a &#8220;Negroni Tic-Tac-Toe&#8221; offer&#8212;you could custom-build your drink from a selection of 3 gins, 3 vermouths and 3 amari, and if you got &#8220;3 in a row&#8221; you&#8217;d get &#163;5 off your bill. It&#8217;s a laughably stingy deal, but it got me thinking. About functional programming, I mean.</p>
+    <h2 class="title">The Abstracted Negroni</h2>
+      <p class='literate-intro'>
+        This post is written in literate javascript.
+        You can <a href='http://aanandprasad.com/literate/negronis.litjs'>download it here</a> and run it at the command line thus:
+        <code>cat negronis.litjs | egrep '^ {4}' | node</code>
+      </p>
+    <p>I was out last Friday at a bar where they had a &#8220;Negroni Tic-Tac-Toe&#8221; offer&#8212;you could custom-build your drink from a selection of 3 gins, 3 vermouths and 3 amari, and if you got &#8220;3 in a row&#8221; you&#8217;d get &#163;5 off your bill. It&#8217;s a laughably stingy deal, but it got me thinking. About programming, I mean.</p>
 
 <pre><code><span class="kd">function</span> <span class="nx">Negroni</span><span class="p">(</span><span class="nx">gin</span><span class="p">,</span> <span class="nx">vermouth</span><span class="p">,</span> <span class="nx">amaro</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">this</span><span class="p">.</span><span class="nx">gin</span>      <span class="o">=</span> <span class="nx">gin</span><span class="p">;</span>
@@ -49,14 +55,18 @@
 
 <span class="nx">Negroni</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">inspect</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
   <span class="k">return</span> <span class="s2">"Negroni("</span><span class="o">+</span><span class="k">this</span><span class="p">.</span><span class="nx">gin</span><span class="o">+</span><span class="s2">", "</span><span class="o">+</span><span class="k">this</span><span class="p">.</span><span class="nx">vermouth</span><span class="o">+</span><span class="s2">", "</span><span class="o">+</span><span class="k">this</span><span class="p">.</span><span class="nx">amaro</span><span class="o">+</span><span class="s2">")"</span><span class="p">;</span>
-<span class="p">}</span></code></pre>
+<span class="p">}</span>
 
-<p>The Negroni is often described as a &#8220;manly&#8221; drink, but fuck your gender-essentialism&#8212;let&#8217;s just call it <em>badass</em>. Everything I ever needed to know about it, by the way, I learned from <a href="http://manhattansproject.com/on-the-negroni/">Felix</a>. I personally find Punt e Mes a shade too bitter when combined with Campari, but that&#8217;s just me.</p>
-
-<pre><code><span class="c1">// just a shorthand</span>
+<span class="c1">// Couple of shorthands we'll be using later</span>
 <span class="kd">function</span> <span class="nx">print</span><span class="p">()</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">console</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span> <span class="p">}</span>
 
-<span class="nx">print</span><span class="p">(</span><span class="s2">"Here's how I make it at home:"</span><span class="p">,</span>
+<span class="kd">function</span> <span class="nx">inspect</span><span class="p">(</span><span class="nx">thing</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">thing</span><span class="p">.</span><span class="nx">inspect</span> <span class="o">?</span> <span class="nx">thing</span><span class="p">.</span><span class="nx">inspect</span><span class="p">()</span> <span class="o">:</span> <span class="nx">thing</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
+<span class="p">}</span></code></pre>
+
+<p>The Negroni is often described as a &#8220;manly&#8221; drink, but fuck your gender-essentialism&#8212;let&#8217;s just call it <em>badass</em>. Everything I ever needed to know about it, incidentally, I learned from <a href="http://manhattansproject.com/on-the-negroni/">Felix</a>. I personally find Punt e Mes a shade too bitter when combined with Campari, but that&#8217;s just me.</p>
+
+<pre><code><span class="nx">print</span><span class="p">(</span><span class="s2">"Here's how I make it at home:"</span><span class="p">,</span>
   <span class="k">new</span> <span class="nx">Negroni</span><span class="p">(</span><span class="s2">"Botanist"</span><span class="p">,</span> <span class="s2">"Martini Rosso"</span><span class="p">,</span> <span class="s2">"Campari"</span><span class="p">));</span>
   <span class="c1">// =&gt; Negroni(Botanist, Martini Rosso, Campari)</span></code></pre>
 
@@ -122,11 +132,7 @@
 
 <p>We need to represent the <em>potential presence or absence</em> of a thing.</p>
 
-<pre><code><span class="kd">function</span> <span class="nx">inspect</span><span class="p">(</span><span class="nx">thing</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="nx">thing</span><span class="p">.</span><span class="nx">inspect</span> <span class="o">?</span> <span class="nx">thing</span><span class="p">.</span><span class="nx">inspect</span><span class="p">()</span> <span class="o">:</span> <span class="nx">thing</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
-<span class="p">}</span>
-
-<span class="kd">var</span> <span class="nx">yep</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">thing</span><span class="p">)</span> <span class="p">{</span>
+<pre><code><span class="kd">var</span> <span class="nx">yep</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">thing</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">return</span> <span class="p">{</span>
     <span class="nx">inspect</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="s2">"yep("</span> <span class="o">+</span> <span class="nx">inspect</span><span class="p">(</span><span class="nx">thing</span><span class="p">)</span> <span class="o">+</span> <span class="s2">")"</span> <span class="p">}</span>
   <span class="p">}</span>
@@ -215,7 +221,7 @@
 
 <p>There are two equivalent ways to define a monad. You can define <code>map</code> and <code>unwrap</code>, as I have, or you can define <code>chain</code> (which is equivalent to <code>map</code> followed by <code>unwrap</code>), and <code>of</code> (which takes a plain value and wraps it&#8212;so <code>Array.of(1)</code> would return <code>[1]</code>).</p>
 
-<p>The problem is that a promise&#8217;s <code>then</code> method, as specified, treats the return value of the passed-in function differently depending on whether it&#8217;s a promise&#8212;essentially, it tries to intelligently determine whether to be <code>map</code> or <code>chain</code>. This means that the result of calling <code>then</code> is always a flattened promise, which is why the <code>Promise.prototype.unwrap</code> defined above just returns <code>this</code>. It&#8217;s impossible to call <code>then</code> and get back a promise of a promise.</p>
+<p>The problem is that a promise&#8217;s <code>then</code> method, as specified by Promises/A+, treats the return value of the passed-in function differently depending on whether it&#8217;s a promise&#8212;essentially, it tries to intelligently determine whether to be <code>map</code> or <code>chain</code>. This means that the result of calling <code>then</code> is always a flattened promise, which is why the <code>Promise.prototype.unwrap</code> defined above just returns <code>this</code>. It&#8217;s impossible to call <code>then</code> and get back a promise of a promise.</p>
 
 <p>Besides the inherent unreliability of trying to determine whether or not something is a promise, such overloading is likely to lead to difficult-to-predict bugs and difficult-to-reason-about code when promises are <em>treated</em> like well-behaved monads, but <em>aren&#8217;t</em>. We got away with it this time, but I wouldn&#8217;t feel confident writing more complex code, knowing that &#8220;smart&#8221; logic was there.</p>
 
@@ -249,7 +255,7 @@
 
 <p>To have <code>chain</code> and <code>of</code> specified and required in Promises/A+ would be a <em>much</em> bigger win.</p><hr />
     <div class="metadata">
-      <div class="created"><time datetime='2013-04-15'>15 April 2013</time></div>
+      <div class="created"><time datetime='2013-04-16'>16 April 2013</time></div>
       <a class="permalink" href="&#47;articles&#47;negronis&#47;">Permalink</a>
     </div>
   </article>

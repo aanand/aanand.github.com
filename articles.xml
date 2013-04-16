@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <id>http://aanandprasad.com/</id>
   <title>Aanand Prasad</title>
-  <updated>2013-04-15T14:45:00Z</updated>
+  <updated>2013-04-16T13:13:00Z</updated>
   <link rel="alternate" href="http://aanandprasad.com/"/>
   <link rel="self" href="http://aanandprasad.com/articles.xml"/>
   <author>
@@ -10,12 +10,18 @@
     <uri>http://aanandprasad.com/</uri>
   </author>
   <entry>
-    <id>tag:aanandprasad.com,2013-04-15:/articles/negronis/</id>
+    <id>tag:aanandprasad.com,2013-04-16:/articles/negronis/</id>
     <title type="html">The Abstracted Negroni</title>
-    <published>2013-04-15T14:45:00Z</published>
-    <updated>2013-04-15T14:45:00Z</updated>
+    <published>2013-04-16T13:13:00Z</published>
+    <updated>2013-04-16T13:13:00Z</updated>
     <link rel="alternate" href="http://aanandprasad.com/articles/negronis/"/>
-    <content type="html">&lt;p&gt;I was out last Friday at a bar where they had a &amp;#8220;Negroni Tic-Tac-Toe&amp;#8221; offer&amp;#8212;you could custom-build your drink from a selection of 3 gins, 3 vermouths and 3 amari, and if you got &amp;#8220;3 in a row&amp;#8221; you&amp;#8217;d get &amp;#163;5 off your bill. It&amp;#8217;s a laughably stingy deal, but it got me thinking. About functional programming, I mean.&lt;/p&gt;
+    <content type="html">
+      &lt;p class='literate-intro'&gt;
+        This post is written in literate javascript.
+        You can &lt;a href='http://aanandprasad.com/literate/negronis.litjs'&gt;download it here&lt;/a&gt; and run it at the command line thus:
+        &lt;code&gt;cat negronis.litjs | egrep '^ {4}' | node&lt;/code&gt;
+      &lt;/p&gt;
+    &lt;p&gt;I was out last Friday at a bar where they had a &amp;#8220;Negroni Tic-Tac-Toe&amp;#8221; offer&amp;#8212;you could custom-build your drink from a selection of 3 gins, 3 vermouths and 3 amari, and if you got &amp;#8220;3 in a row&amp;#8221; you&amp;#8217;d get &amp;#163;5 off your bill. It&amp;#8217;s a laughably stingy deal, but it got me thinking. About programming, I mean.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;function Negroni(gin, vermouth, amaro) {
   this.gin      = gin;
@@ -27,14 +33,18 @@
 
 Negroni.prototype.inspect = function() {
   return "Negroni("+this.gin+", "+this.vermouth+", "+this.amaro+")";
-}&lt;/code&gt;&lt;/pre&gt;
+}
 
-&lt;p&gt;The Negroni is often described as a &amp;#8220;manly&amp;#8221; drink, but fuck your gender-essentialism&amp;#8212;let&amp;#8217;s just call it &lt;em&gt;badass&lt;/em&gt;. Everything I ever needed to know about it, by the way, I learned from &lt;a href="http://manhattansproject.com/on-the-negroni/"&gt;Felix&lt;/a&gt;. I personally find Punt e Mes a shade too bitter when combined with Campari, but that&amp;#8217;s just me.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;// just a shorthand
+// Couple of shorthands we'll be using later
 function print() { console.log.apply(console, arguments); }
 
-print("Here's how I make it at home:",
+function inspect(thing) {
+  return thing.inspect ? thing.inspect() : thing.toString();
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The Negroni is often described as a &amp;#8220;manly&amp;#8221; drink, but fuck your gender-essentialism&amp;#8212;let&amp;#8217;s just call it &lt;em&gt;badass&lt;/em&gt;. Everything I ever needed to know about it, incidentally, I learned from &lt;a href="http://manhattansproject.com/on-the-negroni/"&gt;Felix&lt;/a&gt;. I personally find Punt e Mes a shade too bitter when combined with Campari, but that&amp;#8217;s just me.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;print("Here's how I make it at home:",
   new Negroni("Botanist", "Martini Rosso", "Campari"));
   // =&amp;gt; Negroni(Botanist, Martini Rosso, Campari)&lt;/code&gt;&lt;/pre&gt;
 
@@ -100,11 +110,7 @@ assemble = function(g, v, a) {
 
 &lt;p&gt;We need to represent the &lt;em&gt;potential presence or absence&lt;/em&gt; of a thing.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;function inspect(thing) {
-  return thing.inspect ? thing.inspect() : thing.toString();
-}
-
-var yep = function(thing) {
+&lt;pre&gt;&lt;code&gt;var yep = function(thing) {
   return {
     inspect: function() { return "yep(" + inspect(thing) + ")" }
   }
@@ -193,7 +199,7 @@ promisedNegroni.then(function(negroni) {
 
 &lt;p&gt;There are two equivalent ways to define a monad. You can define &lt;code&gt;map&lt;/code&gt; and &lt;code&gt;unwrap&lt;/code&gt;, as I have, or you can define &lt;code&gt;chain&lt;/code&gt; (which is equivalent to &lt;code&gt;map&lt;/code&gt; followed by &lt;code&gt;unwrap&lt;/code&gt;), and &lt;code&gt;of&lt;/code&gt; (which takes a plain value and wraps it&amp;#8212;so &lt;code&gt;Array.of(1)&lt;/code&gt; would return &lt;code&gt;[1]&lt;/code&gt;).&lt;/p&gt;
 
-&lt;p&gt;The problem is that a promise&amp;#8217;s &lt;code&gt;then&lt;/code&gt; method, as specified, treats the return value of the passed-in function differently depending on whether it&amp;#8217;s a promise&amp;#8212;essentially, it tries to intelligently determine whether to be &lt;code&gt;map&lt;/code&gt; or &lt;code&gt;chain&lt;/code&gt;. This means that the result of calling &lt;code&gt;then&lt;/code&gt; is always a flattened promise, which is why the &lt;code&gt;Promise.prototype.unwrap&lt;/code&gt; defined above just returns &lt;code&gt;this&lt;/code&gt;. It&amp;#8217;s impossible to call &lt;code&gt;then&lt;/code&gt; and get back a promise of a promise.&lt;/p&gt;
+&lt;p&gt;The problem is that a promise&amp;#8217;s &lt;code&gt;then&lt;/code&gt; method, as specified by Promises/A+, treats the return value of the passed-in function differently depending on whether it&amp;#8217;s a promise&amp;#8212;essentially, it tries to intelligently determine whether to be &lt;code&gt;map&lt;/code&gt; or &lt;code&gt;chain&lt;/code&gt;. This means that the result of calling &lt;code&gt;then&lt;/code&gt; is always a flattened promise, which is why the &lt;code&gt;Promise.prototype.unwrap&lt;/code&gt; defined above just returns &lt;code&gt;this&lt;/code&gt;. It&amp;#8217;s impossible to call &lt;code&gt;then&lt;/code&gt; and get back a promise of a promise.&lt;/p&gt;
 
 &lt;p&gt;Besides the inherent unreliability of trying to determine whether or not something is a promise, such overloading is likely to lead to difficult-to-predict bugs and difficult-to-reason-about code when promises are &lt;em&gt;treated&lt;/em&gt; like well-behaved monads, but &lt;em&gt;aren&amp;#8217;t&lt;/em&gt;. We got away with it this time, but I wouldn&amp;#8217;t feel confident writing more complex code, knowing that &amp;#8220;smart&amp;#8221; logic was there.&lt;/p&gt;
 

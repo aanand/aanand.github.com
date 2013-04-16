@@ -1,4 +1,4 @@
-I was out last Friday at a bar where they had a "Negroni Tic-Tac-Toe" offer---you could custom-build your drink from a selection of 3 gins, 3 vermouths and 3 amari, and if you got "3 in a row" you'd get &pound;5 off your bill. It's a laughably stingy deal, but it got me thinking. About functional programming, I mean.
+I was out last Friday at a bar where they had a "Negroni Tic-Tac-Toe" offer---you could custom-build your drink from a selection of 3 gins, 3 vermouths and 3 amari, and if you got "3 in a row" you'd get &pound;5 off your bill. It's a laughably stingy deal, but it got me thinking. About programming, I mean.
 
     function Negroni(gin, vermouth, amaro) {
       this.gin      = gin;
@@ -12,10 +12,14 @@ I was out last Friday at a bar where they had a "Negroni Tic-Tac-Toe" offer---yo
       return "Negroni("+this.gin+", "+this.vermouth+", "+this.amaro+")";
     }
 
-The Negroni is often described as a "manly" drink, but fuck your gender-essentialism---let's just call it _badass_. Everything I ever needed to know about it, by the way, I learned from [Felix](http://manhattansproject.com/on-the-negroni/). I personally find Punt e Mes a shade too bitter when combined with Campari, but that's just me.
-
-    // just a shorthand
+    // Couple of shorthands we'll be using later
     function print() { console.log.apply(console, arguments); }
+
+    function inspect(thing) {
+      return thing.inspect ? thing.inspect() : thing.toString();
+    }
+
+The Negroni is often described as a "manly" drink, but fuck your gender-essentialism---let's just call it _badass_. Everything I ever needed to know about it, incidentally, I learned from [Felix](http://manhattansproject.com/on-the-negroni/). I personally find Punt e Mes a shade too bitter when combined with Campari, but that's just me.
 
     print("Here's how I make it at home:",
       new Negroni("Botanist", "Martini Rosso", "Campari"));
@@ -82,10 +86,6 @@ Much better.
 Of course, it's almost never a good idea to make 27 cocktails. Let's row back a bit and consider a much more common scenario: you've got a guest round and they'd fancy just one Negroni. They don't much mind _what_ gin, vermouth or amaro it's made with---you're more worried about whether you have them at all. Can you satisfy them?
 
 We need to represent the _potential presence or absence_ of a thing.
-
-    function inspect(thing) {
-      return thing.inspect ? thing.inspect() : thing.toString();
-    }
 
     var yep = function(thing) {
       return {
@@ -179,7 +179,7 @@ I'm not the first to point out that [promises are the monad of asynchronous prog
 
 There are two equivalent ways to define a monad. You can define `map` and `unwrap`, as I have, or you can define `chain` (which is equivalent to `map` followed by `unwrap`), and `of` (which takes a plain value and wraps it---so `Array.of(1)` would return `[1]`).
 
-The problem is that a promise's `then` method, as specified, treats the return value of the passed-in function differently depending on whether it's a promise---essentially, it tries to intelligently determine whether to be `map` or `chain`. This means that the result of calling `then` is always a flattened promise, which is why the `Promise.prototype.unwrap` defined above just returns `this`. It's impossible to call `then` and get back a promise of a promise.
+The problem is that a promise's `then` method, as specified by Promises/A+, treats the return value of the passed-in function differently depending on whether it's a promise---essentially, it tries to intelligently determine whether to be `map` or `chain`. This means that the result of calling `then` is always a flattened promise, which is why the `Promise.prototype.unwrap` defined above just returns `this`. It's impossible to call `then` and get back a promise of a promise.
 
 Besides the inherent unreliability of trying to determine whether or not something is a promise, such overloading is likely to lead to difficult-to-predict bugs and difficult-to-reason-about code when promises are _treated_ like well-behaved monads, but _aren't_. We got away with it this time, but I wouldn't feel confident writing more complex code, knowing that "smart" logic was there.
 
