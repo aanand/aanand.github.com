@@ -7,7 +7,7 @@ html {
   border: 0;
 }
 
-.bp-reset-element, body, h1, h2, h3, h4, h5, h6, article, aside, dialog, figure, footer, header, hgroup, nav, section, blockquote, q, th, td, caption, table,
+.bp-reset-element, body, h1, h2, h3, h4, h5, h6, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, blockquote, q, th, td, caption, table,
 div, span, object, iframe, p,
 pre, a, abbr, acronym, address,
 code, del, dfn, em, img,
@@ -24,7 +24,7 @@ caption, tbody, tfoot, thead, tr {
   vertical-align: baseline;
 }
 
-article, aside, dialog, figure, footer, header, hgroup, nav, section {
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
   display: block;
 }
 
@@ -206,12 +206,12 @@ a img {
 
 /* Literal.String */
 .na {
-  color: #008080;
+  color: teal;
 }
 
 /* Name.Attribute */
 .nb {
-  color: #0086B3;
+  color: #0086b3;
 }
 
 /* Name.Builtin */
@@ -222,7 +222,7 @@ a img {
 
 /* Name.Class */
 .no {
-  color: #008080;
+  color: teal;
 }
 
 /* Name.Constant */
@@ -233,7 +233,7 @@ a img {
 
 /* Name.Decorator */
 .ni {
-  color: #800080;
+  color: purple;
 }
 
 /* Name.Entity */
@@ -261,12 +261,12 @@ a img {
 
 /* Name.Namespace */
 .nt {
-  color: #000080;
+  color: navy;
 }
 
 /* Name.Tag */
 .nv {
-  color: #008080;
+  color: teal;
 }
 
 /* Name.Variable */
@@ -362,17 +362,17 @@ a img {
 
 /* Name.Builtin.Pseudo */
 .vc {
-  color: #008080;
+  color: teal;
 }
 
 /* Name.Variable.Class */
 .vg {
-  color: #008080;
+  color: teal;
 }
 
 /* Name.Variable.Global */
 .vi {
-  color: #008080;
+  color: teal;
 }
 
 /* Name.Variable.Instance */
@@ -706,15 +706,13 @@ header .logo a {
   width: 150px;
   height: 150px;
   padding-top: 75px;
-  -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
-  -o-border-radius: 50%;
+  -moz-border-radius: 50%;
   -ms-border-radius: 50%;
-  -khtml-border-radius: 50%;
+  -o-border-radius: 50%;
   border-radius: 50%;
-  -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  -ms-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 header .logo a span {
