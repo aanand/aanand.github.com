@@ -23,6 +23,21 @@
   .index
     +columns(1112px, 3)
 
+=intrinsic-ratio($ratio)
+  position: relative
+  padding-bottom: $ratio * 100%
+  height: 0
+
+  .box-inner
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+
+.box-4x3
+  +intrinsic-ratio(3/4)
+
 hr
   border: 1px solid $very-quiet-color
   border-width: 1px 0
