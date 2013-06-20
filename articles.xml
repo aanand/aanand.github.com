@@ -45,8 +45,8 @@ function inspect(thing) {
 &lt;p&gt;The Negroni is often described as a &amp;#8220;manly&amp;#8221; drink, but fuck your gender-essentialism&amp;#8212;let&amp;#8217;s just call it &lt;em&gt;badass&lt;/em&gt;. Everything I ever needed to know about it, incidentally, I learned from &lt;a href="http://manhattansproject.com/on-the-negroni/"&gt;Felix&lt;/a&gt;. I personally find Punt e Mes a shade too bitter when combined with Campari, but that&amp;#8217;s just me.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;print("Here's how I make it at home:",
-  new Negroni("Botanist", "Martini Rosso", "Campari"));
-  // =&amp;gt; Negroni(Botanist, Martini Rosso, Campari)&lt;/code&gt;&lt;/pre&gt;
+  new Negroni("Botanist", "Antica Formula", "Campari"));
+  // =&amp;gt; Negroni(Botanist, Antica Formula, Campari)&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Point is, there are 3&amp;#215;3&amp;#215;3&amp;#160;=&amp;#160;27 possible combinations at that bar, a delicious Rubik&amp;#8217;s Cube of liver damage. How would you enumerate them all?&lt;/p&gt;
 
@@ -61,14 +61,14 @@ function inspect(thing) {
 };
 
 var allGins      = ["Botanist", "Bombay Sapphire", "Blackwoods 60%"];
-var allVermouths = ["Martini Rosso", "Cocchi", "Punt e Mes"];
+var allVermouths = ["Antica Formula", "Cocchi", "Punt e Mes"];
 var allAmari     = ["Campari", "Aperol", "Cynar"];
 
 print(assemble(allGins, allVermouths, allAmari));
 
-// =&amp;gt; [ [ [ Negroni(Botanist, Martini Rosso, Campari),
-//          Negroni(Botanist, Martini Rosso, Aperol),
-//          Negroni(Botanist, Martini Rosso, Cynar) ],
+// =&amp;gt; [ [ [ Negroni(Botanist, Antica Formula, Campari),
+//          Negroni(Botanist, Antica Formula, Aperol),
+//          Negroni(Botanist, Antica Formula, Cynar) ],
 //        [ Negroni(Botanist, Cocchi, Campari),
 //          Negroni(Botanist, Cocchi, Aperol),
 //          Negroni(Botanist, Cocchi, Cynar) ],
@@ -95,9 +95,9 @@ assemble = function(g, v, a) {
 
 &lt;pre&gt;&lt;code&gt;print(assemble(allGins, allVermouths, allAmari));
 
-// =&amp;gt; [ Negroni(Botanist, Martini Rosso, Campari),
-//      Negroni(Botanist, Martini Rosso, Aperol),
-//      Negroni(Botanist, Martini Rosso, Cynar),
+// =&amp;gt; [ Negroni(Botanist, Antica Formula, Campari),
+//      Negroni(Botanist, Antica Formula, Aperol),
+//      Negroni(Botanist, Antica Formula, Cynar),
 //      Negroni(Botanist, Cocchi, Campari),
 //      Negroni(Botanist, Cocchi, Aperol),
 //      Negroni(Botanist, Cocchi, Cynar),

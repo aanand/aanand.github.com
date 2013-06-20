@@ -67,8 +67,8 @@
 <p>The Negroni is often described as a &#8220;manly&#8221; drink, but fuck your gender-essentialism&#8212;let&#8217;s just call it <em>badass</em>. Everything I ever needed to know about it, incidentally, I learned from <a href="http://manhattansproject.com/on-the-negroni/">Felix</a>. I personally find Punt e Mes a shade too bitter when combined with Campari, but that&#8217;s just me.</p>
 
 <pre><code><span class="nx">print</span><span class="p">(</span><span class="s2">"Here's how I make it at home:"</span><span class="p">,</span>
-  <span class="k">new</span> <span class="nx">Negroni</span><span class="p">(</span><span class="s2">"Botanist"</span><span class="p">,</span> <span class="s2">"Martini Rosso"</span><span class="p">,</span> <span class="s2">"Campari"</span><span class="p">));</span>
-  <span class="c1">// =&gt; Negroni(Botanist, Martini Rosso, Campari)</span></code></pre>
+  <span class="k">new</span> <span class="nx">Negroni</span><span class="p">(</span><span class="s2">"Botanist"</span><span class="p">,</span> <span class="s2">"Antica Formula"</span><span class="p">,</span> <span class="s2">"Campari"</span><span class="p">));</span>
+  <span class="c1">// =&gt; Negroni(Botanist, Antica Formula, Campari)</span></code></pre>
 
 <p>Point is, there are 3&#215;3&#215;3&#160;=&#160;27 possible combinations at that bar, a delicious Rubik&#8217;s Cube of liver damage. How would you enumerate them all?</p>
 
@@ -83,14 +83,14 @@
 <span class="p">};</span>
 
 <span class="kd">var</span> <span class="nx">allGins</span>      <span class="o">=</span> <span class="p">[</span><span class="s2">"Botanist"</span><span class="p">,</span> <span class="s2">"Bombay Sapphire"</span><span class="p">,</span> <span class="s2">"Blackwoods 60%"</span><span class="p">];</span>
-<span class="kd">var</span> <span class="nx">allVermouths</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"Martini Rosso"</span><span class="p">,</span> <span class="s2">"Cocchi"</span><span class="p">,</span> <span class="s2">"Punt e Mes"</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">allVermouths</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"Antica Formula"</span><span class="p">,</span> <span class="s2">"Cocchi"</span><span class="p">,</span> <span class="s2">"Punt e Mes"</span><span class="p">];</span>
 <span class="kd">var</span> <span class="nx">allAmari</span>     <span class="o">=</span> <span class="p">[</span><span class="s2">"Campari"</span><span class="p">,</span> <span class="s2">"Aperol"</span><span class="p">,</span> <span class="s2">"Cynar"</span><span class="p">];</span>
 
 <span class="nx">print</span><span class="p">(</span><span class="nx">assemble</span><span class="p">(</span><span class="nx">allGins</span><span class="p">,</span> <span class="nx">allVermouths</span><span class="p">,</span> <span class="nx">allAmari</span><span class="p">));</span>
 
-<span class="c1">// =&gt; [ [ [ Negroni(Botanist, Martini Rosso, Campari),</span>
-<span class="c1">//          Negroni(Botanist, Martini Rosso, Aperol),</span>
-<span class="c1">//          Negroni(Botanist, Martini Rosso, Cynar) ],</span>
+<span class="c1">// =&gt; [ [ [ Negroni(Botanist, Antica Formula, Campari),</span>
+<span class="c1">//          Negroni(Botanist, Antica Formula, Aperol),</span>
+<span class="c1">//          Negroni(Botanist, Antica Formula, Cynar) ],</span>
 <span class="c1">//        [ Negroni(Botanist, Cocchi, Campari),</span>
 <span class="c1">//          Negroni(Botanist, Cocchi, Aperol),</span>
 <span class="c1">//          Negroni(Botanist, Cocchi, Cynar) ],</span>
@@ -117,9 +117,9 @@
 
 <pre><code><span class="nx">print</span><span class="p">(</span><span class="nx">assemble</span><span class="p">(</span><span class="nx">allGins</span><span class="p">,</span> <span class="nx">allVermouths</span><span class="p">,</span> <span class="nx">allAmari</span><span class="p">));</span>
 
-<span class="c1">// =&gt; [ Negroni(Botanist, Martini Rosso, Campari),</span>
-<span class="c1">//      Negroni(Botanist, Martini Rosso, Aperol),</span>
-<span class="c1">//      Negroni(Botanist, Martini Rosso, Cynar),</span>
+<span class="c1">// =&gt; [ Negroni(Botanist, Antica Formula, Campari),</span>
+<span class="c1">//      Negroni(Botanist, Antica Formula, Aperol),</span>
+<span class="c1">//      Negroni(Botanist, Antica Formula, Cynar),</span>
 <span class="c1">//      Negroni(Botanist, Cocchi, Campari),</span>
 <span class="c1">//      Negroni(Botanist, Cocchi, Aperol),</span>
 <span class="c1">//      Negroni(Botanist, Cocchi, Cynar),</span>
