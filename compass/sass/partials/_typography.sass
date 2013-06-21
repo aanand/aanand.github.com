@@ -7,8 +7,8 @@ $blueprint-font-family: $base-font-family
 =header
   text-align: center
 
-  a
-    color: $site-header-bg
+  a, .links
+    color: $site-header-link-color
 
   .logo a
     font-family: $site-header-font-family
@@ -40,11 +40,11 @@ $blueprint-font-family: $base-font-family
       background:      $site-header-hover-bg
 
 =quiet-header
-  a
-    color: $quiet-header-bg
+  a, .links
+    color: $quiet-header-link-color
 
-    &:hover
-      color: $quiet-header-hover-color
+  a:hover
+    color: $quiet-header-link-hover-color
 
   .logo a
     color:      $quiet-header-color !important

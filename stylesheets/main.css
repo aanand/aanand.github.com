@@ -701,7 +701,7 @@ header {
   text-align: center;
   margin-bottom: 1.5em;
 }
-header a {
+header a, header .links {
   color: #105f94;
 }
 header .logo a {
@@ -734,11 +734,11 @@ header .logo a span {
 }
 header .logo a:hover {
   text-decoration: none;
-  color: #105f94 !important;
-  background: #88ccff;
+  color: white !important;
+  background: #105f94;
 }
 
-.content header a {
+.content header a, .content header .links {
   color: #dddddd;
 }
 .content header a:hover {
@@ -749,8 +749,8 @@ header .logo a:hover {
   background: #dddddd;
 }
 .content header .logo a:hover {
-  color: #105f94 !important;
-  background: #88ccff;
+  color: white !important;
+  background: #105f94;
 }
 
 .links {
@@ -764,7 +764,6 @@ header .logo a:hover {
 }
 .links li:before {
   content: "\00b7";
-  color: #777777;
 }
 .links li:first-child:before {
   display: none;
