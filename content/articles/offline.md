@@ -66,6 +66,6 @@ Indeed, “the current state of the application” no longer has a canonical mea
 If this sounds like more trouble than it’s worth... well, it might be. Your call. But I hope I’ve made the value of offline support clearer, and if you’re planning on implementing it, I hope you’re really _planning_ it.
 
 [local-storage]: http://diveintohtml5.org/storage.html
-[backbone-todo]: http://documentcloud.github.com/backbone/examples/todos/index.html
+[backbone-todo]: http://backbonejs.org/examples/todos/index.html
 [eventual-consistency]: http://en.wikipedia.org/wiki/Eventual_consistency
 [relativity]: http://afeinberg.github.com/2011/06/17/replication-atomicity-and-order-in-distributed-systems.html
