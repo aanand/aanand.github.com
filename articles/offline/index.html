@@ -3,25 +3,34 @@
   <head>
     <meta charset="utf-8" />
     <title>Offline Support is Valuable, and You Can’t Add it Later - Aanand Prasad</title>
-    <meta content="Non-trivial offline functionality in a web application is more valuable than you might have initially assumed, if you care about the user experience on mobile devices. It’s also not a feature you can easily add after you’ve already built a working product. It has a profound effect on how your app should be designed, and you have to plan for it from the outset if you don’t want to end up rewriting the bulk of your communication logic." name="description" />
+    <meta content="
+Non-trivial offline functionality in a web application is more valuable than you might have initially assumed, if you care about the user experience on mobile devices. It’s also not a feature you can easily add after you’ve already built a working product. It has a profound effect on how your app should be designed, and you have to plan for it from the outset if you don’t want to end up rewriting the bulk of your communication logic.
+" name="description" />
     <meta content="Aanand Prasad" name="author" />
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <link href="/articles.xml" rel="alternate" type="application/atom+xml" />
     <link href="/stylesheets/main.css" rel="stylesheet" type="text/css" />
-    <!--[if lt IE 9]><link href="/stylesheets/ie.css" rel="stylesheet" type="text/css" /><![endif]-->
-    <script type="text/javascript">var _gaq = _gaq || [];
+    <!--[if lt IE 9]>
+    <link href="/stylesheets/ie.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+    <script>
+      var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-4209567-1']);
       _gaq.push(['_setSiteSpeedSampleRate', 100]);
-      _gaq.push(['_trackPageview']); 
+      _gaq.push(['_trackPageview']);
+      
       (function() {
         var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();</script>
+      })();
+    </script>
   </head>
   <body>
-    <div class="container"><div class="content"><header>
+    <div class="container">
+      <div class="content">
+        <header>
           <h1 class="logo">
             <a href="/"><span>Aanand Prasad</span></a>
           </h1>
@@ -36,8 +45,14 @@
               <a href="mailto:aanand.prasad@gmail.com">Email</a>
             </li>
           </ul>
-        </header><article class="article">
-          <h2 class="title">Offline Support is Valuable, and You Can’t Add it Later</h2><div class='summary'><p>Non-trivial offline functionality in a web application is more valuable than you might have initially assumed, if you care about the user experience on mobile devices. It’s also not a feature you can easily add after you’ve already built a working product. It has a profound effect on how your app should be designed, and you have to plan for it from the outset if you don’t want to end up rewriting the bulk of your communication logic.</p></div><hr class='summary-break'/><!-- w: tf -->
+        </header>
+        <article class="article">
+          <h2 class="title">
+            Offline Support is Valuable, and You Can’t Add it Later
+          </h2>
+          <div class='summary'>
+          <p>Non-trivial offline functionality in a web application is more valuable than you might have initially assumed, if you care about the user experience on mobile devices. It’s also not a feature you can easily add after you’ve already built a working product. It has a profound effect on how your app should be designed, and you have to plan for it from the outset if you don’t want to end up rewriting the bulk of your communication logic.</p>
+          </div><hr class='summary-break'/><!-- w: tf -->
           <p>If you’re designing a web application to run primarily on desktop browsers, you’ve probably already decided against implementing offline functionality. That’s entirely fair: there’s almost always an Internet connection available, and you’ll save yourself a lot of time.</p>
           
           <p>If you’re considering implementing a mobile interface, though, you would do well to seriously consider implementing offline support too, even though mobile users usually have an Internet connection. Let me explain.</p>
@@ -56,7 +71,9 @@
           <li>If the request does fail, you won’t know whether it made it to the server or not.</li>
           
           <li>If the connection is slow, or flaky, it may well stay that way.</li>
-          </ol><p>For every single type of request your application will make, you will have to deal with these limitations. Consequently, if you’ve come straight from the world of comparatively fast, always-on broadband, many things you’re used to doing are now anti-patterns. Off the top of my head:</p>
+          </ol>
+          
+          <p>For every single type of request your application will make, you will have to deal with these limitations. Consequently, if you’ve come straight from the world of comparatively fast, always-on broadband, many things you’re used to doing are now anti-patterns. Off the top of my head:</p>
           
           <ol>
           <li>When a user initiates an action that requires communication with the server, you can’t expect them to wait, doing nothing, until it’s succeeded—they could be waiting for minutes.</li>
@@ -64,7 +81,9 @@
           <li>If the action fails due to network error, you can’t simply tell them to try again in a moment—if it failed once, it’ll probably fail again.</li>
           
           <li>If the user wants to perform several such actions in quick succession, you <em>really</em> can’t do either of the above two things. Have you ever used an application that worked that way? You can feel your hair greying.</li>
-          </ol><p>An application designed along these traditional lines, built on the assumption that an Internet connection is not just available, but reliable and fast, will be incredibly frustrating to use over a poor-quality connection.</p>
+          </ol>
+          
+          <p>An application designed along these traditional lines, built on the assumption that an Internet connection is not just available, but reliable and fast, will be incredibly frustrating to use over a poor-quality connection.</p>
           
           <p>What I’m getting at is that offline support isn’t just a way of making your app usable when there’s no Internet connection. It can also be a way of making it usable when the Internet connection is awful, which, depending on the app, could be a much more common occurrence. You simply need to broaden your definition of “offline” to mean not just “there is no connection”, but “there is no <em>good</em> connection”.</p>
           
@@ -80,7 +99,9 @@
           <li>If the request succeeds, the UI is updated to reflect the changes to application state.</li>
           
           <li>If the request fails, the user is notified.</li>
-          </ol><p>The problem with this design is that the assumption of connectivity is fundamental. In the absence of a good Internet connection, it’s merely annoying. In the absence of any Internet connection at all, it fails at step 2.</p>
+          </ol>
+          
+          <p>The problem with this design is that the assumption of connectivity is fundamental. In the absence of a good Internet connection, it’s merely annoying. In the absence of any Internet connection at all, it fails at step 2.</p>
           
           <p>The good news is that, in my limited experience, getting into the offline mindset requires only one key realisation: when you leave the world of timely, reliable communication, <strong>the local database, not the server’s, must be the gateway for all persistent changes in application state</strong>.</p>
           
@@ -94,7 +115,9 @@
           <li>The UI is updated.</li>
           
           <li>At some point—now or later—the local database and the server are synchronised.</li>
-          </ol><p>Which, you might realise, is how native smartphone apps are designed. The good ones, anyway.</p>
+          </ol>
+          
+          <p>Which, you might realise, is how native smartphone apps are designed. The good ones, anyway.</p>
           
           <p>When your application is designed this way, its “offline” usability skyrockets. Many common user actions—checking off a todo, archiving an email, composing a blog post, reading something previously downloaded—can be performed with no latency and little to no loss in immediate utility. Indeed, Backbone.js’ <a href="http://backbonejs.org/examples/todos/index.html">example todo app</a> is a functional and useful application that never even needs to talk to a server.</p>
           
@@ -104,12 +127,17 @@
           
           <p>Indeed, “the current state of the application” no longer has a canonical meaning. What if the user has the application installed on two devices, and has made updates on both of them? Proceed far enough down this rabbit-hole and it becomes necessary to <a href="http://afeinberg.github.com/2011/06/17/replication-atomicity-and-order-in-distributed-systems.html">leave behind the Newtonian universe</a>.</p>
           
-          <p>If this sounds like more trouble than it’s worth… well, it might be. Your call. But I hope I’ve made the value of offline support clearer, and if you’re planning on implementing it, I hope you’re really <em>planning</em> it.</p><hr />
+          <p>If this sounds like more trouble than it’s worth… well, it might be. Your call. But I hope I’ve made the value of offline support clearer, and if you’re planning on implementing it, I hope you’re really <em>planning</em> it.</p>
+          
+          <hr />
           <div class="metadata">
-            <div class="created"><time datetime='2011-08-13'>13 August 2011</time></div>
-            <a class="permalink" href="&#47;articles&#47;offline&#47;">Permalink</a>
+            <div class="created">
+              <time datetime='2011-08-13'>13 August 2011</time>
+            </div>
+            <a class="permalink" href="/articles/offline/">Permalink</a>
           </div>
         </article>
-      </div></div>
+      </div>
+    </div>
   </body>
 </html>

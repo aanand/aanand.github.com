@@ -3,25 +3,33 @@
   <head>
     <meta charset="utf-8" />
     <title>The Abstracted Negroni - Aanand Prasad</title>
-    <meta content="I was out last Friday at a bar where they had a “Negroni Tic-Tac-Toe” offer—you could custom-build your drink from a selection of 3 gins, 3 vermouths and 3 amari, and if you got “3 in a row” you’d get £5 off your bill. It’s a laughably stingy deal, but it got me thinking. About programming, I mean." name="description" />
+    <meta content="
+I was out last Friday at a bar where they had a “Negroni Tic-Tac-Toe” offer—you could custom-build your drink from a selection of 3 gins, 3 vermouths and 3 amari, and if you got “3 in a row” you’d get £5 off your bill. It’s a laughably stingy deal, but it got me thinking. About programming, I mean.
+" name="description" />
     <meta content="Aanand Prasad" name="author" />
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <link href="/articles.xml" rel="alternate" type="application/atom+xml" />
     <link href="/stylesheets/main.css" rel="stylesheet" type="text/css" />
-    <!--[if lt IE 9]><link href="/stylesheets/ie.css" rel="stylesheet" type="text/css" /><![endif]-->
-    <script type="text/javascript">var _gaq = _gaq || [];
+    <!--[if lt IE 9]>
+    <link href="/stylesheets/ie.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+    <script>
+      var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-4209567-1']);
       _gaq.push(['_setSiteSpeedSampleRate', 100]);
-      _gaq.push(['_trackPageview']); 
+      _gaq.push(['_trackPageview']);
+      
       (function() {
         var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();</script>
+      })();
+    </script>
   </head>
   <body>
-    <div class="container"><div class="content"><header>
+    <div class="container"><div class="content">
+  <header>
     <h1 class="logo">
       <a href="/"><span>Aanand Prasad</span></a>
     </h1>
@@ -36,14 +44,18 @@
         <a href="mailto:aanand.prasad@gmail.com">Email</a>
       </li>
     </ul>
-  </header><article class="article">
-    <h2 class="title">The Abstracted Negroni</h2>
+  </header>
+  <article class="article">
+    <h2 class="title">
+      The Abstracted Negroni
+    </h2>
       <p class='literate-intro'>
         This post is written in literate javascript.
         You can <a href='http://aanandprasad.com/literate/negronis.litjs'>download it here</a> and run it at the command line thus:
         <code>cat negronis.litjs | egrep '^ {4}' | node</code>
       </p>
-    <p>I was out last Friday at a bar where they had a &#8220;Negroni Tic-Tac-Toe&#8221; offer&#8212;you could custom-build your drink from a selection of 3 gins, 3 vermouths and 3 amari, and if you got &#8220;3 in a row&#8221; you&#8217;d get &#163;5 off your bill. It&#8217;s a laughably stingy deal, but it got me thinking. About programming, I mean.</p>
+    
+<p>I was out last Friday at a bar where they had a “Negroni Tic-Tac-Toe” offer—you could custom-build your drink from a selection of 3 gins, 3 vermouths and 3 amari, and if you got “3 in a row” you’d get £5 off your bill. It’s a laughably stingy deal, but it got me thinking. About programming, I mean.</p>
 
 <pre><code><span class="kd">function</span> <span class="nx">Negroni</span><span class="p">(</span><span class="nx">gin</span><span class="p">,</span> <span class="nx">vermouth</span><span class="p">,</span> <span class="nx">amaro</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">this</span><span class="p">.</span><span class="nx">gin</span>      <span class="o">=</span> <span class="nx">gin</span><span class="p">;</span>
@@ -64,13 +76,13 @@
   <span class="k">return</span> <span class="nx">thing</span><span class="p">.</span><span class="nx">inspect</span> <span class="o">?</span> <span class="nx">thing</span><span class="p">.</span><span class="nx">inspect</span><span class="p">()</span> <span class="o">:</span> <span class="nx">thing</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
 <span class="p">}</span></code></pre>
 
-<p>The Negroni is often described as a &#8220;manly&#8221; drink, but fuck your gender-essentialism&#8212;let&#8217;s just call it <em>badass</em>. Everything I ever needed to know about it, incidentally, I learned from <a href="http://manhattansproject.com/on-the-negroni/">Felix</a>. I personally find Punt e Mes a shade too bitter when combined with Campari, but that&#8217;s just me.</p>
+<p>The Negroni is often described as a “manly” drink, but fuck your gender-essentialism—let’s just call it <em>badass</em>. Everything I ever needed to know about it, incidentally, I learned from <a href="http://manhattansproject.com/on-the-negroni/">Felix</a>. I personally find Punt e Mes a shade too bitter when combined with Campari, but that’s just me.</p>
 
 <pre><code><span class="nx">print</span><span class="p">(</span><span class="s2">"Here's how I make it at home:"</span><span class="p">,</span>
   <span class="k">new</span> <span class="nx">Negroni</span><span class="p">(</span><span class="s2">"Botanist"</span><span class="p">,</span> <span class="s2">"Antica Formula"</span><span class="p">,</span> <span class="s2">"Campari"</span><span class="p">));</span>
   <span class="c1">// =&gt; Negroni(Botanist, Antica Formula, Campari)</span></code></pre>
 
-<p>Point is, there are 3&#215;3&#215;3&#160;=&#160;27 possible combinations at that bar, a delicious Rubik&#8217;s Cube of liver damage. How would you enumerate them all?</p>
+<p>Point is, there are 3×3×3 = 27 possible combinations at that bar, a delicious Rubik’s Cube of liver damage. How would you enumerate them all?</p>
 
 <pre><code><span class="kd">var</span> <span class="nx">assemble</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">g</span><span class="p">,</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">a</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">return</span> <span class="nx">g</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">gin</span><span class="p">)</span> <span class="p">{</span>
@@ -97,7 +109,7 @@
 <span class="c1">//      ...]</span>
 <span class="c1">//    ...]</span></code></pre>
 
-<p>Hmmm. It&#8217;s a start, but that&#8217;s altogether too much nesting. We&#8217;ll never get anything done if we&#8217;re spending all our time unwrapping.</p>
+<p>Hmmm. It’s a start, but that’s altogether too much nesting. We’ll never get anything done if we’re spending all our time unwrapping.</p>
 
 <pre><code><span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">unwrap</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
   <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">reduce</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">a</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span> <span class="p">},</span> <span class="p">[]);</span>
@@ -113,7 +125,7 @@
   <span class="p">}).</span><span class="nx">unwrap</span><span class="p">();</span>
 <span class="p">};</span></code></pre>
 
-<p>The outer two <code>map</code>s are followed by an <code>unwrap</code>, which turns an array-of-arrays into a single array. (The innermost <code>map</code> gives us an array of Negronis, which is what we want, so unwrapping is uncalled for&#8212;and would fail).</p>
+<p>The outer two <code>map</code>s are followed by an <code>unwrap</code>, which turns an array-of-arrays into a single array. (The innermost <code>map</code> gives us an array of Negronis, which is what we want, so unwrapping is uncalled for—and would fail).</p>
 
 <pre><code><span class="nx">print</span><span class="p">(</span><span class="nx">assemble</span><span class="p">(</span><span class="nx">allGins</span><span class="p">,</span> <span class="nx">allVermouths</span><span class="p">,</span> <span class="nx">allAmari</span><span class="p">));</span>
 
@@ -128,7 +140,7 @@
 
 <p>Much better.</p>
 
-<p>Of course, it&#8217;s almost never a good idea to make 27 cocktails. Let&#8217;s row back a bit and consider a much more common scenario: you&#8217;ve got a guest round and they&#8217;d fancy just one Negroni. They don&#8217;t much mind <em>what</em> gin, vermouth or amaro it&#8217;s made with&#8212;you&#8217;re more worried about whether you have them at all. Can you satisfy them?</p>
+<p>Of course, it’s almost never a good idea to make 27 cocktails. Let’s row back a bit and consider a much more common scenario: you’ve got a guest round and they’d fancy just one Negroni. They don’t much mind <em>what</em> gin, vermouth or amaro it’s made with—you’re more worried about whether you have them at all. Can you satisfy them?</p>
 
 <p>We need to represent the <em>potential presence or absence</em> of a thing.</p>
 
@@ -145,7 +157,7 @@
 <span class="nx">print</span><span class="p">(</span><span class="s2">"Here's something:"</span><span class="p">,</span> <span class="nx">yep</span><span class="p">(</span><span class="s2">"Gin"</span><span class="p">));</span>
 <span class="nx">print</span><span class="p">(</span><span class="s2">"Here's nothing:"</span><span class="p">,</span> <span class="nx">nope</span><span class="p">);</span></code></pre>
 
-<p>So, time to write a new <code>assemble</code> method, right? To check individually for the presence or absence of each of our ingredients, and only return a <code>yep()</code> if we&#8217;ve got all 3?</p>
+<p>So, time to write a new <code>assemble</code> method, right? To check individually for the presence or absence of each of our ingredients, and only return a <code>yep()</code> if we’ve got all 3?</p>
 
 <p>Nope. <code>assemble</code> can stay as it is. We just need to implement <code>map</code> and <code>unwrap</code>.</p>
 
@@ -180,17 +192,17 @@
   <span class="nx">assemble</span><span class="p">(</span><span class="nx">yep</span><span class="p">(</span><span class="s2">"Gin"</span><span class="p">),</span> <span class="nx">yep</span><span class="p">(</span><span class="s2">"Vermouth"</span><span class="p">),</span> <span class="nx">yep</span><span class="p">(</span><span class="s2">"Amaro"</span><span class="p">)));</span>
   <span class="c1">// =&gt; yep(Negroni(Gin, Vermouth, Amaro))</span></code></pre>
 
-<p>Magic. <code>assemble</code> will accept anything that supports those two methods. All it expresses is that you need all 3 ingredients to make a Negroni&#8212;not how to get them, or how many to make. That logic lives entirely in the definitions of <code>map</code> and <code>unwrap</code>: for arrays, all possible combinations of elements are enumerated; for <code>yep</code> and <code>nope</code>, we only ever have zero or one of something, and we short-circuit as soon as the first zero (a.k.a. <code>nope</code>) is encountered.</p>
+<p>Magic. <code>assemble</code> will accept anything that supports those two methods. All it expresses is that you need all 3 ingredients to make a Negroni—not how to get them, or how many to make. That logic lives entirely in the definitions of <code>map</code> and <code>unwrap</code>: for arrays, all possible combinations of elements are enumerated; for <code>yep</code> and <code>nope</code>, we only ever have zero or one of something, and we short-circuit as soon as the first zero (a.k.a. <code>nope</code>) is encountered.</p>
 
-<p>Sadly, it turns out we don&#8217;t have any of the ingredients to hand. You can order them online, though! Indeed, you have 3 fast-delivery specialist suppliers (one per ingredient&#8212;they&#8217;re <em>highly</em> specialised) bookmarked for this very purpose. Within a few moments, each one has promised that a bottle is on its way to you, and you can thus pass on the promise of a Negroni to your patient, thirsty guest.</p>
+<p>Sadly, it turns out we don’t have any of the ingredients to hand. You can order them online, though! Indeed, you have 3 fast-delivery specialist suppliers (one per ingredient—they’re <em>highly</em> specialised) bookmarked for this very purpose. Within a few moments, each one has promised that a bottle is on its way to you, and you can thus pass on the promise of a Negroni to your patient, thirsty guest.</p>
 
-<pre><code><span class="kd">var</span> <span class="nx">Promise</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"promise"</span><span class="p">);</span>
+<pre><code><span class="kd">var</span> <span class="nb">Promise</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"promise"</span><span class="p">);</span>
 
-<span class="nx">Promise</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">map</span>    <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">};</span>
-<span class="nx">Promise</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">unwrap</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>   <span class="p">{</span> <span class="k">return</span> <span class="k">this</span> <span class="p">};</span>
+<span class="nb">Promise</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">map</span>    <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">};</span>
+<span class="nb">Promise</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">unwrap</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>   <span class="p">{</span> <span class="k">return</span> <span class="k">this</span> <span class="p">};</span>
 
 <span class="kd">var</span> <span class="nx">order</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="k">new</span> <span class="nx">Promise</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">resolve</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">resolve</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span> <span class="nx">resolve</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
   <span class="p">});</span>
 <span class="p">};</span>
@@ -212,54 +224,54 @@
   <span class="c1">// =&gt; Negroni(Gin, Vermouth, Amaro)</span>
 <span class="p">});</span></code></pre>
 
-<p>Once again, we didn&#8217;t have to change <code>assemble</code>&#8212;just implement <code>map</code> and <code>unwrap</code>.</p>
+<p>Once again, we didn’t have to change <code>assemble</code>—just implement <code>map</code> and <code>unwrap</code>.</p>
 
-<p>I think it&#8217;s kind of incredible that we can write code like <code>assemble</code>, which doesn&#8217;t care how its pieces work&#8212;just that they fit together right&#8212;and plug any kind of delivery mechanism we want into it: arrays-of-things, maybe-things-maybe-nots, promises-of-things. This is a huge step up from just writing views and not caring where the models came from. This is writing operations and not caring how they&#8217;re sequenced or executed.</p>
+<p>I think it’s kind of incredible that we can write code like <code>assemble</code>, which doesn’t care how its pieces work—just that they fit together right—and plug any kind of delivery mechanism we want into it: arrays-of-things, maybe-things-maybe-nots, promises-of-things. This is a huge step up from just writing views and not caring where the models came from. This is writing operations and not caring how they’re sequenced or executed.</p>
 
-<p>If you think that&#8217;s cool too, we&#8217;re probably going to get along.</p>
-<hr><p>I&#8217;m not the first to point out that <a href="http://blog.jcoglan.com/2011/03/11/promises-are-the-monad-of-asynchronous-programming/">promises are the monad of asynchronous programming</a>, but the topic has become pertinent, because <a href="https://github.com/promises-aplus">the Promises/A+ spec</a> is still in formation. If programmers can rely on a monadic interface for promises, this opens up the possibility of writing code which will work with <em>any</em> monad, not just promises&#8212;as I&#8217;ve tried to demonstrate with <code>assemble</code> above.</p>
+<p>If you think that’s cool too, we’re probably going to get along.</p>
+<hr>
+<p>I’m not the first to point out that <a href="http://blog.jcoglan.com/2011/03/11/promises-are-the-monad-of-asynchronous-programming/">promises are the monad of asynchronous programming</a>, but the topic has become pertinent, because <a href="https://github.com/promises-aplus">the Promises/A+ spec</a> is still in formation. If programmers can rely on a monadic interface for promises, this opens up the possibility of writing code which will work with <em>any</em> monad, not just promises—as I’ve tried to demonstrate with <code>assemble</code> above.</p>
 
-<p>There are two equivalent ways to define a monad. You can define <code>map</code> and <code>unwrap</code>, as I have, or you can define <code>chain</code> (which is equivalent to <code>map</code> followed by <code>unwrap</code>), and <code>of</code> (which takes a plain value and wraps it&#8212;so <code>Array.of(1)</code> would return <code>[1]</code>).</p>
+<p>There are two equivalent ways to define a monad. You can define <code>map</code> and <code>unwrap</code>, as I have, or you can define <code>chain</code> (which is equivalent to <code>map</code> followed by <code>unwrap</code>), and <code>of</code> (which takes a plain value and wraps it—so <code>Array.of(1)</code> would return <code>[1]</code>).</p>
 
-<p>The problem is that a promise&#8217;s <code>then</code> method, as specified by Promises/A+, treats the return value of the passed-in function differently depending on whether it&#8217;s a promise&#8212;essentially, it tries to intelligently determine whether to be <code>map</code> or <code>chain</code>. This means that the result of calling <code>then</code> is always a flattened promise, which is why the <code>Promise.prototype.unwrap</code> defined above just returns <code>this</code>. It&#8217;s impossible to call <code>then</code> and get back a promise of a promise.</p>
+<p>The problem is that a promise’s <code>then</code> method, as specified by Promises/A+, treats the return value of the passed-in function differently depending on whether it’s a promise—essentially, it tries to intelligently determine whether to be <code>map</code> or <code>chain</code>. This means that the result of calling <code>then</code> is always a flattened promise, which is why the <code>Promise.prototype.unwrap</code> defined above just returns <code>this</code>. It’s impossible to call <code>then</code> and get back a promise of a promise.</p>
 
-<p>Besides the inherent unreliability of trying to determine whether or not something is a promise, such overloading is likely to lead to difficult-to-predict bugs and difficult-to-reason-about code when promises are <em>treated</em> like well-behaved monads, but <em>aren&#8217;t</em>. We got away with it this time, but I wouldn&#8217;t feel confident writing more complex code, knowing that &#8220;smart&#8221; logic was there.</p>
+<p>Besides the inherent unreliability of trying to determine whether or not something is a promise, such overloading is likely to lead to difficult-to-predict bugs and difficult-to-reason-about code when promises are <em>treated</em> like well-behaved monads, but <em>aren’t</em>. We got away with it this time, but I wouldn’t feel confident writing more complex code, knowing that “smart” logic was there.</p>
 
-<p>There <a href="http://brianmckenna.org/blog/category_theory_promisesaplus">has</a> <a href="https://github.com/promises-aplus/resolvers-spec/issues/24">been</a> <a href="https://github.com/promises-aplus/promises-spec/issues/94">some</a> <a href="https://github.com/promises-aplus/promises-spec/issues/97">discussion</a> on this topic in the last few days. Sadly, the authors have so far been difficult to convince. This is understandable&#8212;the theory is difficult to explain, examples of the potential problems are non-obvious, and it&#8217;s easy to get led astray by the question of why you would ever <em>want</em> to have a promise of a promise.</p>
+<p>There <a href="http://brianmckenna.org/blog/category_theory_promisesaplus">has</a> <a href="https://github.com/promises-aplus/resolvers-spec/issues/24">been</a> <a href="https://github.com/promises-aplus/promises-spec/issues/94">some</a> <a href="https://github.com/promises-aplus/promises-spec/issues/97">discussion</a> on this topic in the last few days. Sadly, the authors have so far been difficult to convince. This is understandable—the theory is difficult to explain, examples of the potential problems are non-obvious, and it’s easy to get led astray by the question of why you would ever <em>want</em> to have a promise of a promise.</p>
 
 <p>A more directly appealing argument was made by <a href="https://github.com/promises-aplus/promises-spec/issues/94#issuecomment-16294840">Reg</a>:</p>
 
 <blockquote>
-<p>A long time ago in a company far, far away, there was a young engineer given a herculean task within an impossible deadline. He created LiveScript. One of the decisions he made was to make functions first-class values rather than have them be &#8220;something else&#8221; like the other popular languages of the day. Another was to use prototypical inheritance rather than classical inheritance, like the other popular languages of the day.</p>
-</blockquote>
+<p>A long time ago in a company far, far away, there was a young engineer given a herculean task within an impossible deadline. He created LiveScript. One of the decisions he made was to make functions first-class values rather than have them be “something else” like the other popular languages of the day. Another was to use prototypical inheritance rather than classical inheritance, like the other popular languages of the day.</p>
 
-<blockquote>
 <p>It would take years for the programming community to embrace the power of functions as first-class values in his language. Most people agree that Crockford got the ball rolling, followed by Oliver Steele and you can trace a direct line down to Jeremy Ashkenas and Underscore from there. Today, it is unthinkable to imagine a JavaScript without functions that can return functions or apply functions.</p>
-</blockquote>
 
-<blockquote>
-<p>Conversely, prototypical inheritance hasn&#8217;t reached a tipping point. The vast majority of programmers simply emulate classical inheritance and do not exploit its power in any way.</p>
-</blockquote>
+<p>Conversely, prototypical inheritance hasn’t reached a tipping point. The vast majority of programmers simply emulate classical inheritance and do not exploit its power in any way.</p>
 
-<blockquote>
 <p>What does this history tell me about promises?</p>
+
+<p>I think that promises-that-are-monads are in the same category as these two ideas I cited. If we embrace the idea of promises being first-class monads, we will likely have a lot of “meh” for a year or maybe three. Then someone will write a library or give a talk and the light will go on. It is had to imagine what wonderful thing will be created when that happens.</p>
 </blockquote>
 
-<blockquote>
-<p>I think that promises-that-are-monads are in the same category as these two ideas I cited. If we embrace the idea of promises being first-class monads, we will likely have a lot of &#8220;meh&#8221; for a year or maybe three. Then someone will write a library or give a talk and the light will go on. It is had to imagine what wonderful thing will be created when that happens.</p>
-</blockquote>
+<p>This speaks to me. The power of first-class functions had already been amply demonstrated when LiveScript was designed—just not in the mainstream. Similarly, the power of the monad abstraction has been amply demonstrated in functional languages, but not yet in the mainstream.</p>
 
-<p>This speaks to me. The power of first-class functions had already been amply demonstrated when LiveScript was designed&#8212;just not in the mainstream. Similarly, the power of the monad abstraction has been amply demonstrated in functional languages, but not yet in the mainstream.</p>
+<p>It may be too late for <code>then</code>—too much code already relies on its current behaviour, and besides, it’s useful. A <a href="https://github.com/pufuwozu/fantasy-land">concurrent spec for monads</a>, specifying <code>chain</code> and <code>of</code>, has been started, and we could just hope that most promise implementors choose to support that too… but I strongly suspect the majority won’t bother, even though it’d be trivial.</p>
 
-<p>It may be too late for <code>then</code>&#8212;too much code already relies on its current behaviour, and besides, it&#8217;s useful. A <a href="https://github.com/pufuwozu/fantasy-land">concurrent spec for monads</a>, specifying <code>chain</code> and <code>of</code>, has been started, and we could just hope that most promise implementors choose to support that too&#8230; but I strongly suspect the majority won&#8217;t bother, even though it&#8217;d be trivial.</p>
+<p>To have <code>chain</code> and <code>of</code> specified and required in Promises/A+ would be a <em>much</em> bigger win.</p>
 
-<p>To have <code>chain</code> and <code>of</code> specified and required in Promises/A+ would be a <em>much</em> bigger win.</p><hr />
+    <hr />
     <div class="metadata">
-      <div class="created"><time datetime='2013-04-16'>16 April 2013</time></div>
-      <div class="updated">Updated <time datetime='2013-06-20'>20 June 2013</time></div>
-      <a class="permalink" href="&#47;articles&#47;negronis&#47;">Permalink</a>
+      <div class="created">
+        <time datetime='2013-04-16'>16 April 2013</time>
+      </div>
+      <div class="updated">
+        Updated <time datetime='2013-06-20'>20 June 2013</time>
+      </div>
+      <a class="permalink" href="/articles/negronis/">Permalink</a>
     </div>
   </article>
-</div></div>
+</div>
+    </div>
   </body>
 </html>

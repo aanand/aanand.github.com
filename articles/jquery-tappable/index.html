@@ -3,25 +3,33 @@
   <head>
     <meta charset="utf-8" />
     <title>Better Tap Behaviour with jquery.tappable.js - Aanand Prasad</title>
-    <meta content="The behaviour of tappable elements in Mobile Safari is unacceptably ugly. Unfortunately, taking control of it is more involved than it perhaps ought to be. jquery.tappable.js does (most of) the hard work for you." name="description" />
+    <meta content="
+The behaviour of tappable elements in Mobile Safari is unacceptably ugly. Unfortunately, taking control of it is more involved than it perhaps ought to be. jquery.tappable.js does (most of) the hard work for you.
+" name="description" />
     <meta content="Aanand Prasad" name="author" />
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <link href="/articles.xml" rel="alternate" type="application/atom+xml" />
     <link href="/stylesheets/main.css" rel="stylesheet" type="text/css" />
-    <!--[if lt IE 9]><link href="/stylesheets/ie.css" rel="stylesheet" type="text/css" /><![endif]-->
-    <script type="text/javascript">var _gaq = _gaq || [];
+    <!--[if lt IE 9]>
+    <link href="/stylesheets/ie.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+    <script>
+      var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-4209567-1']);
       _gaq.push(['_setSiteSpeedSampleRate', 100]);
-      _gaq.push(['_trackPageview']); 
+      _gaq.push(['_trackPageview']);
+      
       (function() {
         var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();</script>
+      })();
+    </script>
   </head>
   <body>
-    <div class="container"><div class="content"><header>
+    <div class="container"><div class="content">
+  <header>
     <h1 class="logo">
       <a href="/"><span>Aanand Prasad</span></a>
     </h1>
@@ -36,8 +44,14 @@
         <a href="mailto:aanand.prasad@gmail.com">Email</a>
       </li>
     </ul>
-  </header><article class="article">
-    <h2 class="title">Better Tap Behaviour with jquery.tappable.js</h2><div class='summary'><p>The behaviour of tappable elements in Mobile Safari is unacceptably ugly. Unfortunately, taking control of it is more involved than it perhaps ought to be. <a href='https://github.com/aanand/jquery.tappable.js'>jquery.tappable.js</a> does (most of) the hard work for you.</p></div><hr class='summary-break'/><p>I hope we can all agree that <a href="http://cvil.ly/2011/06/19/pretenders-why-mobile-web-apps-should-stop-trying-to-act-like-native-apps/">mobile web apps shouldn’t pretend to be native apps</a>, but I don’t like the thought of having to accept the current state of most mobile apps as the hand we’ve been dealt. The whole business feels somewhat 2000-era, which is frankly weird—we’ve spent a good decade improving the look and feel of apps in the browser, but the majority of mobile web apps seem content with a half-hearted grey-boxes-and-lines style and a rigid, transitionless interactivity.</p>
+  </header>
+  <article class="article">
+    <h2 class="title">
+      Better Tap Behaviour with jquery.tappable.js
+    </h2><div class='summary'>
+<p>The behaviour of tappable elements in Mobile Safari is unacceptably ugly. Unfortunately, taking control of it is more involved than it perhaps ought to be. <a href="https://github.com/aanand/jquery.tappable.js">jquery.tappable.js</a> does (most of) the hard work for you.</p>
+</div><hr class='summary-break'/>
+<p>I hope we can all agree that <a href="http://cvil.ly/2011/06/19/pretenders-why-mobile-web-apps-should-stop-trying-to-act-like-native-apps/">mobile web apps shouldn’t pretend to be native apps</a>, but I don’t like the thought of having to accept the current state of most mobile apps as the hand we’ve been dealt. The whole business feels somewhat 2000-era, which is frankly weird—we’ve spent a good decade improving the look and feel of apps in the browser, but the majority of mobile web apps seem content with a half-hearted grey-boxes-and-lines style and a rigid, transitionless interactivity.</p>
 
 <p>Does the responsibility lie with the vendors of mobile browsers? Partially. Apple are only now getting round to adding <a href="http://cubiq.org/ios5-the-first-true-web-app-ready-platform">native support for scrollable elements</a>: so far, we’ve been stuck with a range of lovingly crafted fakeries that range from ‘pathetic’ to ‘uncanny valley’. The problem goes beyond the slow pace of change, though—even when the functionality required to implement higher-quality interaction <em>is</em> in place, it’s often in such a way as to leave an inordinate amount of work to the app developer. A perfect example of this is the default behaviour of ‘clickable’ (or, rather, <em>tappable</em>) elements in Mobile Safari.</p>
 
@@ -79,7 +93,8 @@
 <td style="text-align: left;">None (scroll)</td>
 </tr>
 </tbody>
-</table><p>I promised up there in the first paragraph that I’d done the hard work for you, and here you go: <a href="https://github.com/aanand/jquery.tappable.js">jquery.tappable.js</a> implements this behaviour, and falls back to <code>click</code> events in desktop browsers for good measure.</p>
+</table>
+<p>I promised up there in the first paragraph that I’d done the hard work for you, and here you go: <a href="https://github.com/aanand/jquery.tappable.js">jquery.tappable.js</a> implements this behaviour, and falls back to <code>click</code> events in desktop browsers for good measure.</p>
 
 <p>It deviates from the above table in one respect, however—the highlight class is removed (or, in the case of a short tap, not added) before firing the callback. This is a matter of code aesthetics for me: I don’t want a library or plugin I’m using to add a transient class to an element without cleaning up after itself. When I need the highlight class to stick around longer (which in the nnnnext codebase is the exception, not the rule), I add it again in the callback function.</p>
 
@@ -107,13 +122,20 @@
   <span class="nx">onlyIf</span><span class="o">:</span>   <span class="kd">function</span><span class="p">(</span><span class="nx">el</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">$</span><span class="p">(</span><span class="nx">el</span><span class="p">).</span><span class="nx">hasClass</span><span class="p">(</span><span class="s1">'enabled'</span><span class="p">)</span> <span class="p">}</span>
 <span class="p">})</span></code></pre>
 
-<p>Have fun!</p><hr />
+<p>Have fun!</p>
+
+    <hr />
     <div class="metadata">
-      <div class="created"><time datetime='2011-07-05'>05 July 2011</time></div>
-      <div class="updated">Updated <time datetime='2011-07-07'>07 July 2011</time></div>
-      <a class="permalink" href="&#47;articles&#47;jquery-tappable&#47;">Permalink</a>
+      <div class="created">
+        <time datetime='2011-07-05'>05 July 2011</time>
+      </div>
+      <div class="updated">
+        Updated <time datetime='2011-07-07'>07 July 2011</time>
+      </div>
+      <a class="permalink" href="/articles/jquery-tappable/">Permalink</a>
     </div>
   </article>
-</div></div>
+</div>
+    </div>
   </body>
 </html>

@@ -1,8 +1,9 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <id>http://aanandprasad.com/</id>
   <title>Aanand Prasad</title>
-  <updated>2013-04-16T13:13:00Z</updated>
+  <updated>2013-04-16T14:13:00Z</updated>
   <link rel="alternate" href="http://aanandprasad.com/"/>
   <link rel="self" href="http://aanandprasad.com/articles.xml"/>
   <author>
@@ -12,8 +13,8 @@
   <entry>
     <id>tag:aanandprasad.com,2013-04-16:/articles/negronis/</id>
     <title type="html">The Abstracted Negroni</title>
-    <published>2013-04-16T13:13:00Z</published>
-    <updated>2013-06-20T17:32:00Z</updated>
+    <published>2013-04-16T14:13:00Z</published>
+    <updated>2013-06-20T18:32:00Z</updated>
     <link rel="alternate" href="http://aanandprasad.com/articles/negronis/"/>
     <content type="html">
       &lt;p class='literate-intro'&gt;
@@ -21,7 +22,8 @@
         You can &lt;a href='http://aanandprasad.com/literate/negronis.litjs'&gt;download it here&lt;/a&gt; and run it at the command line thus:
         &lt;code&gt;cat negronis.litjs | egrep '^ {4}' | node&lt;/code&gt;
       &lt;/p&gt;
-    &lt;p&gt;I was out last Friday at a bar where they had a &amp;#8220;Negroni Tic-Tac-Toe&amp;#8221; offer&amp;#8212;you could custom-build your drink from a selection of 3 gins, 3 vermouths and 3 amari, and if you got &amp;#8220;3 in a row&amp;#8221; you&amp;#8217;d get &amp;#163;5 off your bill. It&amp;#8217;s a laughably stingy deal, but it got me thinking. About programming, I mean.&lt;/p&gt;
+    
+&lt;p&gt;I was out last Friday at a bar where they had a “Negroni Tic-Tac-Toe” offer—you could custom-build your drink from a selection of 3 gins, 3 vermouths and 3 amari, and if you got “3 in a row” you’d get £5 off your bill. It’s a laughably stingy deal, but it got me thinking. About programming, I mean.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;function Negroni(gin, vermouth, amaro) {
   this.gin      = gin;
@@ -42,13 +44,13 @@ function inspect(thing) {
   return thing.inspect ? thing.inspect() : thing.toString();
 }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;The Negroni is often described as a &amp;#8220;manly&amp;#8221; drink, but fuck your gender-essentialism&amp;#8212;let&amp;#8217;s just call it &lt;em&gt;badass&lt;/em&gt;. Everything I ever needed to know about it, incidentally, I learned from &lt;a href="http://manhattansproject.com/on-the-negroni/"&gt;Felix&lt;/a&gt;. I personally find Punt e Mes a shade too bitter when combined with Campari, but that&amp;#8217;s just me.&lt;/p&gt;
+&lt;p&gt;The Negroni is often described as a “manly” drink, but fuck your gender-essentialism—let’s just call it &lt;em&gt;badass&lt;/em&gt;. Everything I ever needed to know about it, incidentally, I learned from &lt;a href="http://manhattansproject.com/on-the-negroni/"&gt;Felix&lt;/a&gt;. I personally find Punt e Mes a shade too bitter when combined with Campari, but that’s just me.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;print("Here's how I make it at home:",
   new Negroni("Botanist", "Antica Formula", "Campari"));
   // =&amp;gt; Negroni(Botanist, Antica Formula, Campari)&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Point is, there are 3&amp;#215;3&amp;#215;3&amp;#160;=&amp;#160;27 possible combinations at that bar, a delicious Rubik&amp;#8217;s Cube of liver damage. How would you enumerate them all?&lt;/p&gt;
+&lt;p&gt;Point is, there are 3×3×3 = 27 possible combinations at that bar, a delicious Rubik’s Cube of liver damage. How would you enumerate them all?&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;var assemble = function(g, v, a) {
   return g.map(function(gin) {
@@ -75,7 +77,7 @@ print(assemble(allGins, allVermouths, allAmari));
 //      ...]
 //    ...]&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Hmmm. It&amp;#8217;s a start, but that&amp;#8217;s altogether too much nesting. We&amp;#8217;ll never get anything done if we&amp;#8217;re spending all our time unwrapping.&lt;/p&gt;
+&lt;p&gt;Hmmm. It’s a start, but that’s altogether too much nesting. We’ll never get anything done if we’re spending all our time unwrapping.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;Array.prototype.unwrap = function() {
   return this.reduce(function(a, b) { return a.concat(b) }, []);
@@ -91,7 +93,7 @@ assemble = function(g, v, a) {
   }).unwrap();
 };&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;The outer two &lt;code&gt;map&lt;/code&gt;s are followed by an &lt;code&gt;unwrap&lt;/code&gt;, which turns an array-of-arrays into a single array. (The innermost &lt;code&gt;map&lt;/code&gt; gives us an array of Negronis, which is what we want, so unwrapping is uncalled for&amp;#8212;and would fail).&lt;/p&gt;
+&lt;p&gt;The outer two &lt;code&gt;map&lt;/code&gt;s are followed by an &lt;code&gt;unwrap&lt;/code&gt;, which turns an array-of-arrays into a single array. (The innermost &lt;code&gt;map&lt;/code&gt; gives us an array of Negronis, which is what we want, so unwrapping is uncalled for—and would fail).&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;print(assemble(allGins, allVermouths, allAmari));
 
@@ -106,7 +108,7 @@ assemble = function(g, v, a) {
 
 &lt;p&gt;Much better.&lt;/p&gt;
 
-&lt;p&gt;Of course, it&amp;#8217;s almost never a good idea to make 27 cocktails. Let&amp;#8217;s row back a bit and consider a much more common scenario: you&amp;#8217;ve got a guest round and they&amp;#8217;d fancy just one Negroni. They don&amp;#8217;t much mind &lt;em&gt;what&lt;/em&gt; gin, vermouth or amaro it&amp;#8217;s made with&amp;#8212;you&amp;#8217;re more worried about whether you have them at all. Can you satisfy them?&lt;/p&gt;
+&lt;p&gt;Of course, it’s almost never a good idea to make 27 cocktails. Let’s row back a bit and consider a much more common scenario: you’ve got a guest round and they’d fancy just one Negroni. They don’t much mind &lt;em&gt;what&lt;/em&gt; gin, vermouth or amaro it’s made with—you’re more worried about whether you have them at all. Can you satisfy them?&lt;/p&gt;
 
 &lt;p&gt;We need to represent the &lt;em&gt;potential presence or absence&lt;/em&gt; of a thing.&lt;/p&gt;
 
@@ -123,7 +125,7 @@ var nope = {
 print("Here's something:", yep("Gin"));
 print("Here's nothing:", nope);&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;So, time to write a new &lt;code&gt;assemble&lt;/code&gt; method, right? To check individually for the presence or absence of each of our ingredients, and only return a &lt;code&gt;yep()&lt;/code&gt; if we&amp;#8217;ve got all 3?&lt;/p&gt;
+&lt;p&gt;So, time to write a new &lt;code&gt;assemble&lt;/code&gt; method, right? To check individually for the presence or absence of each of our ingredients, and only return a &lt;code&gt;yep()&lt;/code&gt; if we’ve got all 3?&lt;/p&gt;
 
 &lt;p&gt;Nope. &lt;code&gt;assemble&lt;/code&gt; can stay as it is. We just need to implement &lt;code&gt;map&lt;/code&gt; and &lt;code&gt;unwrap&lt;/code&gt;.&lt;/p&gt;
 
@@ -158,9 +160,9 @@ print("If we have gin, vermouth and amaro:",
   assemble(yep("Gin"), yep("Vermouth"), yep("Amaro")));
   // =&amp;gt; yep(Negroni(Gin, Vermouth, Amaro))&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Magic. &lt;code&gt;assemble&lt;/code&gt; will accept anything that supports those two methods. All it expresses is that you need all 3 ingredients to make a Negroni&amp;#8212;not how to get them, or how many to make. That logic lives entirely in the definitions of &lt;code&gt;map&lt;/code&gt; and &lt;code&gt;unwrap&lt;/code&gt;: for arrays, all possible combinations of elements are enumerated; for &lt;code&gt;yep&lt;/code&gt; and &lt;code&gt;nope&lt;/code&gt;, we only ever have zero or one of something, and we short-circuit as soon as the first zero (a.k.a. &lt;code&gt;nope&lt;/code&gt;) is encountered.&lt;/p&gt;
+&lt;p&gt;Magic. &lt;code&gt;assemble&lt;/code&gt; will accept anything that supports those two methods. All it expresses is that you need all 3 ingredients to make a Negroni—not how to get them, or how many to make. That logic lives entirely in the definitions of &lt;code&gt;map&lt;/code&gt; and &lt;code&gt;unwrap&lt;/code&gt;: for arrays, all possible combinations of elements are enumerated; for &lt;code&gt;yep&lt;/code&gt; and &lt;code&gt;nope&lt;/code&gt;, we only ever have zero or one of something, and we short-circuit as soon as the first zero (a.k.a. &lt;code&gt;nope&lt;/code&gt;) is encountered.&lt;/p&gt;
 
-&lt;p&gt;Sadly, it turns out we don&amp;#8217;t have any of the ingredients to hand. You can order them online, though! Indeed, you have 3 fast-delivery specialist suppliers (one per ingredient&amp;#8212;they&amp;#8217;re &lt;em&gt;highly&lt;/em&gt; specialised) bookmarked for this very purpose. Within a few moments, each one has promised that a bottle is on its way to you, and you can thus pass on the promise of a Negroni to your patient, thirsty guest.&lt;/p&gt;
+&lt;p&gt;Sadly, it turns out we don’t have any of the ingredients to hand. You can order them online, though! Indeed, you have 3 fast-delivery specialist suppliers (one per ingredient—they’re &lt;em&gt;highly&lt;/em&gt; specialised) bookmarked for this very purpose. Within a few moments, each one has promised that a bottle is on its way to you, and you can thus pass on the promise of a Negroni to your patient, thirsty guest.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;var Promise = require("promise");
 
@@ -190,56 +192,52 @@ promisedNegroni.then(function(negroni) {
   // =&amp;gt; Negroni(Gin, Vermouth, Amaro)
 });&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Once again, we didn&amp;#8217;t have to change &lt;code&gt;assemble&lt;/code&gt;&amp;#8212;just implement &lt;code&gt;map&lt;/code&gt; and &lt;code&gt;unwrap&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Once again, we didn’t have to change &lt;code&gt;assemble&lt;/code&gt;—just implement &lt;code&gt;map&lt;/code&gt; and &lt;code&gt;unwrap&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;I think it&amp;#8217;s kind of incredible that we can write code like &lt;code&gt;assemble&lt;/code&gt;, which doesn&amp;#8217;t care how its pieces work&amp;#8212;just that they fit together right&amp;#8212;and plug any kind of delivery mechanism we want into it: arrays-of-things, maybe-things-maybe-nots, promises-of-things. This is a huge step up from just writing views and not caring where the models came from. This is writing operations and not caring how they&amp;#8217;re sequenced or executed.&lt;/p&gt;
+&lt;p&gt;I think it’s kind of incredible that we can write code like &lt;code&gt;assemble&lt;/code&gt;, which doesn’t care how its pieces work—just that they fit together right—and plug any kind of delivery mechanism we want into it: arrays-of-things, maybe-things-maybe-nots, promises-of-things. This is a huge step up from just writing views and not caring where the models came from. This is writing operations and not caring how they’re sequenced or executed.&lt;/p&gt;
 
-&lt;p&gt;If you think that&amp;#8217;s cool too, we&amp;#8217;re probably going to get along.&lt;/p&gt;
-&lt;hr&gt;&lt;p&gt;I&amp;#8217;m not the first to point out that &lt;a href="http://blog.jcoglan.com/2011/03/11/promises-are-the-monad-of-asynchronous-programming/"&gt;promises are the monad of asynchronous programming&lt;/a&gt;, but the topic has become pertinent, because &lt;a href="https://github.com/promises-aplus"&gt;the Promises/A+ spec&lt;/a&gt; is still in formation. If programmers can rely on a monadic interface for promises, this opens up the possibility of writing code which will work with &lt;em&gt;any&lt;/em&gt; monad, not just promises&amp;#8212;as I&amp;#8217;ve tried to demonstrate with &lt;code&gt;assemble&lt;/code&gt; above.&lt;/p&gt;
+&lt;p&gt;If you think that’s cool too, we’re probably going to get along.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;I’m not the first to point out that &lt;a href="http://blog.jcoglan.com/2011/03/11/promises-are-the-monad-of-asynchronous-programming/"&gt;promises are the monad of asynchronous programming&lt;/a&gt;, but the topic has become pertinent, because &lt;a href="https://github.com/promises-aplus"&gt;the Promises/A+ spec&lt;/a&gt; is still in formation. If programmers can rely on a monadic interface for promises, this opens up the possibility of writing code which will work with &lt;em&gt;any&lt;/em&gt; monad, not just promises—as I’ve tried to demonstrate with &lt;code&gt;assemble&lt;/code&gt; above.&lt;/p&gt;
 
-&lt;p&gt;There are two equivalent ways to define a monad. You can define &lt;code&gt;map&lt;/code&gt; and &lt;code&gt;unwrap&lt;/code&gt;, as I have, or you can define &lt;code&gt;chain&lt;/code&gt; (which is equivalent to &lt;code&gt;map&lt;/code&gt; followed by &lt;code&gt;unwrap&lt;/code&gt;), and &lt;code&gt;of&lt;/code&gt; (which takes a plain value and wraps it&amp;#8212;so &lt;code&gt;Array.of(1)&lt;/code&gt; would return &lt;code&gt;[1]&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;There are two equivalent ways to define a monad. You can define &lt;code&gt;map&lt;/code&gt; and &lt;code&gt;unwrap&lt;/code&gt;, as I have, or you can define &lt;code&gt;chain&lt;/code&gt; (which is equivalent to &lt;code&gt;map&lt;/code&gt; followed by &lt;code&gt;unwrap&lt;/code&gt;), and &lt;code&gt;of&lt;/code&gt; (which takes a plain value and wraps it—so &lt;code&gt;Array.of(1)&lt;/code&gt; would return &lt;code&gt;[1]&lt;/code&gt;).&lt;/p&gt;
 
-&lt;p&gt;The problem is that a promise&amp;#8217;s &lt;code&gt;then&lt;/code&gt; method, as specified by Promises/A+, treats the return value of the passed-in function differently depending on whether it&amp;#8217;s a promise&amp;#8212;essentially, it tries to intelligently determine whether to be &lt;code&gt;map&lt;/code&gt; or &lt;code&gt;chain&lt;/code&gt;. This means that the result of calling &lt;code&gt;then&lt;/code&gt; is always a flattened promise, which is why the &lt;code&gt;Promise.prototype.unwrap&lt;/code&gt; defined above just returns &lt;code&gt;this&lt;/code&gt;. It&amp;#8217;s impossible to call &lt;code&gt;then&lt;/code&gt; and get back a promise of a promise.&lt;/p&gt;
+&lt;p&gt;The problem is that a promise’s &lt;code&gt;then&lt;/code&gt; method, as specified by Promises/A+, treats the return value of the passed-in function differently depending on whether it’s a promise—essentially, it tries to intelligently determine whether to be &lt;code&gt;map&lt;/code&gt; or &lt;code&gt;chain&lt;/code&gt;. This means that the result of calling &lt;code&gt;then&lt;/code&gt; is always a flattened promise, which is why the &lt;code&gt;Promise.prototype.unwrap&lt;/code&gt; defined above just returns &lt;code&gt;this&lt;/code&gt;. It’s impossible to call &lt;code&gt;then&lt;/code&gt; and get back a promise of a promise.&lt;/p&gt;
 
-&lt;p&gt;Besides the inherent unreliability of trying to determine whether or not something is a promise, such overloading is likely to lead to difficult-to-predict bugs and difficult-to-reason-about code when promises are &lt;em&gt;treated&lt;/em&gt; like well-behaved monads, but &lt;em&gt;aren&amp;#8217;t&lt;/em&gt;. We got away with it this time, but I wouldn&amp;#8217;t feel confident writing more complex code, knowing that &amp;#8220;smart&amp;#8221; logic was there.&lt;/p&gt;
+&lt;p&gt;Besides the inherent unreliability of trying to determine whether or not something is a promise, such overloading is likely to lead to difficult-to-predict bugs and difficult-to-reason-about code when promises are &lt;em&gt;treated&lt;/em&gt; like well-behaved monads, but &lt;em&gt;aren’t&lt;/em&gt;. We got away with it this time, but I wouldn’t feel confident writing more complex code, knowing that “smart” logic was there.&lt;/p&gt;
 
-&lt;p&gt;There &lt;a href="http://brianmckenna.org/blog/category_theory_promisesaplus"&gt;has&lt;/a&gt; &lt;a href="https://github.com/promises-aplus/resolvers-spec/issues/24"&gt;been&lt;/a&gt; &lt;a href="https://github.com/promises-aplus/promises-spec/issues/94"&gt;some&lt;/a&gt; &lt;a href="https://github.com/promises-aplus/promises-spec/issues/97"&gt;discussion&lt;/a&gt; on this topic in the last few days. Sadly, the authors have so far been difficult to convince. This is understandable&amp;#8212;the theory is difficult to explain, examples of the potential problems are non-obvious, and it&amp;#8217;s easy to get led astray by the question of why you would ever &lt;em&gt;want&lt;/em&gt; to have a promise of a promise.&lt;/p&gt;
+&lt;p&gt;There &lt;a href="http://brianmckenna.org/blog/category_theory_promisesaplus"&gt;has&lt;/a&gt; &lt;a href="https://github.com/promises-aplus/resolvers-spec/issues/24"&gt;been&lt;/a&gt; &lt;a href="https://github.com/promises-aplus/promises-spec/issues/94"&gt;some&lt;/a&gt; &lt;a href="https://github.com/promises-aplus/promises-spec/issues/97"&gt;discussion&lt;/a&gt; on this topic in the last few days. Sadly, the authors have so far been difficult to convince. This is understandable—the theory is difficult to explain, examples of the potential problems are non-obvious, and it’s easy to get led astray by the question of why you would ever &lt;em&gt;want&lt;/em&gt; to have a promise of a promise.&lt;/p&gt;
 
 &lt;p&gt;A more directly appealing argument was made by &lt;a href="https://github.com/promises-aplus/promises-spec/issues/94#issuecomment-16294840"&gt;Reg&lt;/a&gt;:&lt;/p&gt;
 
 &lt;blockquote&gt;
-&lt;p&gt;A long time ago in a company far, far away, there was a young engineer given a herculean task within an impossible deadline. He created LiveScript. One of the decisions he made was to make functions first-class values rather than have them be &amp;#8220;something else&amp;#8221; like the other popular languages of the day. Another was to use prototypical inheritance rather than classical inheritance, like the other popular languages of the day.&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;A long time ago in a company far, far away, there was a young engineer given a herculean task within an impossible deadline. He created LiveScript. One of the decisions he made was to make functions first-class values rather than have them be “something else” like the other popular languages of the day. Another was to use prototypical inheritance rather than classical inheritance, like the other popular languages of the day.&lt;/p&gt;
 
-&lt;blockquote&gt;
 &lt;p&gt;It would take years for the programming community to embrace the power of functions as first-class values in his language. Most people agree that Crockford got the ball rolling, followed by Oliver Steele and you can trace a direct line down to Jeremy Ashkenas and Underscore from there. Today, it is unthinkable to imagine a JavaScript without functions that can return functions or apply functions.&lt;/p&gt;
-&lt;/blockquote&gt;
 
-&lt;blockquote&gt;
-&lt;p&gt;Conversely, prototypical inheritance hasn&amp;#8217;t reached a tipping point. The vast majority of programmers simply emulate classical inheritance and do not exploit its power in any way.&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;Conversely, prototypical inheritance hasn’t reached a tipping point. The vast majority of programmers simply emulate classical inheritance and do not exploit its power in any way.&lt;/p&gt;
 
-&lt;blockquote&gt;
 &lt;p&gt;What does this history tell me about promises?&lt;/p&gt;
+
+&lt;p&gt;I think that promises-that-are-monads are in the same category as these two ideas I cited. If we embrace the idea of promises being first-class monads, we will likely have a lot of “meh” for a year or maybe three. Then someone will write a library or give a talk and the light will go on. It is had to imagine what wonderful thing will be created when that happens.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;blockquote&gt;
-&lt;p&gt;I think that promises-that-are-monads are in the same category as these two ideas I cited. If we embrace the idea of promises being first-class monads, we will likely have a lot of &amp;#8220;meh&amp;#8221; for a year or maybe three. Then someone will write a library or give a talk and the light will go on. It is had to imagine what wonderful thing will be created when that happens.&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;This speaks to me. The power of first-class functions had already been amply demonstrated when LiveScript was designed—just not in the mainstream. Similarly, the power of the monad abstraction has been amply demonstrated in functional languages, but not yet in the mainstream.&lt;/p&gt;
 
-&lt;p&gt;This speaks to me. The power of first-class functions had already been amply demonstrated when LiveScript was designed&amp;#8212;just not in the mainstream. Similarly, the power of the monad abstraction has been amply demonstrated in functional languages, but not yet in the mainstream.&lt;/p&gt;
+&lt;p&gt;It may be too late for &lt;code&gt;then&lt;/code&gt;—too much code already relies on its current behaviour, and besides, it’s useful. A &lt;a href="https://github.com/pufuwozu/fantasy-land"&gt;concurrent spec for monads&lt;/a&gt;, specifying &lt;code&gt;chain&lt;/code&gt; and &lt;code&gt;of&lt;/code&gt;, has been started, and we could just hope that most promise implementors choose to support that too… but I strongly suspect the majority won’t bother, even though it’d be trivial.&lt;/p&gt;
 
-&lt;p&gt;It may be too late for &lt;code&gt;then&lt;/code&gt;&amp;#8212;too much code already relies on its current behaviour, and besides, it&amp;#8217;s useful. A &lt;a href="https://github.com/pufuwozu/fantasy-land"&gt;concurrent spec for monads&lt;/a&gt;, specifying &lt;code&gt;chain&lt;/code&gt; and &lt;code&gt;of&lt;/code&gt;, has been started, and we could just hope that most promise implementors choose to support that too&amp;#8230; but I strongly suspect the majority won&amp;#8217;t bother, even though it&amp;#8217;d be trivial.&lt;/p&gt;
-
-&lt;p&gt;To have &lt;code&gt;chain&lt;/code&gt; and &lt;code&gt;of&lt;/code&gt; specified and required in Promises/A+ would be a &lt;em&gt;much&lt;/em&gt; bigger win.&lt;/p&gt;</content>
+&lt;p&gt;To have &lt;code&gt;chain&lt;/code&gt; and &lt;code&gt;of&lt;/code&gt; specified and required in Promises/A+ would be a &lt;em&gt;much&lt;/em&gt; bigger win.&lt;/p&gt;
+</content>
   </entry>
   <entry>
     <id>tag:aanandprasad.com,2011-08-13:/articles/offline/</id>
     <title type="html">Offline Support is Valuable, and You Can’t Add it Later</title>
-    <published>2011-08-13T22:11:00Z</published>
-    <updated>2011-08-13T22:11:00Z</updated>
+    <published>2011-08-13T23:11:00Z</published>
+    <updated>2011-08-13T23:11:00Z</updated>
     <link rel="alternate" href="http://aanandprasad.com/articles/offline/"/>
-    <content type="html">&lt;div class='summary'&gt;&lt;p&gt;Non-trivial offline functionality in a web application is more valuable than you might have initially assumed, if you care about the user experience on mobile devices. It’s also not a feature you can easily add after you’ve already built a working product. It has a profound effect on how your app should be designed, and you have to plan for it from the outset if you don’t want to end up rewriting the bulk of your communication logic.&lt;/p&gt;&lt;/div&gt;&lt;hr class='summary-break'/&gt;&lt;!-- w: tf --&gt;
+    <content type="html">&lt;div class='summary'&gt;
+&lt;p&gt;Non-trivial offline functionality in a web application is more valuable than you might have initially assumed, if you care about the user experience on mobile devices. It’s also not a feature you can easily add after you’ve already built a working product. It has a profound effect on how your app should be designed, and you have to plan for it from the outset if you don’t want to end up rewriting the bulk of your communication logic.&lt;/p&gt;
+&lt;/div&gt;&lt;hr class='summary-break'/&gt;&lt;!-- w: tf --&gt;
 &lt;p&gt;If you’re designing a web application to run primarily on desktop browsers, you’ve probably already decided against implementing offline functionality. That’s entirely fair: there’s almost always an Internet connection available, and you’ll save yourself a lot of time.&lt;/p&gt;
 
 &lt;p&gt;If you’re considering implementing a mobile interface, though, you would do well to seriously consider implementing offline support too, even though mobile users usually have an Internet connection. Let me explain.&lt;/p&gt;
@@ -258,7 +256,9 @@ promisedNegroni.then(function(negroni) {
 &lt;li&gt;If the request does fail, you won’t know whether it made it to the server or not.&lt;/li&gt;
 
 &lt;li&gt;If the connection is slow, or flaky, it may well stay that way.&lt;/li&gt;
-&lt;/ol&gt;&lt;p&gt;For every single type of request your application will make, you will have to deal with these limitations. Consequently, if you’ve come straight from the world of comparatively fast, always-on broadband, many things you’re used to doing are now anti-patterns. Off the top of my head:&lt;/p&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;For every single type of request your application will make, you will have to deal with these limitations. Consequently, if you’ve come straight from the world of comparatively fast, always-on broadband, many things you’re used to doing are now anti-patterns. Off the top of my head:&lt;/p&gt;
 
 &lt;ol&gt;
 &lt;li&gt;When a user initiates an action that requires communication with the server, you can’t expect them to wait, doing nothing, until it’s succeeded—they could be waiting for minutes.&lt;/li&gt;
@@ -266,7 +266,9 @@ promisedNegroni.then(function(negroni) {
 &lt;li&gt;If the action fails due to network error, you can’t simply tell them to try again in a moment—if it failed once, it’ll probably fail again.&lt;/li&gt;
 
 &lt;li&gt;If the user wants to perform several such actions in quick succession, you &lt;em&gt;really&lt;/em&gt; can’t do either of the above two things. Have you ever used an application that worked that way? You can feel your hair greying.&lt;/li&gt;
-&lt;/ol&gt;&lt;p&gt;An application designed along these traditional lines, built on the assumption that an Internet connection is not just available, but reliable and fast, will be incredibly frustrating to use over a poor-quality connection.&lt;/p&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;An application designed along these traditional lines, built on the assumption that an Internet connection is not just available, but reliable and fast, will be incredibly frustrating to use over a poor-quality connection.&lt;/p&gt;
 
 &lt;p&gt;What I’m getting at is that offline support isn’t just a way of making your app usable when there’s no Internet connection. It can also be a way of making it usable when the Internet connection is awful, which, depending on the app, could be a much more common occurrence. You simply need to broaden your definition of “offline” to mean not just “there is no connection”, but “there is no &lt;em&gt;good&lt;/em&gt; connection”.&lt;/p&gt;
 
@@ -282,7 +284,9 @@ promisedNegroni.then(function(negroni) {
 &lt;li&gt;If the request succeeds, the UI is updated to reflect the changes to application state.&lt;/li&gt;
 
 &lt;li&gt;If the request fails, the user is notified.&lt;/li&gt;
-&lt;/ol&gt;&lt;p&gt;The problem with this design is that the assumption of connectivity is fundamental. In the absence of a good Internet connection, it’s merely annoying. In the absence of any Internet connection at all, it fails at step 2.&lt;/p&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The problem with this design is that the assumption of connectivity is fundamental. In the absence of a good Internet connection, it’s merely annoying. In the absence of any Internet connection at all, it fails at step 2.&lt;/p&gt;
 
 &lt;p&gt;The good news is that, in my limited experience, getting into the offline mindset requires only one key realisation: when you leave the world of timely, reliable communication, &lt;strong&gt;the local database, not the server’s, must be the gateway for all persistent changes in application state&lt;/strong&gt;.&lt;/p&gt;
 
@@ -296,7 +300,9 @@ promisedNegroni.then(function(negroni) {
 &lt;li&gt;The UI is updated.&lt;/li&gt;
 
 &lt;li&gt;At some point—now or later—the local database and the server are synchronised.&lt;/li&gt;
-&lt;/ol&gt;&lt;p&gt;Which, you might realise, is how native smartphone apps are designed. The good ones, anyway.&lt;/p&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Which, you might realise, is how native smartphone apps are designed. The good ones, anyway.&lt;/p&gt;
 
 &lt;p&gt;When your application is designed this way, its “offline” usability skyrockets. Many common user actions—checking off a todo, archiving an email, composing a blog post, reading something previously downloaded—can be performed with no latency and little to no loss in immediate utility. Indeed, Backbone.js’ &lt;a href="http://backbonejs.org/examples/todos/index.html"&gt;example todo app&lt;/a&gt; is a functional and useful application that never even needs to talk to a server.&lt;/p&gt;
 
@@ -306,15 +312,19 @@ promisedNegroni.then(function(negroni) {
 
 &lt;p&gt;Indeed, “the current state of the application” no longer has a canonical meaning. What if the user has the application installed on two devices, and has made updates on both of them? Proceed far enough down this rabbit-hole and it becomes necessary to &lt;a href="http://afeinberg.github.com/2011/06/17/replication-atomicity-and-order-in-distributed-systems.html"&gt;leave behind the Newtonian universe&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;If this sounds like more trouble than it’s worth… well, it might be. Your call. But I hope I’ve made the value of offline support clearer, and if you’re planning on implementing it, I hope you’re really &lt;em&gt;planning&lt;/em&gt; it.&lt;/p&gt;</content>
+&lt;p&gt;If this sounds like more trouble than it’s worth… well, it might be. Your call. But I hope I’ve made the value of offline support clearer, and if you’re planning on implementing it, I hope you’re really &lt;em&gt;planning&lt;/em&gt; it.&lt;/p&gt;
+</content>
   </entry>
   <entry>
     <id>tag:aanandprasad.com,2011-07-05:/articles/jquery-tappable/</id>
     <title type="html">Better Tap Behaviour with jquery.tappable.js</title>
-    <published>2011-07-05T20:13:00Z</published>
-    <updated>2011-07-07T09:39:00Z</updated>
+    <published>2011-07-05T21:13:00Z</published>
+    <updated>2011-07-07T10:39:00Z</updated>
     <link rel="alternate" href="http://aanandprasad.com/articles/jquery-tappable/"/>
-    <content type="html">&lt;div class='summary'&gt;&lt;p&gt;The behaviour of tappable elements in Mobile Safari is unacceptably ugly. Unfortunately, taking control of it is more involved than it perhaps ought to be. &lt;a href='https://github.com/aanand/jquery.tappable.js'&gt;jquery.tappable.js&lt;/a&gt; does (most of) the hard work for you.&lt;/p&gt;&lt;/div&gt;&lt;hr class='summary-break'/&gt;&lt;p&gt;I hope we can all agree that &lt;a href="http://cvil.ly/2011/06/19/pretenders-why-mobile-web-apps-should-stop-trying-to-act-like-native-apps/"&gt;mobile web apps shouldn’t pretend to be native apps&lt;/a&gt;, but I don’t like the thought of having to accept the current state of most mobile apps as the hand we’ve been dealt. The whole business feels somewhat 2000-era, which is frankly weird—we’ve spent a good decade improving the look and feel of apps in the browser, but the majority of mobile web apps seem content with a half-hearted grey-boxes-and-lines style and a rigid, transitionless interactivity.&lt;/p&gt;
+    <content type="html">&lt;div class='summary'&gt;
+&lt;p&gt;The behaviour of tappable elements in Mobile Safari is unacceptably ugly. Unfortunately, taking control of it is more involved than it perhaps ought to be. &lt;a href="https://github.com/aanand/jquery.tappable.js"&gt;jquery.tappable.js&lt;/a&gt; does (most of) the hard work for you.&lt;/p&gt;
+&lt;/div&gt;&lt;hr class='summary-break'/&gt;
+&lt;p&gt;I hope we can all agree that &lt;a href="http://cvil.ly/2011/06/19/pretenders-why-mobile-web-apps-should-stop-trying-to-act-like-native-apps/"&gt;mobile web apps shouldn’t pretend to be native apps&lt;/a&gt;, but I don’t like the thought of having to accept the current state of most mobile apps as the hand we’ve been dealt. The whole business feels somewhat 2000-era, which is frankly weird—we’ve spent a good decade improving the look and feel of apps in the browser, but the majority of mobile web apps seem content with a half-hearted grey-boxes-and-lines style and a rigid, transitionless interactivity.&lt;/p&gt;
 
 &lt;p&gt;Does the responsibility lie with the vendors of mobile browsers? Partially. Apple are only now getting round to adding &lt;a href="http://cubiq.org/ios5-the-first-true-web-app-ready-platform"&gt;native support for scrollable elements&lt;/a&gt;: so far, we’ve been stuck with a range of lovingly crafted fakeries that range from ‘pathetic’ to ‘uncanny valley’. The problem goes beyond the slow pace of change, though—even when the functionality required to implement higher-quality interaction &lt;em&gt;is&lt;/em&gt; in place, it’s often in such a way as to leave an inordinate amount of work to the app developer. A perfect example of this is the default behaviour of ‘clickable’ (or, rather, &lt;em&gt;tappable&lt;/em&gt;) elements in Mobile Safari.&lt;/p&gt;
 
@@ -356,7 +366,8 @@ promisedNegroni.then(function(negroni) {
 &lt;td style="text-align: left;"&gt;None (scroll)&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
-&lt;/table&gt;&lt;p&gt;I promised up there in the first paragraph that I’d done the hard work for you, and here you go: &lt;a href="https://github.com/aanand/jquery.tappable.js"&gt;jquery.tappable.js&lt;/a&gt; implements this behaviour, and falls back to &lt;code&gt;click&lt;/code&gt; events in desktop browsers for good measure.&lt;/p&gt;
+&lt;/table&gt;
+&lt;p&gt;I promised up there in the first paragraph that I’d done the hard work for you, and here you go: &lt;a href="https://github.com/aanand/jquery.tappable.js"&gt;jquery.tappable.js&lt;/a&gt; implements this behaviour, and falls back to &lt;code&gt;click&lt;/code&gt; events in desktop browsers for good measure.&lt;/p&gt;
 
 &lt;p&gt;It deviates from the above table in one respect, however—the highlight class is removed (or, in the case of a short tap, not added) before firing the callback. This is a matter of code aesthetics for me: I don’t want a library or plugin I’m using to add a transient class to an element without cleaning up after itself. When I need the highlight class to stick around longer (which in the nnnnext codebase is the exception, not the rule), I add it again in the callback function.&lt;/p&gt;
 
@@ -384,15 +395,19 @@ $(element).tappable({
   onlyIf:   function(el) { return $(el).hasClass('enabled') }
 })&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Have fun!&lt;/p&gt;</content>
+&lt;p&gt;Have fun!&lt;/p&gt;
+</content>
   </entry>
   <entry>
     <id>tag:aanandprasad.com,2011-05-20:/articles/prototype-chains-and-coffeescript-subclasses/</id>
     <title type="html">Prototype Chains and CoffeeScript Subclasses</title>
-    <published>2011-05-20T13:16:00Z</published>
-    <updated>2011-05-20T13:16:00Z</updated>
+    <published>2011-05-20T14:16:00Z</published>
+    <updated>2011-05-20T14:16:00Z</updated>
     <link rel="alternate" href="http://aanandprasad.com/articles/prototype-chains-and-coffeescript-subclasses/"/>
-    <content type="html">&lt;div class='summary'&gt;&lt;p&gt;In developing &lt;a href='http://nnnnext.com'&gt;nnnnext.com&lt;/a&gt;, I tackled a surprising number of problems I’d not faced before in my web development career. Here’s one of the more interesting ones, with what I think is a pretty cute solution.&lt;/p&gt;&lt;/div&gt;&lt;hr class='summary-break'/&gt;&lt;p&gt;Context, briefly: nnnnext is a todo list for your music. It’s a single-page JavaScript app written in &lt;a href="http://jashkenas.github.com/coffee-script/"&gt;CoffeeScript&lt;/a&gt; and utilising &lt;a href="http://documentcloud.github.com/backbone/"&gt;Backbone.js&lt;/a&gt; for &lt;a href="http://twitter.com/hylomorphism/status/71202209618067457"&gt;lightweight&lt;/a&gt; MVC. Importantly, it has two similar-but-separate user interfaces: one for desktop web browsers, and another for multitouch devices.&lt;/p&gt;
+    <content type="html">&lt;div class='summary'&gt;
+&lt;p&gt;In developing &lt;a href="http://nnnnext.com"&gt;nnnnext.com&lt;/a&gt;, I tackled a surprising number of problems I’d not faced before in my web development career. Here’s one of the more interesting ones, with what I think is a pretty cute solution.&lt;/p&gt;
+&lt;/div&gt;&lt;hr class='summary-break'/&gt;
+&lt;p&gt;Context, briefly: nnnnext is a todo list for your music. It’s a single-page JavaScript app written in &lt;a href="http://jashkenas.github.com/coffee-script/"&gt;CoffeeScript&lt;/a&gt; and utilising &lt;a href="http://documentcloud.github.com/backbone/"&gt;Backbone.js&lt;/a&gt; for &lt;a href="http://twitter.com/hylomorphism/status/71202209618067457"&gt;lightweight&lt;/a&gt; MVC. Importantly, it has two similar-but-separate user interfaces: one for desktop web browsers, and another for multitouch devices.&lt;/p&gt;
 
 &lt;p&gt;Both interfaces are implemented as a set of classes (provided by CoffeeScript’s &lt;a href="http://jashkenas.github.com/coffee-script/#classes"&gt;simple classes implementation&lt;/a&gt;) that represent the different UI views. Each UI requires slightly different behaviour for &lt;em&gt;some&lt;/em&gt; views. For example, an element might contain a button that (in the desktop UI) appears when the element is hovered, and (in the touch UI) appears/disappears when the element is tapped. Consequently, some view classes are subclassed in one or both UIs in order to implement these differences. The class structure might look like this (implementation code omitted):&lt;/p&gt;
 
@@ -457,9 +472,10 @@ new UI.Sprocket # =&amp;gt; new Views.Sprocket&lt;/code&gt;&lt;/pre&gt;
 &lt;div class="footnotes"&gt;
 &lt;hr&gt;
 &lt;ol&gt;&lt;li id="fn:1"&gt;
-&lt;p&gt;I should be careful about using the word “undeniably” though. I’m no expert on object systems. If you feel you can reasonably deny it, I’d love to &lt;a href="mailto:aanand.prasad@gmail.com"&gt;hear from you&lt;/a&gt;!&lt;/p&gt;
-&lt;a href="#fnref:1" rev="footnote"&gt;↩&lt;/a&gt;
+&lt;p&gt;I should be careful about using the word “undeniably” though. I’m no expert on object systems. If you feel you can reasonably deny it, I’d love to &lt;a href="mailto:aanand.prasad@gmail.com"&gt;hear from you&lt;/a&gt;! &lt;a href="#fnref:1" rev="footnote"&gt;↩&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;&lt;/ol&gt;
 &lt;/div&gt;</content>
   </entry>
 </feed>
+
+
