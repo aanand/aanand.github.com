@@ -7,13 +7,11 @@ html {
   border: 0;
 }
 
-.bp-reset-element, body, h1, h2, h3, h4, h5, h6, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, blockquote, q, th, td, caption, table,
-div, span, object, iframe, p,
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary, blockquote, q, th, td, caption, table, body, div, span, object, iframe, p,
 pre, a, abbr, acronym, address,
 code, del, dfn, em, img,
 dl, dt, dd, ol, ul, li, fieldset,
-form, label, legend,
-caption, tbody, tfoot, thead, tr {
+form, label, legend, tbody, tfoot, thead, tr, h1, h2, h3, h4, h5, h6 {
   margin: 0;
   padding: 0;
   border: 0;
@@ -24,14 +22,14 @@ caption, tbody, tfoot, thead, tr {
   vertical-align: baseline;
 }
 
-article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block;
 }
 
 blockquote, q {
   quotes: "" "";
 }
-blockquote:before, blockquote:after, q:before, q:after {
+blockquote:before, q:before, blockquote:after, q:after {
   content: "";
 }
 
@@ -206,12 +204,12 @@ a img {
 
 /* Literal.String */
 .na {
-  color: teal;
+  color: #008080;
 }
 
 /* Name.Attribute */
 .nb {
-  color: #0086b3;
+  color: #0086B3;
 }
 
 /* Name.Builtin */
@@ -222,7 +220,7 @@ a img {
 
 /* Name.Class */
 .no {
-  color: teal;
+  color: #008080;
 }
 
 /* Name.Constant */
@@ -233,7 +231,7 @@ a img {
 
 /* Name.Decorator */
 .ni {
-  color: purple;
+  color: #800080;
 }
 
 /* Name.Entity */
@@ -261,12 +259,12 @@ a img {
 
 /* Name.Namespace */
 .nt {
-  color: navy;
+  color: #000080;
 }
 
 /* Name.Tag */
 .nv {
-  color: teal;
+  color: #008080;
 }
 
 /* Name.Variable */
@@ -362,17 +360,17 @@ a img {
 
 /* Name.Builtin.Pseudo */
 .vc {
-  color: teal;
+  color: #008080;
 }
 
 /* Name.Variable.Class */
 .vg {
-  color: teal;
+  color: #008080;
 }
 
 /* Name.Variable.Global */
 .vi {
-  color: teal;
+  color: #008080;
 }
 
 /* Name.Variable.Instance */
@@ -384,7 +382,7 @@ a img {
 body {
   line-height: 1.5;
   font-family: "Lato", sans-serif;
-  color: #444444;
+  color: #444;
   font-size: 87.5%;
   font-weight: 300;
   letter-spacing: 0;
@@ -394,13 +392,13 @@ body {
   body {
     line-height: 1.5;
     font-family: "Lato", sans-serif;
-    color: #444444;
+    color: #444;
     font-size: 112.5%;
   }
 }
 @media screen and (-webkit-min-device-pixel-ratio: 2) {
   body {
-    color: #444444;
+    color: #444;
     font-weight: 400;
   }
 }
@@ -450,13 +448,11 @@ p {
   margin: 0 0 1.5em;
 }
 p .left {
-  display: inline;
   float: left;
   margin: 1.5em 1.5em 1.5em 0;
   padding: 0;
 }
 p .right {
-  display: inline;
   float: right;
   margin: 1.5em 0 1.5em 1.5em;
   padding: 0;
@@ -476,7 +472,7 @@ a:hover {
   color: #105f94;
 }
 a:active {
-  color: #88ccff;
+  color: #8cf;
 }
 
 blockquote {
@@ -579,7 +575,7 @@ caption {
 }
 
 .quiet {
-  color: #777777;
+  color: #777;
 }
 
 .loud {
@@ -682,7 +678,7 @@ pre, code, tt {
 }
 
 hr {
-  border: 1px solid #aaaaaa;
+  border: 1px solid #aaa;
   border-width: 1px 0;
   margin-bottom: 1.5em;
 }
@@ -696,7 +692,6 @@ hr {
     padding-top: 0;
   }
 }
-
 header {
   text-align: center;
   margin-bottom: 1.5em;
@@ -719,13 +714,11 @@ header .logo a {
   width: 150px;
   height: 150px;
   padding-top: 75px;
-  -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
-  -ms-border-radius: 50%;
-  -o-border-radius: 50%;
+  -webkit-border-radius: 50%;
   border-radius: 50%;
-  -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 header .logo a span {
@@ -739,14 +732,14 @@ header .logo a:hover {
 }
 
 .content header a, .content header .links {
-  color: #dddddd;
+  color: #ddd;
 }
 .content header a:hover {
   color: #105f94;
 }
 .content header .logo a {
-  color: white !important;
-  background: #dddddd;
+  color: #fff !important;
+  background: #ddd;
 }
 .content header .logo a:hover {
   color: white !important;
@@ -763,7 +756,7 @@ header .logo a:hover {
   display: inline;
 }
 .links li:before {
-  content: "\00b7";
+  content: "·";
 }
 .links li:first-child:before {
   display: none;
@@ -787,14 +780,14 @@ h2 {
   font-weight: 700;
 }
 .project .metadata, .article .metadata {
-  color: #777777;
+  color: #777;
 }
 .project .metadata > *, .article .metadata > * {
   display: inline;
 }
 .project .metadata > *:before, .article .metadata > *:before {
   content: "· ";
-  color: #777777 !important;
+  color: #777 !important;
 }
 .project .metadata > *:first-child:before, .article .metadata > *:first-child:before {
   display: none;
@@ -806,7 +799,7 @@ h2 {
   font-size: 0.9em;
 }
 .project .literate-intro, .project .literate-intro a, .project .literate-intro code, .article .literate-intro, .article .literate-intro a, .article .literate-intro code {
-  color: #777777;
+  color: #777;
 }
 .project p, .article p {
   text-align: justify;
@@ -815,7 +808,7 @@ h2 {
   text-decoration: underline;
 }
 .project p code, .article p code {
-  color: #222222;
+  color: #222;
 }
 
 .content .article .title, .content .article .metadata {
