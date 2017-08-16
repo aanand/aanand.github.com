@@ -773,7 +773,12 @@ h2 {
 .project img {
   display: block;
   width: 100%;
+  margin: auto;
   margin-bottom: 16px;
+}
+
+.cv .project img {
+  width: 50%;
 }
 
 .project .title, .article .title {
