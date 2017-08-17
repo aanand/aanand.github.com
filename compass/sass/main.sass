@@ -10,20 +10,17 @@
   margin: 20px
 
 @media screen and (min-width: 480px)
-  .index
-    +columns(480px, 1)
-
   .content
     margin: $gutter auto
     max-width: 768px - $side-margin*2
 
 @media screen and (min-width: 768px)
-  .index
+  .cv
     +columns(768px, 2)
 
-@media screen and (min-width: 1112px)
-  .index
-    +columns(1112px, 3)
+@media screen and (min-width: 768px)
+  p
+    text-align: justify
 
 =intrinsic-ratio($ratio)
   position: relative
@@ -56,7 +53,7 @@ header
   +header
   margin-bottom: 1.5em
 
-.content header
+.article header
   +quiet-header
 
 .links
@@ -81,15 +78,23 @@ h2
   margin-bottom: 1em
 
 .project
+  margin-bottom: 48px
+
+  .title
+    font-size: 1.2em
+    margin-bottom: 16px
+
   img
     display: block
     width: 100%
     margin: auto
     margin-bottom: 16px
 
-@media screen and (min-width: 480px)
-  .cv .project img
-    width: 50%
+  p
+    text-align: left
+
+    a
+      text-decoration: underline
 
 .cv h2
   text-align: center
@@ -121,27 +126,15 @@ h2
       color: $quiet-color
 
   p
-    text-align: justify
-
     a
       text-decoration: underline
 
     code
       color: $strong-color
 
-.content .article
+.article
   .title, .metadata
     text-align: center
-
-.index .article
-  .metadata
-    float: right
-
-.jam
-  text-align: center
-
-  .jam-text:after
-    content: "."
 
 pre
   padding: 0 30px

@@ -606,38 +606,21 @@ pre, code, tt {
 }
 
 @media screen and (min-width: 480px) {
-  .index {
-    width: 360px;
-    margin: 40px auto;
-  }
-  .index .projects, .index .articles {
-    margin-left: -40px;
-    font-size: 0px;
-  }
-  .index .project, .index .article {
-    font-size: 18px;
-    display: inline-block;
-    vertical-align: top;
-    width: 360px;
-    margin-left: 40px;
-    margin-bottom: 40px;
-  }
-
   .content {
     margin: 40px auto;
     max-width: 648px;
   }
 }
 @media screen and (min-width: 768px) {
-  .index {
+  .cv {
     width: 648px;
     margin: 40px auto;
   }
-  .index .projects, .index .articles {
+  .cv .projects {
     margin-left: -40px;
     font-size: 0px;
   }
-  .index .project, .index .article {
+  .cv .project {
     font-size: 18px;
     display: inline-block;
     vertical-align: top;
@@ -646,22 +629,9 @@ pre, code, tt {
     margin-bottom: 40px;
   }
 }
-@media screen and (min-width: 1112px) {
-  .index {
-    width: 992px;
-    margin: 40px auto;
-  }
-  .index .projects, .index .articles {
-    margin-left: -40px;
-    font-size: 0px;
-  }
-  .index .project, .index .article {
-    font-size: 18px;
-    display: inline-block;
-    vertical-align: top;
-    width: 304px;
-    margin-left: 40px;
-    margin-bottom: 40px;
+@media screen and (min-width: 768px) {
+  p {
+    text-align: justify;
   }
 }
 .box-4x3 {
@@ -731,17 +701,17 @@ header .logo a:hover {
   background: #105f94;
 }
 
-.content header a, .content header .links {
+.article header a, .article header .links {
   color: #ddd;
 }
-.content header a:hover {
+.article header a:hover {
   color: #105f94;
 }
-.content header .logo a {
+.article header .logo a {
   color: #fff !important;
   background: #ddd;
 }
-.content header .logo a:hover {
+.article header .logo a:hover {
   color: white !important;
   background: #105f94;
 }
@@ -770,18 +740,26 @@ h2 {
   margin-bottom: 1em;
 }
 
+.project {
+  margin-bottom: 48px;
+}
+.project .title {
+  font-size: 1.2em;
+  margin-bottom: 16px;
+}
 .project img {
   display: block;
   width: 100%;
   margin: auto;
   margin-bottom: 16px;
 }
-
-@media screen and (min-width: 480px) {
-  .cv .project img {
-    width: 50%;
-  }
+.project p {
+  text-align: left;
 }
+.project p a {
+  text-decoration: underline;
+}
+
 .cv h2 {
   text-align: center;
 }
@@ -811,9 +789,6 @@ h2 {
 .project .literate-intro, .project .literate-intro a, .project .literate-intro code, .article .literate-intro, .article .literate-intro a, .article .literate-intro code {
   color: #777;
 }
-.project p, .article p {
-  text-align: justify;
-}
 .project p a, .article p a {
   text-decoration: underline;
 }
@@ -821,19 +796,8 @@ h2 {
   color: #222;
 }
 
-.content .article .title, .content .article .metadata {
+.article .title, .article .metadata {
   text-align: center;
-}
-
-.index .article .metadata {
-  float: right;
-}
-
-.jam {
-  text-align: center;
-}
-.jam .jam-text:after {
-  content: ".";
 }
 
 pre {
